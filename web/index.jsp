@@ -12,6 +12,6 @@
   </head>
   <body>
   <h1>Hello World!</h1>
-  <p>Body Text. this is my first web app JSP page</p>
+  <p>Body Text this is my first web app JSP page</p>
   </body>
 </html>
