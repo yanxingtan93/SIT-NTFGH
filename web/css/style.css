@@ -1,0 +1,39 @@
+.navbar {
+    background-color: #55C5C3;
+    border-bottom: 3px solid #549895;
+}
+.navbar .navbar-nav > li > a:hover,
+ul.sub-menu li:hover a {
+    background-color:#3FBEBB;
+}
+
+.navbar .navbar-nav > .active > a,
+.navbar .navbar-nav > .active > a:focus,
+.navbar .navbar-nav > .active > a:hover {
+    background-color:#549895;
+}
+.navbar .navbar-nav{
+    width: 100%;
+    font-size: 18px;
+    font-family: OpenSans_Regular, Helvetica, Arial, sans-serif;
+}
+.navbar .navbar-nav > a {
+    color: #fff;
+    height: 54px;
+    width: 18%;
+    padding: 14px 0 0 0;
+    text-align: center;
+    vertical-align: middle;
+    display: table-cell;
+}
+.navbar .navbar-collapse .navbar-nav > a {
+    width: 100%;
+}
+
+.navbar .navbar-nav > a:hover {
+    background-color:#3FBEBB;
+}
+
+.navbar .navbar-nav > a.active {
+    border-top: 0px solid #55C5C3;
+}
