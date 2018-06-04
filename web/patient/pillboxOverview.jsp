@@ -2,5 +2,5 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <t:patientPage>
-  <h1>Welcome1</h1>
+  <h1>pillbox overview</h1>
 </t:patientPage>

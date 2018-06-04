@@ -5,7 +5,7 @@
     <jsp:attribute name="header">
         <div class="float-right" style="margin: -60px 130px 0px 0px;">
             <img style="border-radius: 50%; margin: 0 10px 0 0" width="50" src="https://pbs.twimg.com/profile_images/997074101620559872/AHWWdl5J_200x200.jpg">
-            <span class="float-right">Pharmacist<br>Hello, Umar Malik</span>
+            <span class="float-right">Patient<br>Hello, Umar Malik</span>
         </div>
 
 
@@ -16,10 +16,12 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div class="navbar-nav">
-                  <a class="nav-item nav-link" href="/pharmacist/patientOverview.jsp">Patients</a>
-                  <a class="nav-item nav-link" href="/pharmacist/medicationOverview.jsp">Medication</a>
-                  <a class="nav-item nav-link" href="/pharmacist/contentOverview.jsp">Content</a>
-                  <a class="nav-item nav-link" href="/pharmacist/profile.jsp">Profile</a>
+                  <a class="nav-item nav-link" href="/patient/pillboxOverview.jsp">Pillbox</a>
+                  <a class="nav-item nav-link" href="/patient/recordConsumption.jsp">Take Medication</a>
+                  <a class="nav-item nav-link" href="/patient/history.jsp">History</a>
+                  <a class="nav-item nav-link" href="/patient/preorder.jsp">Preorder</a>
+                  <a class="nav-item nav-link" href="/patient/profile.jsp">Profile</a>
+                  <a class="nav-item nav-link" href="/patient/help.jsp">Help</a>
               </div>
           </div>
       </nav>
