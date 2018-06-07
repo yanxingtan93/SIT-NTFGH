@@ -1,12 +1,13 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="SIT-NTFGH:war exploded">
-    <output-path />
+    <output-path>$PROJECT_DIR$/out/artifacts/SIT_NTFGH_war_exploded</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="SIT-NTFGH" />
         </element>
         <element id="directory" name="lib">
+          <element id="library" level="application" name="mysql-connector-java-5.1.40-bin" />
           <element id="library" level="project" name="mssql-jdbc-6.4.0.jre8" />
         </element>
       </element>
