@@ -2,5 +2,27 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <t:patientPage>
-  <h1>pillbox overview</h1>
+    <html>
+    <head>
+        <h1>Pillbox overview</h1>
+    </head>
+    <body>
+    <table>
+        <tbody>
+        <c:forEach items="${pillboxList}" var="pillbox">
+            <tr>
+                <td><c:out value="${pillbox.inventory_id}"/></td>
+                <td><c:out value="${pillbox.drugintake_id}"/></td>
+                <td><c:out value="${pillbox.drugphase_id}"/></td>
+                <td><c:out value="${pillbox.inventory_balance}"/></td>
+                <td><c:out value="${pillbox.inventory_days}"/></td>
+                <td><c:out value="${pillbox.inventory_startdate}"/></td>
+                <td><c:out value="${pillbox.inventory_status}"/></td>
+                <td><c:out value="${pillbox.drug_ID}"/></td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+    </body>
+    </html>
 </t:patientPage>
