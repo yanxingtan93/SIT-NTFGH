@@ -21,6 +21,8 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 9.0.8" level="application_server_libraries" />
     <orderEntry type="library" name="mysql-connector-java-5.1.40-bin" level="application" />
+    <orderEntry type="library" name="gson-2.7" level="project" />
     <orderEntry type="library" name="mssql-jdbc-6.4.0.jre8" level="project" />
+    <orderEntry type="library" name="mssql-jdbc-6.4.0.jre81" level="application" />
   </component>
 </module>

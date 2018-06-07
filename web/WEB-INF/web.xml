@@ -3,4 +3,20 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+    <servlet>
+        <servlet-name>drugServlet</servlet-name>
+        <servlet-class>Servlets.drugServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>drugServlet</servlet-name>
+        <url-pattern>/drugServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>medicineFormServlet</servlet-name>
+        <servlet-class>Servlets.medicineFormServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>medicineFormServlet</servlet-name>
+        <url-pattern>/medicineFormServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
