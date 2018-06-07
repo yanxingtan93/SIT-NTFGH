@@ -1,5 +1,12 @@
 package Objects;
 
+import DBUtils.DBConn;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class Medicine {
     private int id;
     private String medicineName;
@@ -87,5 +94,18 @@ public class Medicine {
 
     public void setSideEffect(String sideEffect) {
         this.sideEffect = sideEffect;
+    }
+    public void addNewMedicine(){
+        String sql = "INSERT INTO DRUGS(drug_name,drug_brand,drug_price,medicineform_ID,drug_description,drug_side_effect) " +
+                "VALUES('"+medicineName+"','"+brand+"',"+price+","+medicineFormId+",'"+description+"','"+sideEffect+"');";
+        try {
+            Connection conn = DBConn.getConnection();
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }
