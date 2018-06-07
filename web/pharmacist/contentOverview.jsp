@@ -39,7 +39,7 @@
                 <br>
                 <div class="row">
                    <!-- <input type="button" onclick="uploadFile()" value="Upload" /> -->
-                    <button type="button" class="btn btn-default" onclick="uploadFile()" value="Upload">Upload</button>
+                    <button type="button" class="btn btn-success" onclick="uploadFile()" value="Upload">Upload</button>
                 </div>
                 <div id="progressNumber"></div>
 
@@ -47,6 +47,7 @@
         </div>
         </div>
     </form>
+
 
 </t:pharmacistPage>
 
