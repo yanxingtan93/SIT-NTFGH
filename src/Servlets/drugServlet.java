@@ -1,6 +1,6 @@
 package Servlets;
 
-import Objects.Medicine;
+import model.Medicine;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet(name="drugServlet")
 public class drugServlet extends HttpServlet {

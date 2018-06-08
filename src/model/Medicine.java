@@ -1,4 +1,4 @@
-package Objects;
+package model;
 
 import DBUtils.DBConn;
 
