@@ -10,5 +10,11 @@
 
 <t:pharmacistPage>
     <h1>Manage Content such as PDF uploads here</h1>
+    <form action="/contentServlet" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" />
+        <input type="submit" value="upload" />
+    </form>
+
+
 </t:pharmacistPage>
 
