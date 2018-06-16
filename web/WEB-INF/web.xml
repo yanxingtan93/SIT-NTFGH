@@ -3,6 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <scripting-invalid>false</scripting-invalid>
+        </jsp-property-group>
+    </jsp-config>
+
     <servlet>
 
         <servlet-name>drugServlet</servlet-name>
@@ -12,13 +20,24 @@
         <servlet-name>drugServlet</servlet-name>
         <url-pattern>/drugServlet</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>medicineFormServlet</servlet-name>
         <servlet-class>Servlets.medicineFormServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>medicineFormServlet</servlet-name>
-        <url-pattern>/medicineFormServlet</url-pattern>
+    <servlet-name>medicineFormServlet</servlet-name>
+    <url-pattern>/medicineFormServlet</url-pattern>
+</servlet-mapping>
+
+    <servlet>
+        <servlet-name>drugCatalogueServlet</servlet-name>
+        <servlet-class>Servlets.drugCatalogueServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>drugCatalogueServlet</servlet-name>
+        <url-pattern>/drugCatalogueServlet</url-pattern>
     </servlet-mapping>
+
 </web-app>
 
