@@ -57,7 +57,12 @@
             <td>${Medicine.sideEffect}</td>
             <td>
                 <div class="btn-group" role="group" aria-label="Basic example">
-                    <a href="/pharmacist/medicationEdit.jsp" class="btn btn-success">Edit</a>
+
+
+                        <button type="button" onclick="editDrug(${Medicine.id})" class="btn btn-success">Edit</button>
+
+
+                    <a href="/pharmacist/medicationEdit.jsp?id='${Medicine.id}'" class="btn btn-success">Edit</a>
                     <button type="button" class="btn btn-secondary">Delete</button>
 
                 </div>
@@ -70,3 +75,10 @@
     </table>
 
 </t:pharmacistPage>
+
+<script>
+
+    function editDrug(s) {
+            document.location.href = "/pharmacist/medicationEdit.jsp?drug=" + s;
+    }
+</script>
