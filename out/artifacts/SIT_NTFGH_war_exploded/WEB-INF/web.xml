@@ -20,5 +20,24 @@
         <servlet-name>medicineFormServlet</servlet-name>
         <url-pattern>/medicineFormServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>contentServlet</servlet-name>
+        <servlet-class>Servlets.contentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>contentServlet</servlet-name>
+        <url-pattern>/contentServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>drugCatalogueServlet</servlet-name>
+        <servlet-class>Servlets.drugCatalogueServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>drugCatalogueServlet</servlet-name>
+        <url-pattern>/drugCatalogueServlet</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>
 

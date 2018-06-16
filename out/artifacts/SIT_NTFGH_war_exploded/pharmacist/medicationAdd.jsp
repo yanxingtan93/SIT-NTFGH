@@ -57,7 +57,8 @@
                                         <tr>
                                             <td>Medicine Form</td>
                                             <td>
-                                                <select class="form-control" id="medicine-form">
+
+                                                <select class="form-control" id="medicine-form" name="medicineForm">
 
                                                 </select>
                                             </td>
