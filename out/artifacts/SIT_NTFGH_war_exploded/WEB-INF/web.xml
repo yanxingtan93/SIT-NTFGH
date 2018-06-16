@@ -4,7 +4,15 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
     <servlet>
+        <servlet-name>pillboxServlet</servlet-name>
+        <servlet-class>Servlets.pillboxServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>pillboxServlet</servlet-name>
+        <url-pattern>/pillboxServlet</url-pattern>
+    </servlet-mapping>
 
+    <servlet>
         <servlet-name>drugServlet</servlet-name>
         <servlet-class>Servlets.drugServlet</servlet-class>
     </servlet>

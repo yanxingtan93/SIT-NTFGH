@@ -84,14 +84,14 @@ public class DBConn {
     }
 
 
-    //check connections.
-//    public static void main(String[]args) throws SQLException {
-//        ResultSet resultSet= getPreparedStatement("SELECT * FROM Drugs WHERE drug_brand = ?").executeQuery();
-//        while (resultSet.next()){
-//            System.out.print(resultSet.getString(1) + " " +resultSet.getString(2));
-//            System.out.print(" ");
-//        }
-//    }
+    //check connections
+    public static void main(String[]args) throws SQLException {
+        ResultSet resultSet= getPreparedStatement("SELECT * FROM INVENTORY WHERE drug_ID = 1").executeQuery();
+        while (resultSet.next()){
+            System.out.print(resultSet.getString(1) + " " +resultSet.getString(2));
+            System.out.print(" ");
+        }
+    }
 
 
 }
