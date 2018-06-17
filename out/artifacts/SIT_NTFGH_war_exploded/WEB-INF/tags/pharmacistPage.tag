@@ -25,6 +25,7 @@
       </nav>
     </jsp:attribute>
     <jsp:body>
+
         <jsp:doBody/>
     </jsp:body>
 </t:pageTemplate>

@@ -30,7 +30,7 @@
         </div>
         <jsp:invoke fragment="header"/>
     </div>
-    <div id="body">
+    <div id="content">
         <jsp:doBody/>
     </div>
 
