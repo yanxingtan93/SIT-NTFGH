@@ -52,18 +52,22 @@
             <td>${Medicine.medicineName}</td>
             <td>${Medicine.brand}</td>
             <td>${Medicine.price}</td>
-            <td>${Medicine.medicineFormId}</td>
+            <td>${Medicine.medicineForm}</td>
             <td>${Medicine.description}</td>
             <td>${Medicine.sideEffect}</td>
             <td>
                 <div class="btn-group" role="group" aria-label="Basic example">
 
-
-                        <button type="button" onclick="editDrug(${Medicine.id})" class="btn btn-success">Edit</button>
-
-
-                    <a href="/pharmacist/medicationEdit.jsp?id='${Medicine.id}'" class="btn btn-success">Edit</a>
-                    <button type="button" class="btn btn-secondary">Delete</button>
+                <form method="post" action="/drugCatalogueServlet">
+                    <input type="hidden" class="form-control" name="mode" value="Edit">
+                    <input type="hidden" class="form-control" name="drugid"  value=${Medicine.id}>
+                    <button type="submit" class="btn btn-success">Edit</button>
+                </form>
+                    <form method="post" action="/drugCatalogueServlet">
+                        <input type="hidden" class="form-control" name="mode"  value="Delete">
+                        <input type="hidden" class="form-control" name="drugid"  value=${Medicine.id}>
+                    <button type="submit" class="btn btn-secondary">Delete</button>
+                    </form>
 
                 </div>
             </td>
