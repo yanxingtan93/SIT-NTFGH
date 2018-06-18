@@ -15,6 +15,7 @@ public class Medicine {
     private int medicineFormId;
     private String description;
     private String sideEffect;
+    private String medicineForm;
 
     //Default Constructor
     public Medicine(){
@@ -80,6 +81,15 @@ public class Medicine {
         this.medicineFormId = medicineFormId;
     }
 
+    public String getMedicineForm() {
+        return medicineForm;
+    }
+
+    public void setMedicineForm(String medicineForm) {
+        this.medicineForm = medicineForm;
+    }
+
+
     public String getDescription() {
         return description;
     }
@@ -108,4 +118,41 @@ public class Medicine {
         }
 
     }
+
+
+    public void updateMedicine(int id){
+
+        String sql = "UPDATE DRUGS SET drug_name = '"+medicineName +"',drug_brand = '"+ brand+"',drug_price = " +price+ "," +
+                "medicineform_ID = '"+ medicineFormId+"',drug_description = '"+ description+"',drug_side_effect = '"+sideEffect +"' " +
+                "WHERE drug_ID = '"+id+"'";
+
+        System.out.println("in med method "+price);
+        try {
+            Connection conn = DBConn.getConnection();
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public static void deleteMedicine(int id){
+
+
+        String sql = "DELETE FROM DRUGS WHERE drug_ID = '"+id+"'";
+
+        try {
+            Connection conn = DBConn.getConnection();
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

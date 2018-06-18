@@ -12,6 +12,7 @@ import java.io.IOException;
 @WebServlet(name="drugServlet")
 public class drugServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
        String medicineName= request.getParameter("medicineName");
        String brand = request.getParameter("brand");
        String priceStr = request.getParameter("price");
