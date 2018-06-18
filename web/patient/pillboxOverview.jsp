@@ -94,17 +94,17 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                        <input type="text" class="form-control" id="editDrugName" placeholder="">
                     </div>
                     <label class="col-sm-2 col-form-label">Total Quantity</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="totalQuantity" placeholder="">
+                        <input type="text" class="form-control" id="editDrugQuantity" placeholder="">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Dose</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="dose" placeholder="">
+                        <input type="text" class="form-control" id="editDrugDose" placeholder="">
                     </div>
                     <label class="col-sm-2 col-form-label">Meals</label>
                     <div class="col-sm-4">
@@ -170,17 +170,17 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                        <input type="text" class="form-control" id="addDrugName" placeholder="">
                     </div>
                     <label class="col-sm-2 col-form-label">Total Quantity</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="totalQuantity" placeholder="">
+                        <input type="text" class="form-control" id="addDrugQuantity" placeholder="">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Dose</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="dose" placeholder="">
+                        <input type="text" class="form-control" id="addDrugDose" placeholder="">
                     </div>
                     <label class="col-sm-2 col-form-label">Meals</label>
                     <div class="col-sm-4">
@@ -229,7 +229,7 @@
                         <button type="button" class="btn btn-success btn-block btn-lg" onclick="">Submit</button>
                     </div>
                     <div class="col-sm-6">
-                        <button type="button" class="btn btn-default btn-block btn-lg"  onclick="closeEditModal()">Cancel</button>
+                        <button type="button" class="btn btn-default btn-block btn-lg"  onclick="closeAddModal()">Cancel</button>
                     </div>
                 </div>
             </form>
