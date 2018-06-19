@@ -7,6 +7,7 @@
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -19,7 +20,7 @@
     <div class="container">
         <div class="row">
 
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
 
 
                 <div class="panel panel-info">
@@ -34,50 +35,59 @@
                                 <img alt="User Pic" style="width: 50px;height: 50px" src="http://cdn.onlinewebfonts.com/svg/img_382491.png" class="img-circle img-responsive">
                             </div>
 
-
+                            <c:forEach items="${list}" var="Medicine">
                             <div class=" col-md-9 col-lg-9 ">
+                                <form method="post" action="/drugCatalogueServlet">
+                                    <input type="hidden" class="form-control" name="mode" id="mode" value="Save">
+                                    <input type="hidden" class="form-control" name="drugid" id="drugid" value=${Medicine.id}>
                                 <table class="table table-user-information">
+
+
                                     <tbody>
                                     <tr>
                                         <td>Medicine Name:</td>
-                                        <td><input type="text" class="form-control" id="drug_name" placeholder="Enter Medicine Name"></td>
+                                        <td><input type="text" class="form-control" name="drug_name"  placeholder="Enter Medicine Name" value=${Medicine.medicineName}></td>
                                     </tr>
                                     <tr>
                                         <td>Brand:</td>
-                                        <td><input type="text" class="form-control" id="drug_brand" placeholder="Enter Brand"></td>
+                                        <td><input type="text" class="form-control" name="drug_brand"  placeholder="Enter Brand" value=${Medicine.brand}></td>
                                     </tr>
                                     <tr>
                                         <td>Price</td>
-                                        <td><input type="number" class="form-control" id="drug_price" placeholder="Enter Price"></td>
+                                        <td><input type="text" class="form-control" name="drug_price" placeholder="Enter Price" value=${Medicine.price}></td>
+
                                     </tr>
 
                                     <tr>
                                     <tr>
                                         <td>Medicine Form</td>
                                         <td>
-                                            <select class="form-control" id="medicine-form">
+                                            <select class="form-control" id="medicine-form" name="medicineForm">
 
                                             </select>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Description</td>
-                                        <td><textarea class="form-control" id="drug_desc" rows="4"></textarea></td>
+                                        <td><textarea class="form-control" name="drug_desc" rows="4">${Medicine.description}</textarea></td>
                                     </tr>
                                     <tr>
                                         <td>Side Effects</td>
-                                        <td><textarea class="form-control" id="drug_sideEffects" rows="4"></textarea></td>
+                                        <td><textarea class="form-control" name="drug_sideEffects"  rows="4">${Medicine.sideEffect}</textarea></td>
                                     </tr>
 
                                     </tr>
 
                                     </tbody>
+
                                 </table>
 
                                 <div class="pull-right">
-                                <a href="#" class="btn btn-success">Save Changes</a>
+                                    <button type="submit" class="btn btn-success">Save Changes</button>
                                 </div>
+                                </form>
                             </div>
+                            </c:forEach>
                         </div>
                     </div>
                     <div class="panel-footer">

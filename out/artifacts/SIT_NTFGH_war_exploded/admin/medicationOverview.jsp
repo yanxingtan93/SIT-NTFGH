@@ -13,7 +13,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
-<t:pharmacistPage>
+<t:adminPage>
     <div>
         <h1>Manage Catalog of Drug Information</h1>
         <span class="pull-right"> <a href="/pharmacist/medicationAdd.jsp" class="btn btn-primary">+ Add New Drug</a></span>
@@ -78,7 +78,7 @@
         </tbody>
     </table>
 
-</t:pharmacistPage>
+</t:adminPage>
 
 <script>
 

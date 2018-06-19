@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<t:pharmacistPage>
+<t:adminPage>
     <h1>Search for patients by Name or NRIC</h1>
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,dt-1.10.8/datatables.min.css">
@@ -58,4 +58,4 @@
 
     </table>
 
-</t:pharmacistPage>
+</t:adminPage>

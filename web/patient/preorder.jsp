@@ -69,6 +69,14 @@
     </div>
     <br>
     <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Preferred Collection Method</label>
+        <div class="col-sm-4">
+        <label class="radio-inline"><input type="radio" name="method"> Self-Collection</label><br>
+        <label class="radio-inline"><input type="radio" name="method"> Home/ Office Delivery</label><br>
+        </div>
+    </div>
+    <br>
+    <div class="form-group row">
       <div class="col-sm-12">
         <button type="button" class="btn btn-success btn-block btn-lg" onclick="openConfirmModal(0)">Submit</button>
       </div>
