@@ -8,7 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<t:pharmacistPage>
+<t:adminPage>
     <h1>Manage personal details</h1>
 
     <br>
@@ -79,4 +79,4 @@
     </div>
 
 
-</t:pharmacistPage>
+</t:adminPage>
