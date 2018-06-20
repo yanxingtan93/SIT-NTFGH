@@ -2,7 +2,6 @@ package Servlets;
 
 import DBUtils.DBConn;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

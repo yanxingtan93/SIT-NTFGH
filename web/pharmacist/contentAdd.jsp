@@ -12,6 +12,14 @@
     <h1>Manage Content such as PDF uploads here</h1>
     <form action="/contentServlet" method="post" enctype="multipart/form-data">
         <input type="file" name="file" />
+        <br/>
+        <label>Document Title:</label>
+        <input type="text" name ="content-title">
+        <br/>
+       <label>Document Description</label>
+        <textarea></textarea>
+        <br/>
+
         <input type="submit" value="upload" />
     </form>
 

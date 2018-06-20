@@ -7,8 +7,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.List;
 
+import DBUtils.DBConn;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -41,6 +43,10 @@ public class contentServlet extends HttpServlet {
                         item.write( new File(uploadPath + File.separator + name));
                         uploded_directory= uploadPath+ File.separator+name;
                         System.out.println(uploded_directory);
+                        //After upload add to path to CONTENT table in the database
+                        Connection conn= DBConn.getConnection();
+
+
 
                     }
                 }
