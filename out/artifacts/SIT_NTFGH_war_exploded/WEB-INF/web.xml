@@ -46,6 +46,15 @@
         <url-pattern>/drugCatalogueServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>preorderFormServlet</servlet-name>
+        <servlet-class>Servlets.preorderFormServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>preorderFormServlet</servlet-name>
+        <url-pattern>/preorderFormServlet</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>
 

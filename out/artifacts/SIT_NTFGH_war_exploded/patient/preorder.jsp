@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="../JS/preorderForm.js"></script>
 
 <t:patientPage>
   <div class="row">
@@ -56,11 +58,14 @@
     <div class="form-group row">
       <label class="col-sm-2 col-form-label">Medication</label>
       <div class="col-sm-4">
-        <select name="meds">
-          <option value="1">Ibuprofen</option>
-          <option value="2">Phenphedrin</option>
-          <option value="3">Alprazolam</option>
-        </select>
+          <select class="form-control" id="preorder-form" name="preorderForm">
+
+          </select>
+        <%--<select name="meds">--%>
+          <%--<option value="1">Ibuprofen</option>--%>
+          <%--<option value="2">Phenphedrin</option>--%>
+          <%--<option value="3">Alprazolam</option>--%>
+        <%--</select>--%>
       </div>
       <label class="col-sm-2 col-form-label">Total Quantity</label>
       <div class="col-sm-4">
