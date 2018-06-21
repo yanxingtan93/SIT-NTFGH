@@ -66,7 +66,7 @@
                     <form method="post" action="/drugCatalogueServlet">
                         <input type="hidden" class="form-control" name="mode"  value="Delete">
                         <input type="hidden" class="form-control" name="drugid"  value=${Medicine.id}>
-                    <button type="submit" class="btn btn-secondary">Delete</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
 
                 </div>

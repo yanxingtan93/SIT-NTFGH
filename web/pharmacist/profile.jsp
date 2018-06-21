@@ -36,7 +36,7 @@
                                     <tbody>
                                     <tr>
                                         <td>Name:</td>
-                                        <td><input type="text" class="form-control" name="user_name" value="Umar (hardcoded for now)" placeholder="Enter Medicine Name"></td>
+                                        <td><input type="text" class="form-control" name="user_name" value="Umar" placeholder="Enter Medicine Name"></td>
                                     </tr>
                                     <tr>
                                         <td>NRIC:</td>

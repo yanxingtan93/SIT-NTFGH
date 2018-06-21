@@ -18,7 +18,7 @@
               <div class="navbar-nav">
                   <a class="nav-item nav-link" href="/UserServlet">Users</a>
                   <a class="nav-item nav-link" href="/drugCatalogueServlet">Medication</a>
-                  <a class="nav-item nav-link" href="/admin/contentOverview.jsp">Administration Settings</a>
+                  <a class="nav-item nav-link" href="/admin/settingsOverview.jsp">Administration Settings</a>
                   <a class="nav-item nav-link" href="/admin/profile.jsp">Profile</a>
               </div>
           </div>

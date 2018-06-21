@@ -9,20 +9,23 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <t:pharmacistPage>
-    <h1>Manage Content such as PDF uploads here</h1>
+    <h1>Content Manager</h1>
+    <div class="container col-md-8 col-lg-9">
+        <br>
     <form action="/contentServlet" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" />
-        <br/>
+        <input type="file" class="form-control btn btn-info" name="file" />
+        <br/><br>
         <label>Document Title:</label>
-        <input type="text" name ="content-title">
+        <input type="text"  class="form-control" name ="content-title">
+        <small id="emailHelp" class="form-text text-muted">Title of Document displayed to users.</small>
         <br/>
-       <label>Document Description</label>
-        <textarea></textarea>
+       <label>Document Description:</label>
+        <textarea class="form-control" rows="5"></textarea>
         <br/>
 
-        <input type="submit" value="upload" />
+        <button type="submit" class="btn btn-primary ">Upload</button>
     </form>
-
+    </div>
 
 </t:pharmacistPage>
 
