@@ -55,6 +55,14 @@
         <url-pattern>/preorderFormServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>preorderServlet</servlet-name>
+        <servlet-class>Servlets.preorderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>preorderServlet</servlet-name>
+        <url-pattern>/preorderServlet</url-pattern>
+    </servlet-mapping>
 
 </web-app>
 
