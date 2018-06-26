@@ -170,7 +170,7 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="addDrugName" placeholder="">
+                        <select name="addDrugName" id="addDrugName"></select>
                     </div>
                     <label class="col-sm-2 col-form-label">Total Quantity</label>
                     <div class="col-sm-4">
@@ -290,5 +290,17 @@
                 deleteModal.style.display = "none";
             }
         }
+    </script>
+    <script>
+        $(document).ready(function(){
+            $.get("http://localhost:8080/patient/getMedicationNames", function(data, status){
+                $.each(JSON.parse(data), function (i, item) {
+                    $('#addDrugName').append($('<option>', {
+                        value: item,
+                        text : item
+                    }));
+                });
+            });
+        });
     </script>
 </t:patientPage>

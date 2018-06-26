@@ -1,0 +1,150 @@
+package Servlets;
+
+import DBUtils.DBConn;
+import com.google.gson.Gson;
+import model.Medicine;
+import model.User;
+import model.pillbox;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Map;
+
+@WebServlet(name = "patientServlet")
+public class patientServlet extends HttpServlet {
+    private Gson gson = new Gson();
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println(request);
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String route = request.getRequestURL().toString().split("/patient/")[1];
+
+        //Sort the request by url i.e. /patient/listMedication
+        switch (route) {
+            case "getMedicationNames":
+                response.getWriter().write(getMedicationNames());
+                break;
+            case "listPillbox":
+                response.getWriter().write(listPillbox());
+                break;
+            case "addToPillbox":
+                response.getWriter().write(consumeMedication());
+                break;
+            case "addMedication":
+                response.getWriter().write(consumeMedication());
+                break;
+            case "editMedication":
+                response.getWriter().write("edit");
+                break;
+            case "deleteMedication":
+                response.getWriter().write("delete");
+                break;
+        }
+    }
+
+    private String getMedicationNames(){
+
+        String sql = "SELECT * FROM DRUGS";
+
+        ArrayList<String> list = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = DBConn.getPreparedStatement(sql);
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                list.add(resultSet.getString("drug_name"));
+
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+
+        }
+
+        return gson.toJson(list);
+    }
+    private String listPillbox(){
+
+        String sql = "SELECT * FROM DRUGS d,INVENTORY i WHERE d.drug_ID = i.drug_ID";
+
+        ArrayList<Map> list = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = DBConn.getPreparedStatement(sql);
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                //To save as dict
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("drug_name", resultSet.getString("drug_name"));
+                map.put("drug_brand", resultSet.getString("drug_brand"));
+                map.put("drug_description", resultSet.getString("drug_description"));
+                map.put("drug_side_effect", resultSet.getString("drug_side_effect"));
+                map.put("drugintake_ID",resultSet.getString("drugintake_ID") );
+                map.put("drugphase_ID",resultSet.getString("drugphase_ID"));
+                map.put("inventory_balance", resultSet.getString("inventory_balance"));
+                map.put("inventory_image", resultSet.getString("inventory_image"));
+                list.add(map);
+
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+
+        }
+
+        return gson.toJson(list);
+    }
+    private String consumeMedication(){
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("response", "success");
+        return gson.toJson(map);
+    }
+    private String addMedication(){
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("response", "success");
+        return gson.toJson(map);
+    }
+}
+/*
+        List<pillbox> list = new ArrayList<pillbox>();
+
+        try {
+            Connection conn = DBConn.getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM INVENTORY");
+            String id = "1";
+            preparedStatement.setString(1, id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                pillbox p = new pillbox();
+                p.setInventory_id(rs.getString(1));
+                p.setDrugintake_id(rs.getString(2));
+                p.setDrugphase_id(rs.getString(3));
+                p.setInventory_balance(rs.getString(4));
+                p.setInventory_days(rs.getString(5));
+                p.setInventory_startdate(rs.getString(6));
+                p.setInventory_status(rs.getString(8));
+                p.setDrug_ID(rs.getString(9));
+                list.add(p);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("test");
+        System.out.println(gson.toJson(list));
+        return gson.toJson(list);
+* */
