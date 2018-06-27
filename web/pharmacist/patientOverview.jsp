@@ -43,7 +43,7 @@
 
     });
     $(document).ready(function() {
-        $.get("/UserServlet", function(responseJson) {
+        $.get("/UserServlet?mode=pharmacist", function(responseJson) {
 
 
             $.each(responseJson, function(key,value) {

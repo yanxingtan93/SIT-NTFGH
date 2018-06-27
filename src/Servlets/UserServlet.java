@@ -24,49 +24,158 @@ public class UserServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String mode = request.getParameter("mode");
 
 
-        //USERS (user_NRIC varchar(20) NOT NULL PRIMARY KEY, user_DOB varchar(20), user_password varchar(100), user_contact int(10),
-           //     user_name varchar(100), user_email varchar(100), user_address varchar(200), user_special_condition varchar(500));
-        String sql = "SELECT * from USERS";
-        //User.addFakeUsers();
+        switch (mode) {
 
-        try {
-
-
-            PreparedStatement ps = DBConn.getPreparedStatement(sql);
-            ResultSet resultSet = ps.executeQuery();
-
-            ArrayList<User> list = new ArrayList<User>();
-            System.out.print(" rows --> doing search "+resultSet.toString());
-            while (resultSet.next()) {
-                System.out.print(" rows --> "+resultSet.getString("user_NRIC"));
-                User user = new User();
-                user.setNRIC(resultSet.getString("user_NRIC"));
-                user.setName(resultSet.getString("user_name"));
-                user.setDob(resultSet.getString("user_DOB"));
-                user.setContact(resultSet.getInt("user_contact"));
-                user.setEmail(resultSet.getString("user_email"));
-                user.setAddress(resultSet.getString("user_address"));
-               // user.setSpecialCondition(resultSet.getString("user_specialCondition"));
+            case "pharmacist":
+            String sql = "SELECT u.user_NRIC,u.user_name,u.user_DOB,u.user_contact,u.user_email,u.user_address" +
+                    ",p.allergies_patient" +
+                    " from USERS u, PATIENTS p WHERE u.user_NRIC = p.user_NRIC";
 
 
-                list.add(user);
+            try {
+
+
+                PreparedStatement ps = DBConn.getPreparedStatement(sql);
+                ResultSet resultSet = ps.executeQuery();
+
+                ArrayList<User> list = new ArrayList<User>();
+
+                while (resultSet.next()) {
+                    User user = new User();
+                    user.setNRIC(resultSet.getString("user_NRIC"));
+                    user.setName(resultSet.getString("user_name"));
+                    user.setDob(resultSet.getString("user_DOB"));
+                    user.setContact(resultSet.getInt("user_contact"));
+                    user.setEmail(resultSet.getString("user_email"));
+                    user.setAddress(resultSet.getString("user_address"));
+                    user.setSpecialCondition(resultSet.getString("allergies_patient"));
+
+
+                    list.add(user);
+                }
+
+                String json = new Gson().toJson(list);
+                System.out.print(" rows --> " + json);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(json);
+
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+
             }
+            break;
+            case "admin":
+                String sql1 = "SELECT u.user_NRIC,u.user_name,u.user_DOB,u.user_contact,u.user_email,u.user_address" +
+                        " from USERS u, PATIENTS p WHERE u.user_NRIC = p.user_NRIC";
 
-            String json = new Gson().toJson(list);
-            System.out.print(" rows --> "+json);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(json);
+                String sql2 = "SELECT u.user_NRIC,u.user_name,u.user_DOB,u.user_contact,u.user_email,u.user_address" +
+                        " from USERS u, CAREGIVERS p WHERE u.user_NRIC = p.user_NRIC";
+
+                String sql3 = "SELECT u.user_NRIC,u.user_name,u.user_DOB,u.user_contact,u.user_email,u.user_address" +
+                        " from USERS u, PHARMACISTS p WHERE u.user_NRIC = p.user_NRIC";
+
+                String sql4 = "SELECT u.user_NRIC,u.user_name,u.user_DOB,u.user_contact,u.user_email,u.user_address" +
+                        " from USERS u, ADMINS p WHERE u.user_NRIC = p.user_NRIC";
+
+                ArrayList<User> list = new ArrayList<User>();
+
+                try {
+                    PreparedStatement ps = DBConn.getPreparedStatement(sql1);
+                    ResultSet resultSet = ps.executeQuery();
+
+                    while (resultSet.next()) {
+
+                        User user = new User();
+                        user.setNRIC(resultSet.getString("user_NRIC"));
+                        user.setName(resultSet.getString("user_name"));
+                        user.setDob(resultSet.getString("user_DOB"));
+                        user.setContact(resultSet.getInt("user_contact"));
+                        user.setEmail(resultSet.getString("user_email"));
+                        user.setAddress(resultSet.getString("user_address"));
+                        user.setRole("Patient");
 
 
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+                        list.add(user);
+                    }
+
+                    resultSet.close();
+
+                    PreparedStatement ps2 = DBConn.getPreparedStatement(sql2);
+                    resultSet = ps2.executeQuery();
+
+                    while (resultSet.next()) {
+
+                        User user = new User();
+                        user.setNRIC(resultSet.getString("user_NRIC"));
+                        user.setName(resultSet.getString("user_name"));
+                        user.setDob(resultSet.getString("user_DOB"));
+                        user.setContact(resultSet.getInt("user_contact"));
+                        user.setEmail(resultSet.getString("user_email"));
+                        user.setAddress(resultSet.getString("user_address"));
+                        user.setRole("Caregiver");
+
+
+                        list.add(user);
+                    }
+                    resultSet.close();
+                    PreparedStatement ps3 = DBConn.getPreparedStatement(sql3);
+                    resultSet = ps3.executeQuery();
+
+                    while (resultSet.next()) {
+
+                        User user = new User();
+                        user.setNRIC(resultSet.getString("user_NRIC"));
+                        user.setName(resultSet.getString("user_name"));
+                        user.setDob(resultSet.getString("user_DOB"));
+                        user.setContact(resultSet.getInt("user_contact"));
+                        user.setEmail(resultSet.getString("user_email"));
+                        user.setAddress(resultSet.getString("user_address"));
+                        user.setRole("Pharmacist");
+
+
+                        list.add(user);
+                    }
+                    resultSet.close();
+                    PreparedStatement ps4 = DBConn.getPreparedStatement(sql4);
+                    resultSet = ps4.executeQuery();
+
+                    while (resultSet.next()) {
+
+                        User user = new User();
+                        user.setNRIC(resultSet.getString("user_NRIC"));
+                        user.setName(resultSet.getString("user_name"));
+                        user.setDob(resultSet.getString("user_DOB"));
+                        user.setContact(resultSet.getInt("user_contact"));
+                        user.setEmail(resultSet.getString("user_email"));
+                        user.setAddress(resultSet.getString("user_address"));
+                        user.setRole("Admin");
+
+
+                        list.add(user);
+                    }
+
+
+
+
+
+                    String json = new Gson().toJson(list);
+                    System.out.print(" rows --> " + json);
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write(json);
+
+
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+
+                }
+                break;
 
         }
-
-
-
     }
 }

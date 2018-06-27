@@ -22,6 +22,7 @@ public class User {
     private String email;
     private String address;
     private String specialCondition;
+    private String role;
 
     public User() {
     }
@@ -85,9 +86,13 @@ public class User {
         this.specialCondition = specialCondition;
     }
 
+    public String getRole() {
+        return role;
+    }
 
-
-
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public static void addFakeUsers(){
         DBConn db = new DBConn();

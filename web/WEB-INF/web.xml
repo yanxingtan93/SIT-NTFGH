@@ -74,7 +74,14 @@
         <url-pattern>/UserServlet</url-pattern>
     </servlet-mapping>
 
-
+    <servlet>
+        <servlet-name>GeneralSettingsServlet</servlet-name>
+        <servlet-class>Servlets.GeneralSettingsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GeneralSettingsServlet</servlet-name>
+        <url-pattern>/GeneralSettingsServlet</url-pattern>
+    </servlet-mapping>
 
 </web-app>
 
