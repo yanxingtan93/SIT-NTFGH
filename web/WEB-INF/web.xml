@@ -64,5 +64,17 @@
         <url-pattern>/preorderServlet</url-pattern>
     </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>Servlets.UserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/UserServlet</url-pattern>
+    </servlet-mapping>
+
+
+
 </web-app>
 

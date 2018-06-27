@@ -1,6 +1,7 @@
 package Servlets;
 
 import DBUtils.DBConn;
+import com.google.gson.Gson;
 import model.Medicine;
 import model.User;
 
@@ -27,7 +28,7 @@ public class UserServlet extends HttpServlet {
 
         //USERS (user_NRIC varchar(20) NOT NULL PRIMARY KEY, user_DOB varchar(20), user_password varchar(100), user_contact int(10),
            //     user_name varchar(100), user_email varchar(100), user_address varchar(200), user_special_condition varchar(500));
-        String sql = "SELECT * from USERS ";
+        String sql = "SELECT * from USERS";
         //User.addFakeUsers();
 
         try {
@@ -37,8 +38,9 @@ public class UserServlet extends HttpServlet {
             ResultSet resultSet = ps.executeQuery();
 
             ArrayList<User> list = new ArrayList<User>();
-
+            System.out.print(" rows --> doing search "+resultSet.toString());
             while (resultSet.next()) {
+                System.out.print(" rows --> "+resultSet.getString("user_NRIC"));
                 User user = new User();
                 user.setNRIC(resultSet.getString("user_NRIC"));
                 user.setName(resultSet.getString("user_name"));
@@ -46,18 +48,18 @@ public class UserServlet extends HttpServlet {
                 user.setContact(resultSet.getInt("user_contact"));
                 user.setEmail(resultSet.getString("user_email"));
                 user.setAddress(resultSet.getString("user_address"));
-                //user.setSpecialCondition(resultSet.getString("user_special_condition"));
+               // user.setSpecialCondition(resultSet.getString("user_specialCondition"));
 
 
                 list.add(user);
             }
 
+            String json = new Gson().toJson(list);
+            System.out.print(" rows --> "+json);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
 
-            String nextJSP = "/pharmacist/patientOverview.jsp";
-            request.setAttribute("list", list);
-
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-            dispatcher.forward(request,response);
 
         } catch (SQLException ex) {
             ex.printStackTrace();

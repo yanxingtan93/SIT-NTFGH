@@ -22,77 +22,168 @@
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,dt-1.10.8/datatables.min.css">
     <script type="text/javascript" src="https://cdn.datatables.net/r/bs-3.3.5/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
-    <script type="text/javascript" charset="utf-8">
 
-        $(document).ready(function() {
-            $('#myMainTable').dataTable({
-                "aLengthMenu": [[5, 50, 75, -1], [5, 50, 75, "All"]],
-                "iDisplayLength": 5
-            });
-        } );
-
-
-    </script>
 
     <style>
         .dataTables_wrapper .FilterStuff .dataTables_filter {float:right}
     </style>
 
 
+<div class="container" id="myTable">
 
     <table id="myMainTable" class="table table-striped table-bordered" style="width:100%">
         <thead class="thead-dark">
         <tr><th>No</th><th>Drug Name</th><th>Brand</th><th>Price</th><th>Type</th><th>Description</th><th>Side Effect</th><th>Functions</th></tr>
         </thead>
-
-        <tbody>
-        <c:forEach items="${list}" var="Medicine">
-        <tr>
-            <td>${Medicine.id}</td>
-            <td>${Medicine.medicineName}</td>
-            <td>${Medicine.brand}</td>
-            <td>${Medicine.price}</td>
-            <td>${Medicine.medicineForm}</td>
-            <td>${Medicine.description}</td>
-            <td>${Medicine.sideEffect}</td>
-            <td>
-                <div class="btn-group" role="group" aria-label="Basic example">
-
-                <form method="post" action="/drugCatalogueServlet">
-                    <input type="hidden" class="form-control" name="mode" value="Edit">
-                    <input type="hidden" class="form-control" name="drugid"  value=${Medicine.id}>
-                    <button type="submit" class="btn btn-success">Edit</button>
-                </form>
-                    <form method="post" action="/drugCatalogueServlet">
-                        <input type="hidden" class="form-control" name="mode"  value="Delete">
-                        <input type="hidden" class="form-control" name="drugid"  value=${Medicine.id}>
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-
-                </div>
-            </td>
-
-
-        </tr>
-        </c:forEach>
-        </tbody>
     </table>
 
+</div>
 </t:pharmacistPage>
+
+
+
 
 <script>
 
-    (function($) {
-        $(document).ready(function() {               // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
-            $.get("/drugCatalogueServlet", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
-                var $select = $("#myMainTable");                           // Locate HTML DOM element with ID "someselect"
-                $.each(responseJson, function(key,value) {               // Iterate over the JSON object.
-                    //alert(key);
-                    console.log(key+value);
-                    // $("<option>").val(key).text(value).appendTo($select); // Create HTML <option> element, set its value with currently iterated key and its text content with currently iterated item and finally append it to the <select>.
-                });
+
+            var mytable = $('#myMainTable').DataTable({
+                "aLengthMenu": [[5, 50, 75, -1], [5, 50, 75, "All"]],
+                "iDisplayLength": 5,
+                "paging": true,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "sDom": 'lfrtip'
+
             });
-        });
-    })(jQuery)
+            $(document).ready(function() {
+                $.get("/drugCatalogueServlet", function(responseJson) {
+
+
+                    $.each(responseJson, function(key,value) {
+
+                        var button = "\n" +
+                            "                <form method=\"post\" action=\"/pharmacist/medicationEdit.jsp\">\n" +
+                            "                    <input type=\"hidden\" class=\"form-control\" name=\"mode\" value=\"Edit\">\n" +
+                            "                    <input type=\"hidden\" class=\"form-control\" name=\"drugid\"  value="+value.id+">\n" +
+                            "                    <button type=\"submit\" class=\"btn btn-success\">Edit</button>\n" +
+                            "                </form>\n" +
+                            "                    <form method=\"post\" action=\"/drugCatalogueServlet\">\n" +
+                            "                        <input type=\"hidden\" class=\"form-control\" name=\"mode\"  value=\"Delete\">\n" +
+                            "                        <input type=\"hidden\" class=\"form-control\" name=\"drugid\"  value="+value.id+">\n" +
+                            "                    <button type=\"submit\" class=\"btn btn-danger\">Delete</button>\n" +
+                            "                    </form>";
+
+
+        mytable.row.add([value.id, value.medicineName, value.brand, value.price, value.medicineForm, value.description, value.sideEffect,button]);
+
+
+                    });
+                    mytable.draw();
+                });
+
+            });
 
 </script>
+
+<!--
+<script type="text/javascript" charset="utf-8">
+
+    (function($) {
+
+        $(document).ready(function() {
+
+            var table = $('#myMainTable').dataTable();
+
+
+            var myTables = document.getElementById("myMainTable");
+            $.get("/drugCatalogueServlet", function(responseJson) {
+
+
+                $.each(responseJson, function(key,value) {
+
+                    var button = "\n" +
+                        "                <form method=\"post\" action=\"/drugCatalogueServlet\">\n" +
+                        "                    <input type=\"hidden\" class=\"form-control\" name=\"mode\" value=\"Edit\">\n" +
+                        "                    <input type=\"hidden\" class=\"form-control\" name=\"drugid\"  value="+value.id+">\n" +
+                        "                    <button type=\"submit\" class=\"btn btn-success\">Edit</button>\n" +
+                        "                </form>\n" +
+                        "                    <form method=\"post\" action=\"/drugCatalogueServlet\">\n" +
+                        "                        <input type=\"hidden\" class=\"form-control\" name=\"mode\"  value=\"Delete\">\n" +
+                        "                        <input type=\"hidden\" class=\"form-control\" name=\"drugid\"  value="+value.id+">\n" +
+                        "                    <button type=\"submit\" class=\"btn btn-danger\">Delete</button>\n" +
+                        "                    </form>";
+
+// <tr><th>No</th><th>Drug Name</th><th>Brand</th><th>Price</th><th>Type</th><th>Description</th><th>Side Effect</th><th>Functions</th></tr>
+
+                    table.row.add({
+                        "No": value.id,
+                        "Drug Name": value.medicineName,
+                        "Brand": value.brand,
+                        "Price": value.price,
+                        "Type": value.medicineForm,
+                        "Description": value.description,
+                        "Side Effect": value.sideEffect,
+                        "Functions": button
+                    }).draw();
+
+
+                    /*
+
+                    var row = myTables.insertRow(-1);
+
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    var cell4 = row.insertCell(3);
+                    var cell5 = row.insertCell(4);
+                    var cell6 = row.insertCell(5);
+                    var cell7 = row.insertCell(6);
+                    var cell8 = row.insertCell(7);
+
+                    cell1.innerHTML = value.id;
+                    cell2.innerHTML = value.medicineName;
+                    cell3.innerHTML = value.brand;
+                    cell4.innerHTML = value.price;
+                    cell5.innerHTML = value.medicineForm;
+                    cell6.innerHTML = value.description;
+                    cell7.innerHTML = value.sideEffect;
+                    cell8.innerHTML = button;
+    /*
+
+                        x+= "<tr><td>"+value.id+"</td><td>"+value.medicineName+"</td><td>"+value.brand+"</td><td>"+value.price+"</td><td>"
+                            +value.medicineForm+"</td><td>"+value.description+"</td><td>"+value.sideEffect+"</td><td>"+button+"</td></tr>";
+
+    */
+
+                    });
+
+                });
+
+
+
+
+            });
+
+
+
+        })(jQuery)
+
+</script>
+
+
+<script type="text/javascript" charset="utf-8">
+
+    $(document).ready(function() {
+        $('#myMainTable').dataTable({
+            "aLengthMenu": [[5, 50, 75, -1], [5, 50, 75, "All"]],
+            "iDisplayLength": 5,
+            destroy:true
+        });
+    } );
+
+
+</script>
+-->
