@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="../JS/preorderForm.js"></script>
 
 <t:patientPage>
   <div class="row">
@@ -32,7 +34,7 @@
     <table class="dailyMedTable table table-striped table-bordered">
       <thead class="thead-dark">
       <tr>
-        <th style="width:15%">Date</th>
+        <th style="width:15%">Image</th>
         <th style="width:60%">Medication</th>
         <th style="width:25%">Collection Type</th>
       </tr>
@@ -52,15 +54,13 @@
     </table>
   </div>
   <br><h1>New Preorder</h1><br>
-  <form>
+  <form action="/preorderServlet" method="post">
     <div class="form-group row">
       <label class="col-sm-2 col-form-label">Medication</label>
       <div class="col-sm-4">
-        <select name="meds">
-          <option value="1">Ibuprofen</option>
-          <option value="2">Phenphedrin</option>
-          <option value="3">Alprazolam</option>
-        </select>
+          <select class="form-control" id="medication-Preorder" name="medicationPreorder">
+
+          </select>
       </div>
       <label class="col-sm-2 col-form-label">Total Quantity</label>
       <div class="col-sm-4">
@@ -71,17 +71,18 @@
     <div class="form-group row">
       <label class="col-sm-2 col-form-label">Preferred Collection Method</label>
         <div class="col-sm-4">
-        <label class="radio-inline"><input type="radio" name="method"> Self-Collection</label><br>
-        <label class="radio-inline"><input type="radio" name="method"> Home/ Office Delivery</label><br>
+        <label class="radio-inline"><input type="radio" name="method" value="Self-Collection"> Self-Collection</label><br>
+        <label class="radio-inline"><input type="radio" name="method" value="Delivery"> Home/ Office Delivery</label><br>
         </div>
     </div>
     <br>
     <div class="form-group row">
       <div class="col-sm-12">
-        <button type="button" class="btn btn-success btn-block btn-lg" onclick="openConfirmModal(0)">Submit</button>
+        <button type="submit" class="btn btn-success btn-block btn-lg" onclick="openConfirmModal(0)">Submit</button>
       </div>
     </div>
   </form>
+
   <div id="confirmModal" class="modal">
     <div class="modal-content">
       <h2>Please confirm.</h2><br>
@@ -114,5 +115,6 @@
               confirmModal.style.display = "none";
           }
       }
+      //var selectedOption = $("input:radio[name=method]:checked").val()
   </script>
 </t:patientPage>

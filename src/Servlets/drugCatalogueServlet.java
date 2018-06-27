@@ -1,6 +1,7 @@
 package Servlets;
 
 import DBUtils.DBConn;
+import com.google.gson.Gson;
 import model.Medicine;
 
 import javax.servlet.RequestDispatcher;
@@ -115,7 +116,7 @@ public class drugCatalogueServlet extends HttpServlet {
         try {
             PreparedStatement ps = DBConn.getPreparedStatement(sql);
             ResultSet resultSet = ps.executeQuery();
-
+            int count = 0;
             ArrayList<Medicine> list = new ArrayList<Medicine>();
             // (int id, String medicineName, String brand, float price, int medicineFormId, String description, String sideEffect)ff
             while (resultSet.next()) {
@@ -130,13 +131,23 @@ public class drugCatalogueServlet extends HttpServlet {
                 medicineCat.setMedicineForm(resultSet.getString("medicineform_name"));
                 //System.out.println("TWo prices");
                 list.add(medicineCat);
+                count++;
             }
-            String nextJSP = "/pharmacist/medicationOverview.jsp";
-            request.setAttribute("list", list);
+       //     String nextJSP = "/pharmacist/medicationOverview.jsp";
+          //  request.setAttribute("list", list);
             //request.getRequestDispatcher("/pharmacist/medicationOverview.jsp").forward(request, response);
 
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-            dispatcher.forward(request,response);
+          ///  RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+            //dispatcher.forward(request,response);
+
+
+            String json = new Gson().toJson(list);
+            System.out.print(count+" rows --> "+json);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+
+
 
         } catch (SQLException ex) {
             ex.printStackTrace();

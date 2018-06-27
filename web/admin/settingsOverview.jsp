@@ -123,7 +123,7 @@
 
 <div class="container">
     <div class="page-header">
-        <h1>General Database Settings<span class="pull-right label label-default">:)</span></h1>
+        <h1>General Database Settings<span class="pull-right label label-default"></span></h1>
     </div>
     <div class="row">
         <div class="col-lg-12">
