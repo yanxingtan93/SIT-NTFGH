@@ -34,7 +34,8 @@ public class pillboxServlet extends HttpServlet {
         List<pillbox> list = new ArrayList<pillbox>();
 
         try {
-            Connection conn = DBConn.getConnection();
+            DBConn db = new DBConn();
+            Connection conn = db.getConnection();
             PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM INVENTORY WHERE drug_ID = ?");
             String id = "1";
             preparedStatement.setString(1, id);

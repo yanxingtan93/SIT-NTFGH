@@ -16,9 +16,6 @@
         <label>Document Title:</label>
         <input type="text" name ="content-title">
         <br/>
-       <label>Document Description</label>
-        <textarea></textarea>
-        <br/>
 
         <input type="submit" value="upload" />
     </form>

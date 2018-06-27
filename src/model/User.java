@@ -90,6 +90,7 @@ public class User {
 
 
     public static void addFakeUsers(){
+        DBConn db = new DBConn();
 
         String sql1 = "INSERT INTO USERS (user_NRIC,user_name,user_dob,user_contact,user_email,user_address,user_password) VALUES" +
                 " ('S1231313X','Terry Brew','16/12/1993','92141011','roofietw@gmail.com','Teck Leo Road Blk 53C','abc123')";
@@ -105,9 +106,10 @@ public class User {
 
 
         try {
-            Connection conn = DBConn.getConnection();
+            Connection conn = db.getConnection();
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(sql1);
+            conn.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
