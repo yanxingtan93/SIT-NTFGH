@@ -2,6 +2,8 @@ package Servlets;
 
 import DBUtils.DBConn;
 import com.google.gson.Gson;
+import model.DrugIntake;
+import model.DrugPhase;
 import model.MedicineForm;
 import model.User;
 
@@ -19,6 +21,32 @@ import java.util.ArrayList;
 @WebServlet(name = "GeneralSettingsServlet")
 public class GeneralSettingsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String route = request.getParameter("route");
+
+        switch (route){
+            case "medForm":
+                String name = request.getParameter("name");
+                MedicineForm.addForm(name);
+                break;
+            case "phase":
+                String phase = request.getParameter("name");
+                DrugPhase.addPhase(phase);
+                break;
+            case "intake":
+                String intake = request.getParameter("name");
+                DrugIntake.addIntake(intake);
+                break;
+            default:
+                System.out.println("DEFAULT");
+                break;
+
+
+
+
+        }
+
+
 
     }
 
@@ -44,7 +72,6 @@ public class GeneralSettingsServlet extends HttpServlet {
                     }
 
                     String json = new Gson().toJson(list);
-                    System.out.print(" rows --> " + json);
                     response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");
                     response.getWriter().write(json);
@@ -64,17 +91,16 @@ public class GeneralSettingsServlet extends HttpServlet {
                     PreparedStatement ps1 = DBConn.getPreparedStatement(sql1);
                     ResultSet resultSet = ps1.executeQuery();
 
-                    ArrayList<MedicineForm> list = new ArrayList<MedicineForm>();
+                    ArrayList<DrugPhase> list = new ArrayList<DrugPhase>();
 
                     while (resultSet.next()) {
-                        MedicineForm medForm = new MedicineForm();
-                        medForm.setId(resultSet.getInt("drugphase_ID"));
-                        medForm.setFormName(resultSet.getString("drugphase_term"));
-                        list.add(medForm);
+                        DrugPhase drugPhase = new DrugPhase();
+                        drugPhase.setId(resultSet.getInt("drugphase_ID"));
+                        drugPhase.setPhaseTerm(resultSet.getString("drugphase_term"));
+                        list.add(drugPhase);
                     }
 
                     String json = new Gson().toJson(list);
-                    System.out.print(" rows --> " + json);
                     response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");
                     response.getWriter().write(json);
@@ -94,17 +120,16 @@ public class GeneralSettingsServlet extends HttpServlet {
                     PreparedStatement ps2 = DBConn.getPreparedStatement(sql2);
                     ResultSet resultSet = ps2.executeQuery();
 
-                    ArrayList<MedicineForm> list = new ArrayList<MedicineForm>();
+                    ArrayList<DrugIntake> list = new ArrayList<DrugIntake>();
 
                     while (resultSet.next()) {
-                        MedicineForm medForm = new MedicineForm();
-                        medForm.setId(resultSet.getInt("drugintake_ID"));
-                        medForm.setFormName(resultSet.getString("drugintake_term"));
-                        list.add(medForm);
+                        DrugIntake drugIntake = new DrugIntake();
+                        drugIntake.setId(resultSet.getInt("drugintake_ID"));
+                        drugIntake.setIntakeTerm(resultSet.getString("drugintake_term"));
+                        list.add(drugIntake);
                     }
 
                     String json = new Gson().toJson(list);
-                    System.out.print(" rows --> " + json);
                     response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");
                     response.getWriter().write(json);

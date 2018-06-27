@@ -1,5 +1,11 @@
 package model;
 
+import DBUtils.DBConn;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class DrugIntake {
 
     private int id;
@@ -26,4 +32,22 @@ public class DrugIntake {
     public void setIntakeTerm(String intakeTerm) {
         this.intakeTerm = intakeTerm;
     }
+
+    public static void addIntake(String name){
+
+        DBConn db = new DBConn();
+        String sql = "INSERT INTO DRUGINTAKE(drugintake_term) VALUES ('"+name+"')";
+
+        try {
+            Connection conn = db.getConnection();
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+            conn.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
