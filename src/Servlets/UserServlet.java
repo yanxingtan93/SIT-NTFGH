@@ -34,8 +34,8 @@ public class UserServlet extends HttpServlet {
                 String password = request.getParameter("user_password");
                 String role = request.getParameter("role");
                 System.out.println("My Role: "+role+" of NRIC: "+NRIC+" name-> "+name);
-                User.addNewUser(NRIC,name,Integer.parseInt(contact),email,address,dob,password,role);
-
+               // User.addNewUser(NRIC,name,Integer.parseInt(contact),email,address,dob,password,role);
+                response.sendRedirect("/admin/patientOverview.jsp");
                 break;
                 default:
                     System.out.println("Error in adding (Via Admin Add Account)");
@@ -90,6 +90,7 @@ public class UserServlet extends HttpServlet {
 
             }
             break;
+
             case "admin":
                 String sql1 = "SELECT u.user_NRIC,u.user_name,u.user_DOB,u.user_contact,u.user_email,u.user_address" +
                         " from USERS u, PATIENTS p WHERE u.user_NRIC = p.user_NRIC";
@@ -196,6 +197,45 @@ public class UserServlet extends HttpServlet {
 
                 }
                 break;
+
+
+            case "patient":
+
+                //HARDCODED
+                String userNRIC = "S1234567A";
+
+                String patientSQL = "SELECT pc.patient_NRIC,pc.caregiver_NRIC,u.user_NRIC,u.user_name,u.user_contact,u.user_email,u.user_address " +
+                        "FROM PATIENTCAREGIVER pc,USERS u WHERE pc.caregiver_NRIC = u.user_NRIC AND pc.patient_NRIC = '"+userNRIC+"'";
+// AND pc.patient_NRIC = '"+userNRIC+"'
+                ArrayList<User> caregiverList = new ArrayList<User>();
+
+                try {
+                    PreparedStatement ps = DBConn.getPreparedStatement(patientSQL);
+                    ResultSet resultSet = ps.executeQuery();
+
+                    while (resultSet.next()) {
+
+                        User user = new User();
+                        user.setName(resultSet.getString("user_NRIC"));
+                        user.setName(resultSet.getString("user_name"));
+                        user.setContact(resultSet.getInt("user_contact"));
+                        user.setEmail(resultSet.getString("user_email"));
+                        user.setAddress(resultSet.getString("user_address"));
+
+                        caregiverList.add(user);
+                    }
+
+                    String json = new Gson().toJson(caregiverList);
+                   // System.out.print(" rows --> " + json);
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write(json);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+
+                }
+                break;
+
 
         }
     }
