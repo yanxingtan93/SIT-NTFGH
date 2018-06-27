@@ -5,7 +5,7 @@
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,dt-1.10.8/datatables.min.css">
     <script type="text/javascript" src="https://cdn.datatables.net/r/bs-3.3.5/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
         .dataTables_wrapper .FilterStuff .dataTables_filter {float:right}
@@ -16,7 +16,7 @@
 
     <div class="container">
         <div class="page-header">
-            <h2>General Database Settings<span class="pull-right label label-default"></span></h2>
+            <h2><i class="fa fa-gears"></i> General Database Settings<span class="pull-right label label-default"></span></h2>
         </div>
         <div class="row">
             <div class="col-lg-11">
@@ -24,10 +24,10 @@
                 <!-- tabs -->
                 <div class="tabbable">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#one" data-toggle="tab">Medicine Forms</a></li>
-                        <li><a href="#two" data-toggle="tab">Medicine Phases</a></li>
-                        <li><a href="#three" data-toggle="tab">Medicine Intake Periods</a></li>
-                        <li><a href="#four" data-toggle="tab">Allergies</a></li>
+                        <li class="active"><a href="#one" data-toggle="tab"><i class="fa fa-gear"></i> Medicine Forms</a></li>
+                        <li><a href="#two" data-toggle="tab"><i class="fa fa-gear"></i> Medicine Phases</a></li>
+                        <li><a href="#three" data-toggle="tab"><i class="fa fa-gear"></i> Medicine Intake Periods</a></li>
+                        <li><a href="#four" data-toggle="tab"><i class="fa fa-gear"></i> Allergies</a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="one">

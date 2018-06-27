@@ -15,8 +15,9 @@
 
 <t:pharmacistPage>
     <div>
-        <h1>Manage Catalog of Drug Information</h1>
+        <h2>Manage Catalog of Drug Information
         <span class="pull-right"> <a href="/pharmacist/medicationAdd.jsp" class="btn btn-primary">+ Add New Drug</a></span>
+        </h2>
     </div>
 <br>
 

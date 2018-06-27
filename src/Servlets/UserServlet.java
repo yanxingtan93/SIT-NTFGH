@@ -50,7 +50,7 @@ public class UserServlet extends HttpServlet {
 
         switch (mode) {
 
-            case "pharmacist":
+            case "pharmacistAllPatients":
             String sql = "SELECT u.user_NRIC,u.user_name,u.user_DOB,u.user_contact,u.user_email,u.user_address" +
                     ",p.allergies_patient" +
                     " from USERS u, PATIENTS p WHERE u.user_NRIC = p.user_NRIC";
@@ -90,6 +90,46 @@ public class UserServlet extends HttpServlet {
 
             }
             break;
+
+
+            case "pharmacistAllPharmacists":
+                String sqlPH = "SELECT u.user_NRIC,u.user_name,u.user_DOB,u.user_contact,u.user_email,u.user_address" +
+                        " from USERS u, PHARMACISTS p WHERE u.user_NRIC = p.user_NRIC";
+
+
+                try {
+
+
+                    PreparedStatement ps1 = DBConn.getPreparedStatement(sqlPH);
+                    ResultSet resultSet = ps1.executeQuery();
+
+                    ArrayList<User> list = new ArrayList<User>();
+
+                    while (resultSet.next()) {
+                        User user = new User();
+                        user.setNRIC(resultSet.getString("user_NRIC"));
+                        user.setName(resultSet.getString("user_name"));
+                        user.setContact(resultSet.getInt("user_contact"));
+                        user.setEmail(resultSet.getString("user_email"));
+
+
+
+                        list.add(user);
+                    }
+
+                    String json = new Gson().toJson(list);
+                    System.out.print(" rows --> " + json);
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write(json);
+
+
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+
+                }
+                break;
+
 
             case "admin":
                 String sql1 = "SELECT u.user_NRIC,u.user_name,u.user_DOB,u.user_contact,u.user_email,u.user_address" +
