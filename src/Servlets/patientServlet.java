@@ -38,15 +38,16 @@ public class patientServlet extends HttpServlet {
             case "getMedicationNames":
                 response.getWriter().write(getMedicationNames());
                 break;
+
+            case "addToPillbox":
+                addToPillbox();
+                response.sendRedirect("http://localhost:8080/patient/pillboxOverview.jsp");
+                break;
+
             case "listPillbox":
                 response.getWriter().write(listPillbox());
                 break;
-            case "addToPillbox":
-                response.getWriter().write(consumeMedication());
-                break;
-            case "addMedication":
-                response.getWriter().write(consumeMedication());
-                break;
+
             case "editMedication":
                 response.getWriter().write("edit");
                 break;
@@ -57,47 +58,16 @@ public class patientServlet extends HttpServlet {
     }
 
     private String getMedicationNames(){
-
         String sql = "SELECT * FROM DRUGS";
-
-        ArrayList<String> list = new ArrayList<>();
-
-        try {
-            PreparedStatement ps = DBConn.getPreparedStatement(sql);
-            ResultSet resultSet = ps.executeQuery();
-
-            while (resultSet.next()) {
-                list.add(resultSet.getString("drug_name"));
-
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-
-        }
-
-        return gson.toJson(list);
-    }
-    private String listPillbox(){
-
-        String sql = "SELECT * FROM DRUGS d,INVENTORY i WHERE d.drug_ID = i.drug_ID";
-
         ArrayList<Map> list = new ArrayList<>();
-
         try {
             PreparedStatement ps = DBConn.getPreparedStatement(sql);
             ResultSet resultSet = ps.executeQuery();
 
             while (resultSet.next()) {
-                //To save as dict
                 Map<String, String> map = new HashMap<String, String>();
+                map.put("drug_ID", resultSet.getString("drug_ID"));
                 map.put("drug_name", resultSet.getString("drug_name"));
-                map.put("drug_brand", resultSet.getString("drug_brand"));
-                map.put("drug_description", resultSet.getString("drug_description"));
-                map.put("drug_side_effect", resultSet.getString("drug_side_effect"));
-                map.put("drugintake_ID",resultSet.getString("drugintake_ID") );
-                map.put("drugphase_ID",resultSet.getString("drugphase_ID"));
-                map.put("inventory_balance", resultSet.getString("inventory_balance"));
-                map.put("inventory_image", resultSet.getString("inventory_image"));
                 list.add(map);
 
             }
@@ -105,19 +75,60 @@ public class patientServlet extends HttpServlet {
             ex.printStackTrace();
 
         }
-
         return gson.toJson(list);
     }
+    private String listPillbox(){
+        String sql = "SELECT * FROM INVENTORY";
+        ArrayList<Map> list = new ArrayList<>();
+        try {
+            PreparedStatement ps = DBConn.getPreparedStatement(sql);
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("inventory_ID", resultSet.getString("inventory_ID"));
+                map.put("drug_ID", resultSet.getString("drug_ID"));
+                map.put("drugintake_ID", resultSet.getString("drugintake_ID"));
+                map.put("drugphase_ID", resultSet.getString("drugphase_ID"));
+                map.put("inventory_balance", resultSet.getString("inventory_balance"));
+                map.put("inventory_status", resultSet.getString("inventory_status"));
+                map.put("inventory_startdate", resultSet.getString("inventory_startdate"));
+                list.add(map);
+
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+
+        }
+        return gson.toJson(list);
+    }
+
+    private void addToPillbox(){
+        String sql = "INSERT INTO INVENTORY(drug_ID, drugintake_ID,drugphase_ID,inventory_balance,inventory_status,inventory_startdate) " +
+                "VALUES(?,?,?,?,?,?);";
+        try {
+            PreparedStatement ps = DBConn.getPreparedStatement(sql);
+            ps.setInt(1, 1);
+            ps.setInt(2, 1);
+            ps.setInt(3, 1);
+            ps.setInt(4, 1);
+            ps.setBoolean(5, true);
+            ps.setString(6, "01/06/2018");
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+
+
     private String consumeMedication(){
         Map<String, String> map = new HashMap<String, String>();
         map.put("response", "success");
         return gson.toJson(map);
     }
-    private String addMedication(){
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("response", "success");
-        return gson.toJson(map);
-    }
+
 }
 /*
         List<pillbox> list = new ArrayList<pillbox>();
