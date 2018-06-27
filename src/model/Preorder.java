@@ -29,7 +29,8 @@ public class Preorder {
         String sql = "SELECT MAX(preorder_ID) FROM PREORDER";
 
         try {
-            Connection conn = DBConn.getConnection();
+            DBConn db = new DBConn();
+            Connection conn = db.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -85,7 +86,8 @@ public class Preorder {
                 "VALUES ('"+nric+"','"+mode+"');";
 
         try {
-            Connection conn = DBConn.getConnection();
+            DBConn db = new DBConn();
+            Connection conn = db.getConnection();
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
@@ -99,7 +101,8 @@ public class Preorder {
                 "VALUES ('"+preorderID+"','"+drugID+"');";
 
         try {
-            Connection conn = DBConn.getConnection();
+            DBConn db = new DBConn();
+            Connection conn = db.getConnection();
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
