@@ -46,7 +46,7 @@
                                     </table>
 
                                     <div class="pull-right">
-                                        <button type="submit" class="btn btn-primary active">Add To Database</button>
+                                        <button type="submit" class="btn btn-primary">Add To Database</button>
                                     </div>
                                 </div>
                             </div>

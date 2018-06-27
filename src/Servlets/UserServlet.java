@@ -21,6 +21,27 @@ import java.util.ArrayList;
 public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        String route = request.getParameter("route");
+
+        switch(route){
+            case "adminAdd":
+                String name = request.getParameter("user_name");
+                String NRIC = request.getParameter("user_NRIC");
+                String email = request.getParameter("user_email");
+                String contact  = request.getParameter("user_contact");
+                String dob = request.getParameter("user_dob");
+                String address = request.getParameter("user_address");
+                String password = request.getParameter("user_password");
+                String role = request.getParameter("role");
+                System.out.println("My Role: "+role+" of NRIC: "+NRIC+" name-> "+name);
+                User.addNewUser(NRIC,name,Integer.parseInt(contact),email,address,dob,password,role);
+
+                break;
+                default:
+                    System.out.println("Error in adding (Via Admin Add Account)");
+                    break;
+        }
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

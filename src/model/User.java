@@ -122,7 +122,63 @@ public class User {
 
     }
 
+    public static void addNewUser(String NRIC,String name, int contact, String email, String address,String dob,String password, String role){
 
+        DBConn db = new DBConn();
+
+        String sql = "INSERT INTO USERS (user_NRIC,user_name,user_dob,user_contact,user_email,user_address,user_password) VALUES" +
+                " ('"+NRIC+"','"+name+"','"+dob+"','"+contact+"','"+email+"','"+address+"','"+password+"')";
+
+        try {
+            Connection conn = db.getConnection();
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+            conn.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        String myRole = role.toLowerCase().trim();
+
+        String sqlRole ="";
+        switch(myRole){
+
+            case "admin":
+                sqlRole = "INSERT INTO ADMINS (user_NRIC) VALUES" +
+                        " ('"+NRIC+"')";
+                break;
+
+            case "caregiver":
+                sqlRole = "INSERT INTO CAREGIVERS (user_NRIC) VALUES" +
+                        " ('"+NRIC+"')";
+                break;
+
+            case "patient":
+                sqlRole = "INSERT INTO PATIENTS (user_NRIC) VALUES" +
+                        " ('"+NRIC+"')";
+                break;
+
+            case "pharmacist":
+                sqlRole = "INSERT INTO PHARMACISTS (user_NRIC) VALUES" +
+                        " ('"+NRIC+"')";
+                break;
+
+
+        }
+
+
+        try {
+            Connection conn1 = db.getConnection();
+            Statement stmt2 = conn1.createStatement();
+            stmt2.executeUpdate(sqlRole);
+            conn1.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
 }
