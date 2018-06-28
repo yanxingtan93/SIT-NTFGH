@@ -78,7 +78,7 @@
                                     </table>
 
                                     <div class="pull-right">
-                                        <button type="submit" class="btn btn-primary active">Add To Catalogue</button>
+                                        <button type="submit" class="btn btn-primary">Add To Catalogue</button>
                                     </div>
                                 </div>
                             </div>

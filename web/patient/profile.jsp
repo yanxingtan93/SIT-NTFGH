@@ -4,11 +4,18 @@
 <t:patientPage>
   <h1>Manage personal details</h1>
 
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,dt-1.10.8/datatables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/r/bs-3.3.5/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
+    <style>
+        .dataTables_wrapper .FilterStuff .dataTables_filter {float:right}
+    </style>
+
   <br>
   <div class="container">
     <div class="row">
 
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+      <div class="col-xs-12 col-sm-12 col-md-11 col-lg-11 toppad" >
 
 
         <div class="panel panel-info">
@@ -36,21 +43,37 @@
                     <td><input type="text" class="form-control" name="user_NRIC" value="S9318913X" placeholder="Enter Brand"></td>
                   </tr>
                   <tr>
-                    <td>Email</td>
+                    <td>Email: </td>
                     <td><input type="email" class="form-control" name="user_email" value="Juoae@gmail.com" placeholder="Enter Price"></td>
                   </tr>
                   <tr>
-                    <td>Address</td>
+                    <td>Address: </td>
                     <td><input type="email" class="form-control" name="user_address" value="Clementi Ave 2" placeholder="Enter Price"></td>
                   </tr>
                   <tr>
 
                   <tr>
-                    <td>Date of Birth</td>
+                    <td>Date of Birth: </td>
                     <td><input type="text" class="form-control" id="user_dob" value="16/12/1994" placeholder="Enter DOB"></td>
                   </tr>
 
-                  </tr>
+                  <tr><td>Caregivers: </td><td>
+
+                      <table id="myMainTable" class="table table-striped table-bordered" style="width:100%">
+                          <thead class="thead-dark">
+                          <tr><th>Name</th><th>Contact</th><th>Email</th><th>Address</th><th>Functions</th></tr>
+                          </thead>
+
+                          <tbody>
+
+                          </tbody>
+
+                      </table>
+
+                  </td></tr>
+
+
+
 
                   </tbody>
                 </table>
@@ -72,3 +95,43 @@
   </div>
 
 </t:patientPage>
+<script>
+
+
+    var mytable = $('#myMainTable').DataTable({
+        "aLengthMenu": [[15, 50, 75, -1], [15, 50, 75, "All"]],
+        "iDisplayLength": 10,
+        "paging": false,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "sDom": 'lfrtip'
+
+    });
+
+    $(document).ready(function() {
+        $.get("/UserServlet?mode=patient", function(responseJson) {
+
+
+            $.each(responseJson, function(key,value) {
+
+                var button = "\n" +
+                    "                    <form method=\"post\" action=\"/drugCatalogueServlet\">\n" +
+                    "                        <input type=\"hidden\" class=\"form-control\" name=\"mode\"  value=\"Delete\">\n" +
+                    "                        <input type=\"hidden\" class=\"form-control\" name=\"drugid\"  value="+value.NRIC+">\n" +
+                    "                    <button type=\"submit\" class=\"btn btn-danger\">Remove</button>\n" +
+                    "                    </form>";
+
+
+                mytable.row.add([value.name, value.contact, value.email, value.address,button]);
+
+
+            });
+            mytable.draw();
+        });
+
+    });
+
+</script>

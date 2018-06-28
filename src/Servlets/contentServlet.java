@@ -1,5 +1,6 @@
 package Servlets;
 
+import java.awt.*;
 import java.io.File;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import DBUtils.DBConn;
+import model.Content;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -19,11 +21,11 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 public class contentServlet extends HttpServlet {
     private final String UPLOAD_DIRECTORY = "data";
     private String uploded_directory="";
+    private String documentTitle="";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         //process only if its multipart content
         if(ServletFileUpload.isMultipartContent(request)){
             try {
@@ -42,12 +44,23 @@ public class contentServlet extends HttpServlet {
                         String name = new File(item.getName()).getName();
                         item.write( new File(uploadPath + File.separator + name));
                         uploded_directory= uploadPath+ File.separator+name;
-                        System.out.println(uploded_directory);
+
+                        System.out.println(item);
                         //After upload add to path to CONTENT table in the database
-                        Connection conn= DBConn.getConnection();
 
 
 
+
+
+                    }
+                    else if(item.isFormField()){
+                        System.out.println(item.getFieldName());
+                        if(item.getFieldName().equals("content-title")) {
+                            documentTitle = item.getString();
+                            System.out.println(documentTitle);
+                        }
+                        Content addNewContent = new Content(documentTitle,uploded_directory);
+                        addNewContent.addContent();
                     }
                 }
 

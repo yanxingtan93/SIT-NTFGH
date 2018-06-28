@@ -15,8 +15,9 @@ public class pillboxDAO {
     private static Connection conn;
 
     public pillboxDAO(){
+        DBConn db = new DBConn();
         try {
-            conn = DBConn.getConnection();
+            conn = db.getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }

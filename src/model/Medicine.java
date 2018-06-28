@@ -1,6 +1,7 @@
 package model;
 
 import DBUtils.DBConn;
+import sun.security.pkcs11.Secmod;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -105,13 +106,16 @@ public class Medicine {
     public void setSideEffect(String sideEffect) {
         this.sideEffect = sideEffect;
     }
+
     public void addNewMedicine(){
+        DBConn db = new DBConn();
         String sql = "INSERT INTO DRUGS(drug_name,drug_brand,drug_price,medicineform_ID,drug_description,drug_side_effect) " +
                 "VALUES('"+medicineName+"','"+brand+"',"+price+","+medicineFormId+",'"+description+"','"+sideEffect+"');";
         try {
-            Connection conn = DBConn.getConnection();
+            Connection conn = db.getConnection();
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(sql);
+            conn.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -121,6 +125,7 @@ public class Medicine {
 
 
     public void updateMedicine(int id){
+        DBConn db = new DBConn();
 
         String sql = "UPDATE DRUGS SET drug_name = '"+medicineName +"',drug_brand = '"+ brand+"',drug_price = " +price+ "," +
                 "medicineform_ID = '"+ medicineFormId+"',drug_description = '"+ description+"',drug_side_effect = '"+sideEffect +"' " +
@@ -128,9 +133,11 @@ public class Medicine {
 
         System.out.println("in med method "+price);
         try {
-            Connection conn = DBConn.getConnection();
+            Connection conn = db.getConnection();
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(sql);
+            conn.commit();
+            conn.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -140,14 +147,17 @@ public class Medicine {
 
 
     public static void deleteMedicine(int id){
+        DBConn db = new DBConn();
 
 
         String sql = "DELETE FROM DRUGS WHERE drug_ID = '"+id+"'";
 
         try {
-            Connection conn = DBConn.getConnection();
+            Connection conn = db.getConnection();
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(sql);
+            conn.commit();
+            conn.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
