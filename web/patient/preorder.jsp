@@ -1,9 +1,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="../JS/preorderForm.js"></script>
 
 <t:patientPage>
+
+    <%--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,dt-1.10.8/datatables.min.css">--%>
+    <%--<script type="text/javascript" src="https://cdn.datatables.net/r/bs-3.3.5/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>--%>
+
   <div class="row">
     <div class="col-sm-6">
       <h2>Self-Collection</h2>
@@ -31,26 +36,17 @@
   </div>
   <br><h1>Current Preorder(s)</h1><br>
   <div class="row">
-    <table class="dailyMedTable table table-striped table-bordered">
+    <table id="myMainTable" class="dailyMedTable table table-striped table-bordered">
       <thead class="thead-dark">
       <tr>
-        <th style="width:15%">Image</th>
         <th style="width:60%">Medication</th>
-        <th style="width:25%">Collection Type</th>
+        <th style="width:15%">Quantity</th>
+        <th style="width:25%">Collection Mode</th>
       </tr>
       </thead>
-      <tbody>
-      <tr>
-        <td><img src="https://img.tesco.com/Groceries/pi/718/5000158100718/IDShot_540x540.jpg" height="150px"></td>
-        <td>
-          <div class="pillbox">
-            <h2>Ibuprofen</h2>
-            <h4>15 pills</h4>
+          <div id ="pillbox-table" class="pillbox">
+
           </div>
-        </td>
-        <td><h3>Home Delivery</h3></td>
-      </tr>
-      </tbody>
     </table>
   </div>
   <br><h1>New Preorder</h1><br>
@@ -72,23 +68,23 @@
       <label class="col-sm-2 col-form-label">Preferred Collection Method</label>
         <div class="col-sm-4">
         <label class="radio-inline"><input type="radio" name="method" value="Self-Collection"> Self-Collection</label><br>
-        <label class="radio-inline"><input type="radio" name="method" value="Delivery"> Home/ Office Delivery</label><br>
+        <label class="radio-inline"><input type="radio" name="method" value="Home/ Office Delivery"> Home/ Office Delivery</label><br>
         </div>
     </div>
     <br>
     <div class="form-group row">
       <div class="col-sm-12">
-        <button type="submit" class="btn btn-success btn-block btn-lg" onclick="openConfirmModal(0)">Submit</button>
+        <button type="button" class="btn btn-success btn-block btn-lg" onclick="openConfirmModal(0)">Submit</button>
       </div>
     </div>
-  </form>
+
 
   <div id="confirmModal" class="modal">
     <div class="modal-content">
       <h2>Please confirm.</h2><br>
       <div class="row">
         <div class="col-sm-6">
-          <button type="button" class="btn btn-success btn-block btn-lg" onclick="">Confirm</button>
+          <button type="submit" class="btn btn-success btn-block btn-lg" onclick="">Confirm</button>
         </div>
         <div class="col-sm-6">
           <button type="button" class="btn btn-default btn-block btn-lg"  onclick="closeConfirmModal()">Cancel</button>
@@ -96,7 +92,22 @@
       </div>
     </div>
   </div>
+  </form>
   <script>
+      $(document).ready(function() {
+          $.get("/preorderServlet?mode=get", function(responseJson) {
+              var $table = $('<tbody>').appendTo($('#myMainTable'));
+              $.each(responseJson, function(key,value) {
+                  $('<tr>').appendTo($table)
+                      .append($('<td>').text(value.drugname))
+                      .append($('<td>').text(value.quantity))
+                      .append($('<td>').text(value.mode))
+
+              });
+          });
+
+      });
+
       // Get the modal
       var confirmModal = document.getElementById('confirmModal');
 
