@@ -262,42 +262,44 @@
     </script>
     <script>
         $(document).ready(function(){
-            $.get("http://localhost:8080/patient/getMedicationNames", function(data, status){
-                $.each(JSON.parse(data), function (i, item) {
-                    $('#addDrugName').append($('<option>', {
-                        value: item.drug_ID,
-                        text : item.drug_name
-                    }));
-                });
-            });
+            $.get( "http://localhost:8080/patient/listPillbox" ).then(
+                function(data,status) {
+                    $.each(JSON.parse(data), function (i, item) {
+                        $('#addDrugName').append($('<option>', {
+                            value: item.drug_ID,
+                            text : item.drug_name
+                        }));
+                    });
+                }
+            );
 
-            $.get("http://localhost:8080/patient/listPillbox", function(data, status){
-
-                $.each(JSON.parse(data), function (i, item) {
-
-                    console.log(item);
-                    $("#pillboxTable").find('tbody')
-                        .append($('<tr>')
-                            .append($('<td>')
-                                .append($('<img>')
-                                    .attr('src', 'https://img.tesco.com/Groceries/pi/718/5000158100718/IDShot_540x540.jpg')
-                                    .height('150px')
+            $.get( "http://localhost:8080/patient/listPillbox" ).then(
+                function(data,status) {
+                    $.each(JSON.parse(data), function (i, item) {
+                        console.log(item);
+                        $("#pillboxTable").find('tbody')
+                            .append($('<tr>')
+                                .append($('<td>')
+                                    .append($('<img>')
+                                        .attr('src', 'https://img.tesco.com/Groceries/pi/718/5000158100718/IDShot_540x540.jpg')
+                                        .height('150px')
+                                    )
                                 )
-                            )
-                            .append($('<td>')
-                                .append("<div class='pillbox'>")
-                                .append("<h2>Drug No. "+item.drugID+"  <small> phase "+item.drugphaseID+"</small></h2>")
-                                .append("<h4>Balance: "+item.balance+" pills</h4>")
-                                .append("</div>")
-                            )
-                            .append($('<td>')
-                                .append("<div class='pillbox'>")
-                                .append("<button type='button' class='btn btn-info btn-block btn-lg' onclick='openEditModal(0)'>Edit</button>")
-                                .append("<button type='button' class='btn btn-danger btn-block btn-lg' onclick='openDeleteModal(0)'>Delete</button>")
-                            )
-                        );
-                });
-            });
+                                .append($('<td>')
+                                    .append("<div class='pillbox'>")
+                                    .append("<h2>Drug No. "+item.drugID+"  <small> phase "+item.drugphaseID+"</small></h2>")
+                                    .append("<h4>Balance: "+item.balance+" pills</h4>")
+                                    .append("</div>")
+                                )
+                                .append($('<td>')
+                                    .append("<div class='pillbox'>")
+                                    .append("<button type='button' class='btn btn-info btn-block btn-lg' onclick='openEditModal(0)'>Edit</button>")
+                                    .append("<button type='button' class='btn btn-danger btn-block btn-lg' onclick='openDeleteModal(0)'>Delete</button>")
+                                )
+                            );
+                    });
+                }
+            );
 
         });
     </script>
