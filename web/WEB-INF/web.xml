@@ -64,5 +64,39 @@
         <url-pattern>/preorderServlet</url-pattern>
     </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>patientServlet</servlet-name>
+        <servlet-class>Servlets.patientServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>patientServlet</servlet-name>
+        <url-pattern>/patient/getMedicationNames</url-pattern>
+        <url-pattern>/patient/listPillbox</url-pattern>
+        <url-pattern>/patient/addToPillbox</url-pattern>
+        <url-pattern>/patient/addMedication</url-pattern>
+        <url-pattern>/patient/editMedication</url-pattern>
+        <url-pattern>/patient/deleteMedication</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>Servlets.UserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/UserServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GeneralSettingsServlet</servlet-name>
+        <servlet-class>Servlets.GeneralSettingsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GeneralSettingsServlet</servlet-name>
+        <url-pattern>/GeneralSettingsServlet</url-pattern>
+    </servlet-mapping>
+
 </web-app>
 

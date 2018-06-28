@@ -16,6 +16,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 @WebServlet(name = "drugCatalogueServlet")
@@ -117,9 +119,13 @@ public class drugCatalogueServlet extends HttpServlet {
             PreparedStatement ps = DBConn.getPreparedStatement(sql);
             ResultSet resultSet = ps.executeQuery();
             int count = 0;
-            ArrayList<Medicine> list = new ArrayList<Medicine>();
-            // (int id, String medicineName, String brand, float price, int medicineFormId, String description, String sideEffect)ff
+
+           // Map<String, Medicine> options = new LinkedHashMap<>();
+          //  ArrayList<ArrayList<String>> list = new ArrayList<>();
+            ArrayList<Medicine> list = new ArrayList<>();
+
             while (resultSet.next()) {
+
                 Medicine medicineCat = new Medicine();
                 medicineCat.setId(resultSet.getInt("drug_ID"));
                 medicineCat.setMedicineName(resultSet.getString("drug_name"));
@@ -130,17 +136,33 @@ public class drugCatalogueServlet extends HttpServlet {
                 medicineCat.setSideEffect(resultSet.getString("drug_side_effect"));
                 medicineCat.setMedicineForm(resultSet.getString("medicineform_name"));
                 //System.out.println("TWo prices");
+/*
+                ArrayList<String> xs = new ArrayList<>();
+                xs.add(resultSet.getInt("drug_ID")+"");
+                xs.add(resultSet.getString("drug_name")+"");
+                xs.add(resultSet.getString("drug_brand")+"");
+                xs.add(resultSet.getFloat("drug_price")+"");
+                xs.add(resultSet.getInt("medicineform_ID")+"");
+                xs.add(resultSet.getString("drug_description")+"");
+                xs.add(resultSet.getString("drug_side_effect")+"");
+                xs.add(resultSet.getString("medicineform_name")+"");
+
+*/
+
                 list.add(medicineCat);
+              //  options.put(count+"",medicineCat);
                 count++;
             }
-       //     String nextJSP = "/pharmacist/medicationOverview.jsp";
-          //  request.setAttribute("list", list);
-            //request.getRequestDispatcher("/pharmacist/medicationOverview.jsp").forward(request, response);
 
-          ///  RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-            //dispatcher.forward(request,response);
+            /*
+            String nextJSP = "/pharmacist/medicationOverview.jsp";
+           request.setAttribute("list", list);
+           request.getRequestDispatcher("/pharmacist/medicationOverview.jsp").forward(request, response);
 
+          RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+          dispatcher.forward(request,response);
 
+*/
             String json = new Gson().toJson(list);
             System.out.print(count+" rows --> "+json);
             response.setContentType("application/json");

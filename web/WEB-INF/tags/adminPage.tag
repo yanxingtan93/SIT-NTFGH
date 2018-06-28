@@ -16,8 +16,8 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div class="navbar-nav">
-                  <a class="nav-item nav-link" href="/UserServlet">Users</a>
-                  <a class="nav-item nav-link" href="/drugCatalogueServlet">Medication</a>
+                  <a class="nav-item nav-link" href="/admin/patientOverview.jsp">Users</a>
+                  <a class="nav-item nav-link" href="/admin/medicationOverview.jsp">Medication</a>
                   <a class="nav-item nav-link" href="/admin/settingsOverview.jsp">Administration Settings</a>
                   <a class="nav-item nav-link" href="/admin/profile.jsp">Profile</a>
               </div>

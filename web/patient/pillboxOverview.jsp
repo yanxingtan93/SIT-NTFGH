@@ -12,7 +12,8 @@
     <div class="row">
 
         <table id="pillboxTable" class="table table-striped table-bordered">
-            <tbody>
+            <tbody id="pillboxListContent">
+
             <tr>
                 <td style="width: 15%">
                     <img src="https://img.tesco.com/Groceries/pi/718/5000158100718/IDShot_540x540.jpg" height="150px">
@@ -27,38 +28,6 @@
                 <td style="width: 25%">
                     <button type="button" class="btn btn-info btn-block btn-lg" onclick="openEditModal(0)">Edit</button>
                     <button type="button" class="btn btn-danger btn-block btn-lg" onclick="openDeleteModal(0)">Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 15%">
-                    <img src="https://img.tesco.com/Groceries/pi/718/5000158100718/IDShot_540x540.jpg" height="150px">
-                </td>
-                <td style="width: 60%">
-                    <div class="pillbox">
-
-                        <h2>Ibuprofen  <small>(1 pill 3 times a day)</small></h2>
-                        <h4>Balance: 15 pills</h4>
-                    </div>
-                </td>
-                <td style="width: 25%">
-                    <button type="button" class="btn btn-info btn-block btn-lg" onclick="openEditModal(1)">Edit</button>
-                    <button type="button" class="btn btn-danger btn-block btn-lg" onclick="openDeleteModal(1)">Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 15%">
-                    <img src="https://img.tesco.com/Groceries/pi/718/5000158100718/IDShot_540x540.jpg" height="150px">
-                </td>
-                <td style="width: 60%">
-                    <div class="pillbox">
-
-                        <h2>Ibuprofen  <small>(1 pill 3 times a day)</small></h2>
-                        <h4>Balance: 15 pills</h4>
-                    </div>
-                </td>
-                <td style="width: 25%">
-                    <button type="button" class="btn btn-info btn-block btn-lg" onclick="openEditModal(2)">Edit</button>
-                    <button type="button" class="btn btn-danger btn-block btn-lg"  onclick="openDeleteModal(3)">Delete</button>
                 </td>
             </tr>
             </tbody>
@@ -109,9 +78,9 @@
                     <label class="col-sm-2 col-form-label">Meals</label>
                     <div class="col-sm-4">
                         <select name="meals">
-                            <option value="1">- NIL -</option>
-                            <option value="2">Before Food</option>
-                            <option value="3">After Food</option>
+                            <option value="3">Meal Independent</option>
+                            <option value="1">Before Food</option>
+                            <option value="2">After Food</option>
                         </select>
                     </div>
                 </div>
@@ -166,11 +135,11 @@
         <div class="modal-content">
             <h1>Add Entry</h1>
             <br>
-            <form>
+            <form action="http://localhost:8080/patient/addToPillbox" method="get">
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="addDrugName" placeholder="">
+                        <select name="addDrugName" id="addDrugName"></select>
                     </div>
                     <label class="col-sm-2 col-form-label">Total Quantity</label>
                     <div class="col-sm-4">
@@ -226,7 +195,7 @@
                 <br>
                 <div class="form-group row">
                     <div class="col-sm-6">
-                        <button type="button" class="btn btn-success btn-block btn-lg" onclick="">Submit</button>
+                        <button type="submit" class="btn btn-success btn-block btn-lg" onclick="">Submit</button>
                     </div>
                     <div class="col-sm-6">
                         <button type="button" class="btn btn-default btn-block btn-lg"  onclick="closeAddModal()">Cancel</button>
@@ -291,4 +260,48 @@
             }
         }
     </script>
+    <script>
+        $(document).ready(function(){
+            $.get( "http://localhost:8080/patient/listPillbox" ).then(
+                function(data,status) {
+                    $.each(JSON.parse(data), function (i, item) {
+                        $('#addDrugName').append($('<option>', {
+                            value: item.drug_ID,
+                            text : item.drug_name
+                        }));
+                    });
+                }
+            );
+
+            $.get( "http://localhost:8080/patient/listPillbox" ).then(
+                function(data,status) {
+                    $.each(JSON.parse(data), function (i, item) {
+                        console.log(item);
+                        $("#pillboxTable").find('tbody')
+                            .append($('<tr>')
+                                .append($('<td>')
+                                    .append($('<img>')
+                                        .attr('src', 'https://img.tesco.com/Groceries/pi/718/5000158100718/IDShot_540x540.jpg')
+                                        .height('150px')
+                                    )
+                                )
+                                .append($('<td>')
+                                    .append("<div class='pillbox'>")
+                                    .append("<h2>Drug No. "+item.drugID+"  <small> phase "+item.drugphaseID+"</small></h2>")
+                                    .append("<h4>Balance: "+item.balance+" pills</h4>")
+                                    .append("</div>")
+                                )
+                                .append($('<td>')
+                                    .append("<div class='pillbox'>")
+                                    .append("<button type='button' class='btn btn-info btn-block btn-lg' onclick='openEditModal(0)'>Edit</button>")
+                                    .append("<button type='button' class='btn btn-danger btn-block btn-lg' onclick='openDeleteModal(0)'>Delete</button>")
+                                )
+                            );
+                    });
+                }
+            );
+
+        });
+    </script>
+
 </t:patientPage>
