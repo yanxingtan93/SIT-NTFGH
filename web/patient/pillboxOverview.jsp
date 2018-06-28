@@ -14,22 +14,6 @@
         <table id="pillboxTable" class="table table-striped table-bordered">
             <tbody id="pillboxListContent">
 
-            <tr>
-                <td style="width: 15%">
-                    <img src="https://img.tesco.com/Groceries/pi/718/5000158100718/IDShot_540x540.jpg" height="150px">
-                </td>
-                <td style="width: 60%">
-                    <div class="pillbox">
-
-                        <h2>Ibuprofen  <small>(1 pill 3 times a day)</small></h2>
-                        <h4>Balance: 15 pills</h4>
-                    </div>
-                </td>
-                <td style="width: 25%">
-                    <button type="button" class="btn btn-info btn-block btn-lg" onclick="openEditModal(0)">Edit</button>
-                    <button type="button" class="btn btn-danger btn-block btn-lg" onclick="openDeleteModal(0)">Delete</button>
-                </td>
-            </tr>
             </tbody>
         </table>
     </div>
@@ -211,7 +195,7 @@
             <h2>Are you sure you want to delete this item?</h2><br>
             <div class="row">
                 <div class="col-sm-6">
-                    <button type="button" class="btn btn-danger btn-block btn-lg" onclick="">Delete</button>
+                    <button type="button" class="btn btn-danger btn-block btn-lg" onclick="deleteFromPillbox()">Delete</button>
                 </div>
                 <div class="col-sm-6">
                     <button type="button" class="btn btn-default btn-block btn-lg"  onclick="closeDeleteModal()">Cancel</button>
@@ -221,6 +205,8 @@
     </div>
 
     <script>
+        var deleteID;
+
         // Get the modal
         var addModal = document.getElementById('addModal');
         var editModal = document.getElementById('editModal');
@@ -234,7 +220,13 @@
             editModal.style.display = "block";
         }
         function openDeleteModal(id) {
+            deleteID = id;
             deleteModal.style.display = "block";
+        }
+        function deleteFromPillbox() {
+            console.log(deleteID);
+            $.post( "http://localhost:8080/patient/deleteFromPillbox", {id: deleteID})
+                .then(location.reload());
         }
 
         // When the user clicks on <span> (x), close the modal
@@ -259,10 +251,13 @@
                 deleteModal.style.display = "none";
             }
         }
+
     </script>
     <script>
+
+
         $(document).ready(function(){
-            $.get( "http://localhost:8080/patient/listPillbox" ).then(
+            $.get( "http://localhost:8080/patient/getMedicationNames" ).then(
                 function(data,status) {
                     $.each(JSON.parse(data), function (i, item) {
                         $('#addDrugName').append($('<option>', {
@@ -276,7 +271,7 @@
             $.get( "http://localhost:8080/patient/listPillbox" ).then(
                 function(data,status) {
                     $.each(JSON.parse(data), function (i, item) {
-                        console.log(item);
+                        console.log(item['drug_ID']);
                         $("#pillboxTable").find('tbody')
                             .append($('<tr>')
                                 .append($('<td>')
@@ -287,14 +282,15 @@
                                 )
                                 .append($('<td>')
                                     .append("<div class='pillbox'>")
-                                    .append("<h2>Drug No. "+item.drugID+"  <small> phase "+item.drugphaseID+"</small></h2>")
-                                    .append("<h4>Balance: "+item.balance+" pills</h4>")
+                                    .append("<h2>"+item['drug_name']+"<small> phase "+item['drugphase_term']+"</small></h2>")
+                                    .append("<h4>Balance: "+item['inventory_balance']+" pills</h4>")
+                                    .append("<p>Side Effects: "+item['drug_side_effect']+" pills</p>")
                                     .append("</div>")
                                 )
                                 .append($('<td>')
                                     .append("<div class='pillbox'>")
-                                    .append("<button type='button' class='btn btn-info btn-block btn-lg' onclick='openEditModal(0)'>Edit</button>")
-                                    .append("<button type='button' class='btn btn-danger btn-block btn-lg' onclick='openDeleteModal(0)'>Delete</button>")
+                                    .append("<button type='button' class='btn btn-info btn-block btn-lg' onclick='openEditModal("+item['inventory_ID']+")'>Edit</button>")
+                                    .append("<button type='button' class='btn btn-danger btn-block btn-lg' onclick='openDeleteModal("+item['inventory_ID']+")'>Delete</button>")
                                 )
                             );
                     });
