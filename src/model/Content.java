@@ -50,21 +50,5 @@ public class Content {
     public void setContentPath(String contentPath) {
         this.contentPath = contentPath;
     }
-    public void addContent(){
-        DBConn db = new DBConn();
-        String sql = "INSERT INTO CONTENT(content_title,content_document)"+
-                "VALUES('"+contentTitle+"','"+contentPath+"')";
-        System.out.println(contentTitle);
-        try {
-            Connection conn = db.getConnection();
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate(sql);
-            conn.close();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
-    }
 }
