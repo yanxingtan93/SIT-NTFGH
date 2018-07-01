@@ -1,6 +1,6 @@
 package Servlets;
 
-import DBUtils.DBConn;
+import DatabaseConnector.DBConn;
 import com.google.gson.Gson;
 import model.Medicine;
 
@@ -11,13 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 
 @WebServlet(name = "drugCatalogueServlet")

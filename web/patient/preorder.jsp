@@ -58,9 +58,9 @@
     <div class="form-group row">
       <label class="col-sm-2 col-form-label">Medication</label>
       <div class="col-sm-4">
-          <select class="form-control" id="medication-Preorder" name="medicationPreorder">
+        <select class="form-control" id="medication-Preorder" name="medicationPreorder">
 
-          </select>
+        </select>
       </div>
       <label class="col-sm-2 col-form-label">Total Quantity</label>
       <div class="col-sm-4">
@@ -70,10 +70,10 @@
     <br>
     <div class="form-group row">
       <label class="col-sm-2 col-form-label">Preferred Collection Method</label>
-        <div class="col-sm-4">
+      <div class="col-sm-4">
         <label class="radio-inline"><input type="radio" name="method" value="Self-Collection"> Self-Collection</label><br>
         <label class="radio-inline"><input type="radio" name="method" value="Delivery"> Home/ Office Delivery</label><br>
-        </div>
+      </div>
     </div>
     <br>
     <div class="form-group row">

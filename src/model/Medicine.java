@@ -1,10 +1,8 @@
 package model;
 
-import DBUtils.DBConn;
-import sun.security.pkcs11.Secmod;
+import DatabaseConnector.DBConn;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 

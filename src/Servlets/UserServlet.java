@@ -1,11 +1,9 @@
 package Servlets;
 
-import DBUtils.DBConn;
+import DatabaseConnector.DBConn;
 import com.google.gson.Gson;
-import model.Medicine;
 import model.User;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
