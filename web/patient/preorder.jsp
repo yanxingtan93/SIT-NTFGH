@@ -1,9 +1,17 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="../JS/preorderForm.js"></script>
 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+
 <t:patientPage>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
   <div class="row">
     <div class="col-sm-6">
       <h2>Self-Collection</h2>
@@ -31,31 +39,34 @@
   </div>
   <br><h1>Current Preorder(s)</h1><br>
   <div class="row">
-    <table class="dailyMedTable table table-striped table-bordered">
+    <table id="myMainTable" class="dailyMedTable table table-striped table-bordered">
       <thead class="thead-dark">
       <tr>
-        <th style="width:15%">Image</th>
         <th style="width:60%">Medication</th>
-        <th style="width:25%">Collection Type</th>
+        <th style="width:15%">Quantity</th>
+        <th style="width:25%">Collection Mode</th>
       </tr>
       </thead>
-      <tbody>
-      <tr>
-        <td><img src="https://img.tesco.com/Groceries/pi/718/5000158100718/IDShot_540x540.jpg" height="150px"></td>
-        <td>
-          <div class="pillbox">
-            <h2>Ibuprofen</h2>
-            <h4>15 pills</h4>
-          </div>
-        </td>
-        <td><h3>Home Delivery</h3></td>
-      </tr>
-      </tbody>
+      <div id ="pillbox-table" class="pillbox">
+
+      </div>
     </table>
   </div>
   <br><h1>New Preorder</h1><br>
   <form action="/preorderServlet" method="post">
-    <div class="form-group row">
+    <div id="collectionMode" class="form-group row">
+      <label class="col-sm-2 col-form-label">Preferred Collection Method</label>
+      <div class="col-sm-3">
+        <label class="radio-inline"><input type="radio" name="method" id="collection" value="Self-Collection"> Self-Collection</label><br>
+        <label class="radio-inline"><input type="radio" name="method" id="delivery" value="Home/ Office Delivery"> Home/ Office Delivery</label><br>
+      </div>
+      <div id="toshow" class="col-sm-6" style="display:none">
+        <label class="col-sm-4 col-form-label">Collection Date</label>
+        <input type="text" id="datepicker">
+      </div>
+    </div>
+    <br>
+    <div id= "medicationRow" class="form-group row">
       <label class="col-sm-2 col-form-label">Medication</label>
       <div class="col-sm-4">
         <select class="form-control" id="medication-Preorder" name="medicationPreorder">
@@ -68,35 +79,87 @@
       </div>
     </div>
     <br>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Preferred Collection Method</label>
-      <div class="col-sm-4">
-        <label class="radio-inline"><input type="radio" name="method" value="Self-Collection"> Self-Collection</label><br>
-        <label class="radio-inline"><input type="radio" name="method" value="Delivery"> Home/ Office Delivery</label><br>
-      </div>
+    <div class="col-sm-2">
+      <button id="addRow" type="button" class="btn btn-infok">Add more medication</button>
     </div>
     <br>
+
     <div class="form-group row">
       <div class="col-sm-12">
-        <button type="submit" class="btn btn-success btn-block btn-lg" onclick="openConfirmModal(0)">Submit</button>
+        <button type="button" class="btn btn-success btn-block btn-lg" onclick="openConfirmModal(0)">Submit</button>
+      </div>
+    </div>
+
+
+    <div id="confirmModal" class="modal">
+      <div class="modal-content">
+        <h2>Please confirm.</h2><br>
+        <div class="row">
+          <div class="col-sm-6">
+            <button type="submit" class="btn btn-success btn-block btn-lg" onclick="">Confirm</button>
+          </div>
+          <div class="col-sm-6">
+            <button type="button" class="btn btn-default btn-block btn-lg"  onclick="closeConfirmModal()">Cancel</button>
+          </div>
+        </div>
       </div>
     </div>
   </form>
-
-  <div id="confirmModal" class="modal">
-    <div class="modal-content">
-      <h2>Please confirm.</h2><br>
-      <div class="row">
-        <div class="col-sm-6">
-          <button type="button" class="btn btn-success btn-block btn-lg" onclick="">Confirm</button>
-        </div>
-        <div class="col-sm-6">
-          <button type="button" class="btn btn-default btn-block btn-lg"  onclick="closeConfirmModal()">Cancel</button>
-        </div>
-      </div>
-    </div>
-  </div>
   <script>
+      $("#addRow").click(function () {
+          $("<div id= \"medicationRow\" class=\"form-group row\">\n" +
+              "          <label class=\"col-sm-2 col-form-label\">Medication</label>\n" +
+              "          <div class=\"col-sm-4\">\n" +
+              "              <select class=\"form-control\" id=\"medication-Preorder\" name=\"medicationPreorder\">\n" +
+              "\n" +
+              "              </select>\n" +
+              "          </div>\n" +
+              "          <label class=\"col-sm-2 col-form-label\">Total Quantity</label>\n" +
+              "          <div class=\"col-sm-4\">\n" +
+              "              <input type=\"number\" name=\"quantity\" min=\"1\" max=\"5\">\n" +
+              "          </div>").insertAfter('#medicationRow')
+          // $("#medicationRow").append("");
+          $.get("/preorderFormServlet", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+              var $select = $("#medication-Preorder");                           // Locate HTML DOM element with ID "someselect"
+              $.each(responseJson, function(key, value) {               // Iterate over the JSON object.
+                  $("<option>").val(key).text(value).appendTo($select); // Create HTML <option> element, set its value with currently iterated key and its text content with currently iterated item and finally append it to the <select>.
+              });
+          });
+      });
+
+
+
+      $(document).ready(function(){
+          $("input[type='radio']").click(function(){
+              var collection = $("input[id='collection']:checked").val();
+              if(collection){
+                  $("#toshow").show();
+              }
+              else {
+                  $("#toshow").hide();
+              }
+          });
+      });
+
+      $(function() {
+          $( "#datepicker" ).datepicker();
+      } );
+
+
+      $(document).ready(function() {
+          $.get("/preorderServlet?mode=get", function(responseJson) {
+              var $table = $('<tbody>').appendTo($('#myMainTable'));
+              $.each(responseJson, function(key,value) {
+                  $('<tr>').appendTo($table)
+                      .append($('<td>').text(value.drugname))
+                      .append($('<td>').text(value.quantity))
+                      .append($('<td>').text(value.mode))
+
+              });
+          });
+
+      });
+
       // Get the modal
       var confirmModal = document.getElementById('confirmModal');
 

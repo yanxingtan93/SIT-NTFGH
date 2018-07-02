@@ -10,19 +10,28 @@ public class Preorder {
     private String mode;
     private int preorderDrugID;
     private int drugID;
+    private String drugname;
+    private int quantity;
 
-    public Preorder(int preorderID, String nric, String mode, int preorderDrugID, int drugID) {
+    public Preorder(int preorderID, String nric, String mode, int preorderDrugID, int drugID, String drugname, int quantity) {
         this.preorderID = preorderID;
         this.nric = nric;
         this.mode = mode;
         this.preorderDrugID = preorderDrugID;
         this.drugID = drugID;
+        this.drugname = drugname;
+        this.quantity = quantity;
     }
 
-    public Preorder(String nric, String mode, int drugID) {
+    public Preorder(String nric, String mode, int drugID, int quantity) {
         this.nric = nric;
         this.mode = mode;
         this.drugID = drugID;
+        this.quantity = quantity;
+    }
+
+    public Preorder() {
+
     }
 
     public int getPreorderID() {
@@ -97,8 +106,8 @@ public class Preorder {
 
     public void addPreorderDrugs(int preorderID) {
 
-        String sql = "INSERT INTO PREORDERDRUGS (preorder_ID,drug_ID)" +
-                "VALUES ('"+preorderID+"','"+drugID+"');";
+        String sql = "INSERT INTO PREORDERDRUGS (preorder_ID,drug_ID,quantity)" +
+                "VALUES ('"+preorderID+"','"+drugID+"', '"+quantity+"');";
 
         try {
             DBConn db = new DBConn();
@@ -108,5 +117,21 @@ public class Preorder {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getDrugname() {
+        return drugname;
+    }
+
+    public void setDrugname(String drugname) {
+        this.drugname = drugname;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
