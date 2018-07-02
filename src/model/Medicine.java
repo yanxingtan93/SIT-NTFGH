@@ -21,20 +21,18 @@ public class Medicine {
 
     }
     //Constructor with ID
-    public Medicine(int id, String medicineName, String brand, float price, int medicineFormId, String description, String sideEffect) {
+    public Medicine(int id, String medicineName, String brand, int medicineFormId, String description, String sideEffect) {
         this.id = id;
         this.medicineName = medicineName;
         this.brand = brand;
-        this.price = price;
         this.medicineFormId = medicineFormId;
         this.description = description;
         this.sideEffect = sideEffect;
     }
     //Constructor without ID
-    public Medicine(String medicineName, String brand, float price, int medicineFormId, String description, String sideEffect) {
+    public Medicine(String medicineName, String brand, int medicineFormId, String description, String sideEffect) {
         this.medicineName = medicineName;
         this.brand = brand;
-        this.price = price;
         this.medicineFormId = medicineFormId;
         this.description = description;
         this.sideEffect = sideEffect;
@@ -107,8 +105,8 @@ public class Medicine {
 
     public void addNewMedicine(){
         DBConn db = new DBConn();
-        String sql = "INSERT INTO DRUGS(drug_name,drug_brand,drug_price,medicineform_ID,drug_description,drug_side_effect) " +
-                "VALUES('"+medicineName+"','"+brand+"',"+price+","+medicineFormId+",'"+description+"','"+sideEffect+"');";
+        String sql = "INSERT INTO DRUGS(drug_name,drug_brand,medicineform_ID,drug_description,drug_side_effect) " +
+                "VALUES('"+medicineName+"','"+brand+"',"+medicineFormId+",'"+description+"','"+sideEffect+"');";
         try {
             Connection conn = db.getConnection();
             Statement stmt = conn.createStatement();
@@ -125,11 +123,11 @@ public class Medicine {
     public void updateMedicine(int id){
         DBConn db = new DBConn();
 
-        String sql = "UPDATE DRUGS SET drug_name = '"+medicineName +"',drug_brand = '"+ brand+"',drug_price = " +price+ "," +
+        String sql = "UPDATE DRUGS SET drug_name = '"+medicineName +"',drug_brand = '"+ brand+"'," +
                 "medicineform_ID = '"+ medicineFormId+"',drug_description = '"+ description+"',drug_side_effect = '"+sideEffect +"' " +
                 "WHERE drug_ID = '"+id+"'";
 
-        System.out.println("in med method "+price);
+
         try {
             Connection conn = db.getConnection();
             Statement stmt = conn.createStatement();

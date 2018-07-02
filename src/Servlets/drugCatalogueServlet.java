@@ -30,7 +30,7 @@ public class drugCatalogueServlet extends HttpServlet {
             System.out.println("In Editting mode of medEdit.jsp");
 
             String nextJSP = "/pharmacist/medicationEdit.jsp";
-            String sql = "SELECT d.drug_id,d.drug_name,d.drug_brand,d.drug_price," +
+            String sql = "SELECT d.drug_id,d.drug_name,d.drug_brand," +
                     "d.medicineform_ID,d.drug_description,d.drug_side_effect,m.medicineform_name FROM DRUGS d,MEDICINEFORM m " +
                     "WHERE d.drug_ID = " + medicineID.trim() + " AND d.medicineform_ID = m.medicineform_ID";
 
@@ -46,7 +46,6 @@ public class drugCatalogueServlet extends HttpServlet {
                     medicineCat.setId(resultSet.getInt("drug_ID"));
                     medicineCat.setMedicineName(resultSet.getString("drug_name"));
                     medicineCat.setBrand(resultSet.getString("drug_brand"));
-                    medicineCat.setPrice(resultSet.getFloat("drug_price"));
                     medicineCat.setMedicineFormId(resultSet.getInt("medicineform_ID"));
                     medicineCat.setDescription(resultSet.getString("drug_description"));
                     medicineCat.setSideEffect(resultSet.getString("drug_side_effect"));
@@ -73,12 +72,10 @@ public class drugCatalogueServlet extends HttpServlet {
 
             String medicineName= request.getParameter("drug_name");
             String brand = request.getParameter("drug_brand");
-            String priceStr = request.getParameter("drug_price");
-            float price = Float.valueOf(priceStr);
             int medicineFormId = Integer.valueOf(request.getParameter("medicineForm"));
             String description = request.getParameter("drug_desc");
             String drugSideEffect = request.getParameter("drug_sideEffects");
-            Medicine newMedicine = new Medicine(medicineName,brand,price,medicineFormId,description,drugSideEffect);
+            Medicine newMedicine = new Medicine(medicineName,brand,medicineFormId,description,drugSideEffect);
             newMedicine.updateMedicine(Integer.parseInt(medicineID));
 
 
@@ -107,7 +104,13 @@ public class drugCatalogueServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String sql = "SELECT d.drug_id,d.drug_name,d.drug_brand,d.drug_price," +
+
+        String route  = request.getParameter("route");
+
+
+
+
+        String sql = "SELECT d.drug_id,d.drug_name,d.drug_brand," +
                 "d.medicineform_ID,d.drug_description,d.drug_side_effect,m.medicineform_name FROM DRUGS d,MEDICINEFORM m " +
                 "WHERE d.medicineform_ID = m.medicineform_ID";
 
@@ -127,7 +130,6 @@ public class drugCatalogueServlet extends HttpServlet {
                 medicineCat.setId(resultSet.getInt("drug_ID"));
                 medicineCat.setMedicineName(resultSet.getString("drug_name"));
                 medicineCat.setBrand(resultSet.getString("drug_brand"));
-                medicineCat.setPrice(resultSet.getFloat("drug_price"));
                 medicineCat.setMedicineFormId(resultSet.getInt("medicineform_ID"));
                 medicineCat.setDescription(resultSet.getString("drug_description"));
                 medicineCat.setSideEffect(resultSet.getString("drug_side_effect"));
