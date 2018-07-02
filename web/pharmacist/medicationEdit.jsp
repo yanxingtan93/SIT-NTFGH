@@ -7,13 +7,14 @@
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="../JS/medicineForm.js"></script>
+
+
 <t:pharmacistPage>
 
 <br>
@@ -35,28 +36,24 @@
                                 <img alt="User Pic" style="width: 50px;height: 50px" src="http://cdn.onlinewebfonts.com/svg/img_382491.png" class="img-circle img-responsive">
                             </div>
 
-                            <c:forEach items="${list}" var="Medicine">
+
                             <div class=" col-md-9 col-lg-9 ">
                                 <form method="post" action="/drugCatalogueServlet">
                                     <input type="hidden" class="form-control" name="mode" id="mode" value="Save">
-                                    <input type="hidden" class="form-control" name="drugid" id="drugid" value=${Medicine.id}>
+                                    <input type="text" class="form-control" name="drugid" id="drugid" value="" >
                                 <table class="table table-user-information">
 
 
                                     <tbody>
                                     <tr>
                                         <td>Medicine Name:</td>
-                                        <td><input type="text" class="form-control" name="drug_name"  placeholder="Enter Medicine Name" value=${Medicine.medicineName}></td>
+                                        <td><input type="text" class="form-control" name="drug_name"  placeholder="Enter Medicine Name" ></td>
                                     </tr>
                                     <tr>
                                         <td>Brand:</td>
-                                        <td><input type="text" class="form-control" name="drug_brand"  placeholder="Enter Brand" value=${Medicine.brand}></td>
+                                        <td><input type="text" class="form-control" name="drug_brand"  placeholder="Enter Brand" ></td>
                                     </tr>
-                                    <tr>
-                                        <td>Price</td>
-                                        <td><input type="text" class="form-control" name="drug_price" placeholder="Enter Price" value=${Medicine.price}></td>
 
-                                    </tr>
 
                                     <tr>
                                     <tr>
@@ -69,11 +66,11 @@
                                     </tr>
                                     <tr>
                                         <td>Description</td>
-                                        <td><textarea class="form-control" name="drug_desc" rows="4">${Medicine.description}</textarea></td>
+                                        <td><textarea class="form-control" name="drug_desc" rows="4"></textarea></td>
                                     </tr>
                                     <tr>
                                         <td>Side Effects</td>
-                                        <td><textarea class="form-control" name="drug_sideEffects"  rows="4">${Medicine.sideEffect}</textarea></td>
+                                        <td><textarea class="form-control" name="drug_sideEffects"  rows="4"></textarea></td>
                                     </tr>
 
                                     </tr>
@@ -87,7 +84,7 @@
                                 </div>
                                 </form>
                             </div>
-                            </c:forEach>
+
                         </div>
                     </div>
                     <div class="panel-footer">
@@ -103,3 +100,26 @@
         </div>
     </div>
 </t:pharmacistPage>
+
+
+
+
+<script>
+
+
+    $(document).ready(function() {
+
+       // alert("ADW "+url.);
+        $.get("/drugCatalogueServletroute=individual", function(responseJson) {
+
+
+            $.each(responseJson, function(key,value) {
+
+
+            });
+
+        });
+
+    });
+
+</script>

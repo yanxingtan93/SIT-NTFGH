@@ -15,12 +15,10 @@ public class drugServlet extends HttpServlet {
 
        String medicineName= request.getParameter("medicineName");
        String brand = request.getParameter("brand");
-       String priceStr = request.getParameter("price");
-       float price = Float.valueOf(priceStr);
        int medicineFormId = Integer.valueOf(request.getParameter("medicineForm"));
        String description = request.getParameter("drugDescription");
        String drugSideEffect = request.getParameter("drugSideEffect");
-       Medicine newMedicine = new Medicine(medicineName,brand,price,medicineFormId,description,drugSideEffect);
+       Medicine newMedicine = new Medicine(medicineName,brand,medicineFormId,description,drugSideEffect);
        newMedicine.addNewMedicine();
 
 

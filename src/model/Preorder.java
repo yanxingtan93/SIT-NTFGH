@@ -1,6 +1,6 @@
 package model;
 
-import DBUtils.DBConn;
+import DatabaseConnector.DBConn;
 
 import java.sql.*;
 
