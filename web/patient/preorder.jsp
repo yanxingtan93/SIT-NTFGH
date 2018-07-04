@@ -1,15 +1,17 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="../JS/preorderForm.js"></script>
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
+<%--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>--%>
+
+
 
 <t:patientPage>
+
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/base/jquery-ui.css"/>
 
 
     <div class="row">
@@ -56,32 +58,45 @@
     <form action="/preorderServlet" method="post">
         <div id="collectionMode" class="form-group row">
             <label class="col-sm-2 col-form-label">Preferred Collection Method</label>
-            <div class="col-sm-3">
+            <div class="col-sm-3" id="radiobtn">
                 <label class="radio-inline"><input type="radio" name="method" id="collection" value="Self-Collection"> Self-Collection</label><br>
                 <label class="radio-inline"><input type="radio" name="method" id="delivery" value="Home/ Office Delivery"> Home/ Office Delivery</label><br>
             </div>
-            <div id="toshow" class="col-sm-6" style="display:none">
-                <label class="col-sm-4 col-form-label">Collection Date</label>
-                <input type="text" id="datepicker">
-            </div>
+            <%--<div id="toshow" class="col-sm-6" style="display:none">--%>
+                <%--<label class="col-sm-4 col-form-label">Collection Date</label>--%>
+                <%--<input type="text" id="datepicker">--%>
+            <%--</div>--%>
         </div>
         <br>
         <div id= "medicationRow" class="form-group row">
-            <label class="col-sm-2 col-form-label">Medication</label>
-            <div class="col-sm-4">
-                <input type="text" id="search" name="search" class="search" placeholder="search here"/>
-                    <%--<select class="form-control" id="medication-Preorder" name="medicationPreorder">--%>
+            <div class="col-sm-12">
+                <div class="input_fields_wrap">
+                    <div>
+                        <label class="col-sm-4 col-form-label">Medication</label>
+                        <input type="text" id="medication-Preorder" name="medicationPreorder">
 
-                    <%--</select>--%>
+                        <label class="col-sm-4 col-form-label">Total Quantity</label>
+                        <input type="number" name="quantity" min="1" max="5">
+                    </div>
+
+                </div>
+
+                <%--<div class="ui-widget">--%>
+                <%--<input type="text" id="medication-Preorder" name="medicationPreorder">--%>
+                <%--</div>--%>
+                <%--<select class="form-control" id="medication-Preorder" name="medicationPreorder">--%>
+
+                <%--</select>--%>
             </div>
-            <label class="col-sm-2 col-form-label">Total Quantity</label>
-            <div class="col-sm-4">
-                <input type="number" name="quantity" min="1" max="5">
-            </div>
+            <%--<label class="col-sm-2 col-form-label">Total Quantity</label>--%>
+            <%--<div class="col-sm-4">--%>
+                <%--&lt;%&ndash;<input type="number" name="quantity" min="1" max="5">&ndash;%&gt;--%>
+            <%--</div>--%>
         </div>
         <br>
         <div class="col-sm-2">
-            <button id="addRow" type="button" class="btn btn-infok">Add more medication</button>
+            <button class="add_field_button">Add More Fields</button>
+            <%--<button id="addRow" type="button" class="btn btn-info">Add more medication</button>--%>
         </div>
         <br>
 
@@ -106,14 +121,70 @@
             </div>
         </div>
     </form>
+
     <script>
+        $(document).ready(function() {
+            var max_fields      = 10; //maximum input boxes allowed
+            var wrapper         = $(".input_fields_wrap"); //Fields wrapper
+            var add_button      = $(".add_field_button"); //Add button ID
+
+            var x = 1; //initlal text box count
+            $(add_button).click(function(e){ //on add input button click
+                e.preventDefault();
+                if(x < max_fields){ //max input box allowed
+                    x++; //text box increment
+                    $(wrapper).append('<div><label class="col-sm-4 col-form-label">Medication</label>\n' +
+                        '                        <input type="text" id="medication-Preorder" name="medicationPreorder">\n' +
+                        '\n' +
+                        '                        <label class="col-sm-4 col-form-label">Total Quantity</label>\n' +
+                        '                        <input type="number" name="quantity" min="1" max="5">\n' +
+                        '<a href="#" class="remove_field"> Remove</a></div>'); //add input box
+                }
+            });
+
+            $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+                e.preventDefault(); $(this).parent('div').remove(); x--;
+            })
+        });
+
+
+        $(document).ready(function(){
+            var data = ["Boston Celtics", "Chicago Bulls", "Miami Heat", "Orlando Magic", "Atlanta Hawks", "Philadelphia Sixers", "New York Knicks", "Indiana Pacers", "Charlotte Bobcats", "Milwaukee Bucks", "Detroit Pistons", "New Jersey Nets", "Toronto Raptors", "Washington Wizards", "Cleveland Cavaliers"];
+            $("#medication-Preorder").autocomplete({
+                source: "/preorderFormServlet"
+            });
+        });
+
+
+
+        // $(document).ready(function() {
+        //     $(function() {
+        //         $("#medication-Preorder").autocomplete({
+        //             source: function(request, response) {
+        //                 $.ajax({
+        //                     url: "/preorderFormServlet",
+        //                     type: "GET",
+        //                     data: { term: request.term },
+        //
+        //                     dataType: "json",
+        //
+        //                     success: function(data) {
+        //                         response(data);
+        //                     }
+        //                 });
+        //             }
+        //         });
+        //     });
+        // });
+
+
+        // $("#medicationPreorder").autocomplete("preorderFormServlet");
+
         $("#addRow").click(function () {
             $("<div id= \"medicationRow\" class=\"form-group row\">\n" +
                 "          <label class=\"col-sm-2 col-form-label\">Medication</label>\n" +
                 "          <div class=\"col-sm-4\">\n" +
-                "              <select class=\"form-control\" id=\"medication-Preorder\" name=\"medicationPreorder\">\n" +
-                "\n" +
-                "              </select>\n" +
+                "              <input type=\"text\" id=\"medication-Preorder\" name=\"medicationPreorder\">\n" +
                 "          </div>\n" +
                 "          <label class=\"col-sm-2 col-form-label\">Total Quantity</label>\n" +
                 "          <div class=\"col-sm-4\">\n" +
@@ -125,20 +196,23 @@
 
 
         $(document).ready(function(){
-            $("input[type='radio']").click(function(){
+            $("input[type='radio']").change(function(){
                 var collection = $("input[id='collection']:checked").val();
                 if(collection){
-                    $("#toshow").show();
+                    $("<div id=\"toshow\" class=\"col-sm-6\">\n" +
+                        "                <label class=\"col-sm-4 col-form-label\">Collection Date</label>\n" +
+                        "                <input type=\"text\" id=\"datepicker\">\n" +
+                        "            </div>").insertAfter('#radiobtn');
+                    $( "#datepicker" ).datepicker();
+                    //$("#toshow").show();
                 }
                 else {
-                    $("#toshow").hide();
+                    $('#toshow').remove();
+                    //$("#toshow").hide();
                 }
             });
         });
 
-        $(function() {
-            $( "#datepicker" ).datepicker();
-        } );
 
 
         $(document).ready(function() {
@@ -174,41 +248,5 @@
             }
         }
         //var selectedOption = $("input:radio[name=method]:checked").val()
-
-        // $(function() {
-        //     $( "#search" ).autocomplete({
-        //         source: function (request, response) {
-        //             $.ajax({
-        //                 url: "preorderFormServlet",
-        //                 dataType: 'json',
-        //                 data: request,
-        //                 success: function (data) {
-        //                     if (typeof Array.prototype.forEach != 'function') {
-        //                         Array.prototype.forEach = function(callback){
-        //                             for (var i = 0; i < this.length; i++){
-        //                                 callback.apply(this, [this[i], i, this]);
-        //                             }
-        //                         };
-        //                     }
-        //
-        //                     var values = data;
-        //                     var newArray = new Array(values.length);
-        //                     var i = 0;
-        //                     values.forEach(function (entry) {
-        //                         var newObject = {
-        //                             label: entry.name
-        //                         };
-        //                         newArray[i] = newObject;
-        //                         i++;
-        //                     });
-        //
-        //                     response(newArray);
-        //                 }
-        //             });
-        //         },
-        //         minLength: 1
-        //     });
-        // });
-
     </script>
 </t:patientPage>

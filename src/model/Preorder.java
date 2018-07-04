@@ -9,11 +9,11 @@ public class Preorder {
     private String nric;
     private String mode;
     private int preorderDrugID;
-    private int drugID;
+    private String drugID; //prev int
     private String drugname;
     private int quantity;
 
-    public Preorder(int preorderID, String nric, String mode, int preorderDrugID, int drugID, String drugname, int quantity) {
+    public Preorder(int preorderID, String nric, String mode, int preorderDrugID, String drugID, String drugname, int quantity) {
         this.preorderID = preorderID;
         this.nric = nric;
         this.mode = mode;
@@ -23,10 +23,16 @@ public class Preorder {
         this.quantity = quantity;
     }
 
-    public Preorder(String nric, String mode, int drugID, int quantity) {
+    public Preorder(String nric, String mode, String drugID, int quantity) {
         this.nric = nric;
         this.mode = mode;
         this.drugID = drugID;
+        this.quantity = quantity;
+    } //prev one
+
+    public Preorder(String nric, String mode, int quantity) {
+        this.nric = nric;
+        this.mode = mode;
         this.quantity = quantity;
     }
 
@@ -82,11 +88,11 @@ public class Preorder {
         this.preorderDrugID = preorderDrugID;
     }
 
-    public int getDrugID() {
+    public String getDrugID() {
         return drugID;
     }
 
-    public void setDrugID(int drugID) {
+    public void setDrugID(String drugID) {
         this.drugID = drugID;
     }
 
@@ -104,7 +110,7 @@ public class Preorder {
         }
     }
 
-    public void addPreorderDrugs(int preorderID) {
+    public void addPreorderDrugs(int preorderID, String drugID) {
 
         String sql = "INSERT INTO PREORDERDRUGS (preorder_ID,drug_ID,quantity)" +
                 "VALUES ('"+preorderID+"','"+drugID+"', '"+quantity+"');";
