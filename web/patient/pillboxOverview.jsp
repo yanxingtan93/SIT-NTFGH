@@ -47,31 +47,32 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="editDrugName" placeholder="">
+                        <select name="editDrugName" id="editDrugName"></select>
                     </div>
                     <label class="col-sm-2 col-form-label">Total Quantity</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="editDrugQuantity" placeholder="">
+                        <input type="number" class="form-control" id="editDrugQuantity" name="editDrugQuantity" min="1" max="60">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Dose</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="editDrugDose" placeholder="">
+                        <input type="number" class="form-control" name="editDrugDose" name="editDrugDose"min="1" max="10">
                     </div>
                     <label class="col-sm-2 col-form-label">Meals</label>
                     <div class="col-sm-4">
-                        <select name="meals">
+                        <select name="editDrugMeals" name="editDrugMeals">
+                            <option value="1">Before Meal</option>
+                            <option value="2">After Meal</option>
                             <option value="3">Meal Independent</option>
-                            <option value="1">Before Food</option>
-                            <option value="2">After Food</option>
                         </select>
                     </div>
                 </div>
+
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Interval</label>
+                    <label class="col-sm-2 col-form-label">Frequency</label>
                     <div class="col-sm-4">
-                        <select name="numberOfTimes">
+                        <select name="editDrugFrequency" name="editDrugFrequency">
                             <option value="1">1 time</option>
                             <option value="2">2 times</option>
                             <option value="3">3 times</option>
@@ -80,30 +81,41 @@
                             <option value="6">6 times</option>
                         </select>
                     </div>
-                    <label class="col-sm-2 col-form-label">Per</label>
+                    <label class="col-sm-2 col-form-label">Interval</label>
                     <div class="col-sm-4">
-                        <select name="intervalUnit">
-                            <option value="1">Day</option>
-                            <option value="2">Week</option>
-                            <option value="3">2 Weeks</option>
-                            <option value="4">Month</option>
+                        <select name="editDrugInterval" name="editDrugInterval">
+                            <option value="1">Daily</option>
+                            <option value="2">Weekly</option>
+                            <option value="3">Fortnightly</option>
+                            <option value="4">Monthly</option>
+                            <option value="5">Yearly</option>
+                            <option value="6">Custom</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Instructions</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="editDrugInstructions" name="editDrugInstructions" placeholder="">
+                    </div>
+                    <label class="col-sm-2 col-form-label">Strictness</label>
+                    <div class="col-sm-4">
+                        <select name="editDrugStrictness">
+                            <option value="true">Compulsory</option>
+                            <option value="false">If needed</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Start Date</label>
                     <div class="col-sm-4">
-                        <input type="date" name="startDate">
-                    </div>
-                    <label class="col-sm-2 col-form-label">End Date</label>
-                    <div class="col-sm-4">
-                        <input type="date" name="endDate">
+                        <input type="date" name="editDrugStartDate">
                     </div>
                 </div>
                 <br>
                 <div class="form-group row">
                     <div class="col-sm-6">
-                        <button type="button" class="btn btn-success btn-block btn-lg" onclick="">Save</button>
+                        <button type="submit" class="btn btn-success btn-block btn-lg" onclick="">Submit</button>
                     </div>
                     <div class="col-sm-6">
                         <button type="button" class="btn btn-default btn-block btn-lg"  onclick="closeEditModal()">Cancel</button>
@@ -119,7 +131,7 @@
         <div class="modal-content">
             <h1>Add Entry</h1>
             <br>
-            <form action="http://localhost:8080/patient/addToPillbox" method="get">
+            <form action="http://localhost:8080/patient/addToPillbox" method="post">
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-4">
@@ -127,27 +139,28 @@
                     </div>
                     <label class="col-sm-2 col-form-label">Total Quantity</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="addDrugQuantity" placeholder="">
+                        <input type="number" class="form-control" name="addDrugQuantity" min="1" max="60">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Dose</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="addDrugDose" placeholder="">
+                        <input type="number" class="form-control" name="addDrugDose" min="1" max="10">
                     </div>
                     <label class="col-sm-2 col-form-label">Meals</label>
                     <div class="col-sm-4">
-                        <select name="meals">
-                            <option value="1">- NIL -</option>
-                            <option value="2">Before Food</option>
-                            <option value="3">After Food</option>
+                        <select name="addDrugMeals">
+                            <option value="1">Before Meal</option>
+                            <option value="2">After Meal</option>
+                            <option value="3">Meal Independent</option>
                         </select>
                     </div>
                 </div>
+
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Interval</label>
+                    <label class="col-sm-2 col-form-label">Frequency</label>
                     <div class="col-sm-4">
-                        <select name="numberOfTimes">
+                        <select name="addDrugFrequency">
                             <option value="1">1 time</option>
                             <option value="2">2 times</option>
                             <option value="3">3 times</option>
@@ -156,24 +169,35 @@
                             <option value="6">6 times</option>
                         </select>
                     </div>
-                    <label class="col-sm-2 col-form-label">Per</label>
+                    <label class="col-sm-2 col-form-label">Interval</label>
                     <div class="col-sm-4">
-                        <select name="intervalUnit">
-                            <option value="1">Day</option>
-                            <option value="2">Week</option>
-                            <option value="3">2 Weeks</option>
-                            <option value="4">Month</option>
+                        <select name="addDrugInterval">
+                            <option value="1">Daily</option>
+                            <option value="2">Weekly</option>
+                            <option value="3">Fortnightly</option>
+                            <option value="4">Monthly</option>
+                            <option value="5">Yearly</option>
+                            <option value="6">Custom</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Instructions</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="addDrugInstructions" placeholder="">
+                    </div>
+                    <label class="col-sm-2 col-form-label">Strictness</label>
+                    <div class="col-sm-4">
+                        <select name="addDrugStrictness">
+                            <option value="true">Compulsory</option>
+                            <option value="false">If needed</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Start Date</label>
                     <div class="col-sm-4">
-                        <input type="date" name="startDate">
-                    </div>
-                    <label class="col-sm-2 col-form-label">End Date</label>
-                    <div class="col-sm-4">
-                        <input type="date" name="endDate">
+                        <input type="date" name="addDrugStartDate">
                     </div>
                 </div>
                 <br>
@@ -205,6 +229,7 @@
     </div>
 
     <script>
+        var pillboxlist;
         var deleteID;
 
         // Get the modal
@@ -218,6 +243,24 @@
         }
         function openEditModal(id) {
             editModal.style.display = "block";
+            var item = pillboxlist[parseInt(id)];
+            $('#editDrugName').empty().append($('<option>', {
+                value: 0,
+                text : item.drug_name
+            }));
+            $('#editDrugName').empty().append($('<option>', {
+                value: 0,
+                text : item.drug_name
+            }));
+            $('#editDrugName').empty().append($('<option>', {
+                value: 0,
+                text : item.drug_name
+            }));
+            $('#editDrugName').empty().append($('<option>', {
+                value: 0,
+                text : item.drug_name
+            }));
+
         }
         function openDeleteModal(id) {
             deleteID = id;
@@ -252,10 +295,6 @@
             }
         }
 
-    </script>
-    <script>
-
-
         $(document).ready(function(){
             $.get( "http://localhost:8080/patient/getMedicationNames" ).then(
                 function(data,status) {
@@ -270,8 +309,9 @@
 
             $.get( "http://localhost:8080/patient/listPillbox" ).then(
                 function(data,status) {
-                    $.each(JSON.parse(data), function (i, item) {
-                        console.log(item['drug_ID']);
+                    pillboxlist = JSON.parse(data);
+                    $.each(pillboxlist, function (i, item) {
+                        console.log(i);
                         $("#pillboxTable").find('tbody')
                             .append($('<tr>')
                                 .append($('<td>')
@@ -289,8 +329,8 @@
                                 )
                                 .append($('<td>')
                                     .append("<div class='pillbox'>")
-                                    .append("<button type='button' class='btn btn-info btn-block btn-lg' onclick='openEditModal("+item['inventory_ID']+")'>Edit</button>")
-                                    .append("<button type='button' class='btn btn-danger btn-block btn-lg' onclick='openDeleteModal("+item['inventory_ID']+")'>Delete</button>")
+                                    .append("<button type='button' class='btn btn-info btn-block btn-lg' onclick='openEditModal("+i+")'>Edit</button>")
+                                    .append("<button type='button' class='btn btn-danger btn-block btn-lg' onclick='openDeleteModal("+i+")'>Delete</button>")
                                 )
                             );
                     });

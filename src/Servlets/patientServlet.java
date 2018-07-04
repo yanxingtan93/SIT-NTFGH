@@ -31,6 +31,10 @@ public class patientServlet extends HttpServlet {
         String route = request.getRequestURL().toString().split("/patient/")[1];
         //Sort the request by url i.e. /patient/listMedication
         switch (route) {
+            case "addToPillbox":
+                addToPillbox(request);
+                response.sendRedirect("http://localhost:8080/patient/pillboxOverview.jsp");
+                break;
             case "deleteFromPillbox":
                 deleteFromPillbox(request.getParameter("id"));
                 response.sendRedirect("http://localhost:8080/patient/pillboxOverview.jsp");
@@ -46,11 +50,6 @@ public class patientServlet extends HttpServlet {
         switch (route) {
             case "getMedicationNames":
                 response.getWriter().write(getMedicationNames());
-                break;
-
-            case "addToPillbox":
-                addToPillbox();
-                response.sendRedirect("http://localhost:8080/patient/pillboxOverview.jsp");
                 break;
 
             case "listPillbox":
@@ -89,13 +88,22 @@ public class patientServlet extends HttpServlet {
             while (resultSet.next()) {
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("inventory_ID", resultSet.getString("inventory_ID"));
-                map.put("drug_name", resultSet.getString("drug_name"));
                 map.put("drug_brand", resultSet.getString("drug_brand"));
                 map.put("drugintake_term", resultSet.getString("drugintake_term"));
                 map.put("drugphase_term", resultSet.getString("drugphase_term"));
                 map.put("drug_description", resultSet.getString("drug_description"));
                 map.put("drug_side_effect", resultSet.getString("drug_side_effect"));
+
+
+                map.put("drug_name", resultSet.getString("drug_name"));
                 map.put("inventory_balance", resultSet.getString("inventory_balance"));
+                map.put("dose", resultSet.getString("dose"));
+                map.put("drugintake_ID", resultSet.getString("drugintake_ID"));
+                map.put("frequency", resultSet.getString("frequency"));
+                map.put("drugphase_ID", resultSet.getString("drugphase_ID"));
+                map.put("instructions", resultSet.getString("instructions"));
+                map.put("strictness", resultSet.getString("strictness"));
+                map.put("inventory_startdate", resultSet.getString("inventory_startdate"));
                 list.add(map);
 
             }
@@ -106,17 +114,41 @@ public class patientServlet extends HttpServlet {
         return gson.toJson(list);
     }
 
-    private void addToPillbox(){
-        String sql = "INSERT INTO INVENTORY(drug_ID, drugintake_ID,drugphase_ID,inventory_balance,inventory_status,inventory_startdate) " +
-                "VALUES(?,?,?,?,?,?);";
+    private void addToPillbox(HttpServletRequest request){
+
+        System.out.println(request.getParameter("addDrugName"));
+        System.out.println(request.getParameter("addDrugQuantity"));//
+        System.out.println(request.getParameter("addDrugDose"));//
+        System.out.println(request.getParameter("addDrugMeals"));
+        System.out.println(request.getParameter("addDrugFrequency"));
+        System.out.println(request.getParameter("addDrugInterval"));
+        System.out.println(request.getParameter("addDrugInstructions"));//
+        System.out.println(request.getParameter("addDrugStrictness"));
+        System.out.println(request.getParameter("addDrugStartDate"));
+
+        String sql = "INSERT INTO INVENTORY(drug_ID, drugintake_ID,drugphase_ID,inventory_balance,inventory_status,inventory_startdate,dose,instructions,frequency,strictness) " +
+                "VALUES(?,?,?,?,?,?,?,?,?,?);";
+
         try {
             PreparedStatement ps = DBConn.getPreparedStatement(sql);
-            ps.setInt(1, 1);
-            ps.setInt(2, 1);
-            ps.setInt(3, 1);
-            ps.setInt(4, 1);
+            ps.setInt(1, Integer.valueOf(request.getParameter("addDrugName")));
+            ps.setInt(2, Integer.valueOf(request.getParameter("addDrugMeals")));
+            ps.setInt(3, Integer.valueOf(request.getParameter("addDrugInterval")));
+            ps.setInt(4, Integer.valueOf(request.getParameter("addDrugQuantity")));
             ps.setBoolean(5, true);
-            ps.setString(6, "01/06/2018");
+            ps.setString(6, request.getParameter("addDrugStartDate"));
+            ps.setInt(7, Integer.valueOf(request.getParameter("addDrugDose")));
+            ps.setString(8, request.getParameter("addDrugInstructions"));
+            ps.setInt(9, Integer.valueOf(request.getParameter("addDrugFrequency")));
+
+            if (request.getParameter("addDrugStrictness").equalsIgnoreCase("true")){
+                ps.setBoolean(10, true);
+            }
+            else{
+                ps.setBoolean(10, false);
+            }
+
+
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
