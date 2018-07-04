@@ -1,4 +1,4 @@
-package DBUtils;
+package DatabaseConnector;
 
 import java.sql.*;
 
@@ -21,6 +21,11 @@ public class DBConn {
         return connection;
     }*/
     public Connection getConnection() throws SQLException {
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         PreparedStatement ps = null;
         String hostName = "itpgroup1.database.windows.net";
         String dbName = "SIT-NGTFH";

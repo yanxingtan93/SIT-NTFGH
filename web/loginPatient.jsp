@@ -64,7 +64,7 @@
 
                 <img src="https://www.gov.sg/sgdi/~/media/sgdi/ntfgh.png" alt="logo_ntfgh" width="291">
                 <h4>NTFGH Pharmacy Application</h4>
-                <input type="text" id="userName" class="form-control input-sm chat-input" placeholder="Username" />
+                <input type="text" id="userName" class="form-control input-sm chat-input" placeholder="NRIC" />
                 </br>
                 <input type="text" id="userPassword" class="form-control input-sm chat-input" placeholder="Password" />
                 </br>
@@ -75,7 +75,7 @@
                     <br><br>
             <span class="group-btn">
                 <a href="#" class="btn btn-primary btn-md">Login <i class="fa fa-sign-in"></i></a>
-                <a href="#" class="btn btn-primary btn-md">Register <i class="fa fa-user-plus"></i></a>
+                <a href="registration.jsp" class="btn btn-primary btn-md">Register <i class="fa fa-user-plus"></i></a>
             </span>
                 </div>
             </div>

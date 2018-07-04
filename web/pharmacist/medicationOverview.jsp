@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -34,7 +34,7 @@
 
     <table id="myMainTable" class="table table-striped table-bordered" style="width:100%">
         <thead class="thead-dark">
-        <tr><th>No</th><th>Drug Name</th><th>Brand</th><th>Price</th><th>Type</th><th>Description</th><th>Side Effect</th><th>Functions</th></tr>
+        <tr><th>No</th><th>Drug Name</th><th>Brand</th><th>Type</th><th>Description</th><th>Side Effect</th><th>Functions</th></tr>
         </thead>
     </table>
 
@@ -64,11 +64,11 @@
 
 
                     $.each(responseJson, function(key,value) {
-
                         var button = "\n" +
-                            "                <form method=\"post\" action=\"/pharmacist/medicationEdit.jsp\">\n" +
+
+                             "  <form method=\"post\" action=\"/pharmacist/medicationEdit.jsp?xmedID="+value.id+" \">\n" +
                             "                    <input type=\"hidden\" class=\"form-control\" name=\"mode\" value=\"Edit\">\n" +
-                            "                    <input type=\"hidden\" class=\"form-control\" name=\"drugid\"  value="+value.id+">\n" +
+                            "                    <input type=\"hidden\" class=\"form-control\" name=\"xmedID\"  value="+value.id+">\n" +
                             "                    <button type=\"submit\" class=\"btn btn-success\">Edit</button>\n" +
                             "                </form>\n" +
                             "                    <form method=\"post\" action=\"/drugCatalogueServlet\">\n" +
@@ -78,7 +78,7 @@
                             "                    </form>";
 
 
-        mytable.row.add([value.id, value.medicineName, value.brand, value.price, value.medicineForm, value.description, value.sideEffect,button]);
+        mytable.row.add([value.id, value.medicineName, value.brand, value.medicineForm, value.description, value.sideEffect,button]);
 
 
                     });

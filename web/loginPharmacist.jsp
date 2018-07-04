@@ -64,7 +64,7 @@
 
                 <img src="https://www.gov.sg/sgdi/~/media/sgdi/ntfgh.png" alt="logo_ntfgh" width="291">
                 <h4>NTFGH Pharmacy Application</h4>
-                <input type="text" id="userName" class="form-control input-sm chat-input" placeholder="Username" />
+                <input type="text" id="userName" class="form-control input-sm chat-input" placeholder="NRIC" />
                 </br>
                 <input type="text" id="userPassword" class="form-control input-sm chat-input" placeholder="Password" />
                 </br>

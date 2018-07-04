@@ -1,11 +1,9 @@
 package Servlets;
 
-import DBUtils.DBConn;
+import DatabaseConnector.DBConn;
 import com.google.gson.Gson;
-import model.Medicine;
 import model.User;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -256,7 +254,7 @@ public class UserServlet extends HttpServlet {
                     while (resultSet.next()) {
 
                         User user = new User();
-                        user.setName(resultSet.getString("user_NRIC"));
+                        user.setNRIC(resultSet.getString("user_NRIC"));
                         user.setName(resultSet.getString("user_name"));
                         user.setContact(resultSet.getInt("user_contact"));
                         user.setEmail(resultSet.getString("user_email"));
@@ -275,6 +273,45 @@ public class UserServlet extends HttpServlet {
 
                 }
                 break;
+
+            case "caregiver":
+                String careGiverNRIC = "S1234567C";
+                String sqlCare = "SELECT pc.patient_NRIC,pc.caregiver_NRIC,u.user_NRIC,u.user_name,u.user_email,u.user_contact,u.user_address" +
+                        ",u.user_dob FROM USERS u, PATIENTCAREGIVER pc WHERE pc.caregiver_NRIC = '"+careGiverNRIC+"' " +
+                        "AND pc.patient_NRIC = u.user_NRIC";
+
+                ArrayList<User> caregiverPatientList = new ArrayList<User>();
+
+                try {
+                    PreparedStatement ps = DBConn.getPreparedStatement(sqlCare);
+                    ResultSet resultSet = ps.executeQuery();
+
+                    while (resultSet.next()) {
+
+                        User user = new User();
+                        user.setNRIC(resultSet.getString("user_NRIC"));
+                        user.setName(resultSet.getString("user_name"));
+                        user.setContact(resultSet.getInt("user_contact"));
+                        user.setEmail(resultSet.getString("user_email"));
+                        user.setAddress(resultSet.getString("user_address"));
+                        user.setDob(resultSet.getString("user_dob"));
+
+                        caregiverPatientList.add(user);
+                    }
+
+                    String json = new Gson().toJson(caregiverPatientList);
+                    // System.out.print(" rows --> " + json);
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write(json);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+
+                }
+                break;
+
+
+
 
 
         }

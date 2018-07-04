@@ -1,6 +1,5 @@
 package Servlets;
 
-import java.awt.*;
 import java.io.File;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,10 +7,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.List;
 
-import DBUtils.DBConn;
+import DatabaseConnector.ContentDao;
+import DatabaseConnector.ContentDaoImpl;
 import model.Content;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -60,7 +59,8 @@ public class contentServlet extends HttpServlet {
                             System.out.println(documentTitle);
                         }
                         Content addNewContent = new Content(documentTitle,uploded_directory);
-                        addNewContent.addContent();
+                        ContentDao contentDao = new ContentDaoImpl();
+                        contentDao.addContent(addNewContent);
                     }
                 }
 
