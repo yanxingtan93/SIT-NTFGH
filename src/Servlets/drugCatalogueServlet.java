@@ -1,6 +1,8 @@
 package Servlets;
 
 import DatabaseConnector.DBConn;
+import DatabaseConnector.DrugDaoImpl;
+import DatabaseConnector.DrugsDao;
 import com.google.gson.Gson;
 import model.Medicine;
 
@@ -21,7 +23,7 @@ import java.util.ArrayList;
 public class drugCatalogueServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
+        DrugsDao drugsDao = new DrugDaoImpl();
         String mode = request.getParameter("mode");
         String medicineID = request.getParameter("drugid");
         System.out.println("---> " + medicineID);
@@ -30,38 +32,13 @@ public class drugCatalogueServlet extends HttpServlet {
             System.out.println("In Editting mode of medEdit.jsp");
 
             String nextJSP = "/pharmacist/medicationEdit.jsp";
-            String sql = "SELECT d.drug_id,d.drug_name,d.drug_brand," +
-                    "d.medicineform_ID,d.drug_description,d.drug_side_effect,m.medicineform_name FROM DRUGS d,MEDICINEFORM m " +
-                    "WHERE d.drug_ID = " + medicineID.trim() + " AND d.medicineform_ID = m.medicineform_ID";
-
-
-            try {
-                PreparedStatement ps = DBConn.getPreparedStatement(sql);
-                ResultSet resultSet = ps.executeQuery();
-
-                ArrayList<Medicine> list = new ArrayList<Medicine>();
-
-                while (resultSet.next()) {
-                    Medicine medicineCat = new Medicine();
-                    medicineCat.setId(resultSet.getInt("drug_ID"));
-                    medicineCat.setMedicineName(resultSet.getString("drug_name"));
-                    medicineCat.setBrand(resultSet.getString("drug_brand"));
-                    medicineCat.setMedicineFormId(resultSet.getInt("medicineform_ID"));
-                    medicineCat.setDescription(resultSet.getString("drug_description"));
-                    medicineCat.setSideEffect(resultSet.getString("drug_side_effect"));
-                    medicineCat.setMedicineForm(resultSet.getString("medicineform_name"));
-                    list.add(medicineCat);
-                }
-
-                request.setAttribute("list", list);
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-                dispatcher.forward(request, response);
-
-            } catch (SQLException ex) {
-                ex.printStackTrace();
+            ArrayList<Medicine> list = drugsDao.getAllDrugEdit(medicineID);
+            request.setAttribute("list", list);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+            dispatcher.forward(request, response);
 
             }
-        }
+
 
 
 
@@ -106,74 +83,16 @@ public class drugCatalogueServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String route  = request.getParameter("route");
+        DrugsDao drugDao = new DrugDaoImpl();
+        int count = 0;
+        ArrayList<Medicine> list = drugDao.getAllDrugs();
+        String json = new Gson().toJson(list);
+        //System.out.print(count+" rows --> "+json);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(json);
 
 
-
-
-        String sql = "SELECT d.drug_id,d.drug_name,d.drug_brand," +
-                "d.medicineform_ID,d.drug_description,d.drug_side_effect,m.medicineform_name FROM DRUGS d,MEDICINEFORM m " +
-                "WHERE d.medicineform_ID = m.medicineform_ID";
-
-
-        try {
-            PreparedStatement ps = DBConn.getPreparedStatement(sql);
-            ResultSet resultSet = ps.executeQuery();
-            int count = 0;
-
-           // Map<String, Medicine> options = new LinkedHashMap<>();
-          //  ArrayList<ArrayList<String>> list = new ArrayList<>();
-            ArrayList<Medicine> list = new ArrayList<>();
-
-            while (resultSet.next()) {
-
-                Medicine medicineCat = new Medicine();
-                medicineCat.setId(resultSet.getInt("drug_ID"));
-                medicineCat.setMedicineName(resultSet.getString("drug_name"));
-                medicineCat.setBrand(resultSet.getString("drug_brand"));
-                medicineCat.setMedicineFormId(resultSet.getInt("medicineform_ID"));
-                medicineCat.setDescription(resultSet.getString("drug_description"));
-                medicineCat.setSideEffect(resultSet.getString("drug_side_effect"));
-                medicineCat.setMedicineForm(resultSet.getString("medicineform_name"));
-                //System.out.println("TWo prices");
-/*
-                ArrayList<String> xs = new ArrayList<>();
-                xs.add(resultSet.getInt("drug_ID")+"");
-                xs.add(resultSet.getString("drug_name")+"");
-                xs.add(resultSet.getString("drug_brand")+"");
-                xs.add(resultSet.getFloat("drug_price")+"");
-                xs.add(resultSet.getInt("medicineform_ID")+"");
-                xs.add(resultSet.getString("drug_description")+"");
-                xs.add(resultSet.getString("drug_side_effect")+"");
-                xs.add(resultSet.getString("medicineform_name")+"");
-
-*/
-
-                list.add(medicineCat);
-              //  options.put(count+"",medicineCat);
-                count++;
-            }
-
-            /*
-            String nextJSP = "/pharmacist/medicationOverview.jsp";
-           request.setAttribute("list", list);
-           request.getRequestDispatcher("/pharmacist/medicationOverview.jsp").forward(request, response);
-
-          RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
-          dispatcher.forward(request,response);
-
-*/
-            String json = new Gson().toJson(list);
-            System.out.print(count+" rows --> "+json);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(json);
-
-
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-
-        }
     }
 
 

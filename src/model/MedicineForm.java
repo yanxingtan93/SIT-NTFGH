@@ -35,21 +35,7 @@ public class MedicineForm {
     }
 
 
-    public static void addForm(String name){
 
-        DBConn db = new DBConn();
-        String sql = "INSERT INTO MEDICINEFORM(medicineform_name) VALUES ('"+name+"')";
-
-        try {
-            Connection conn = db.getConnection();
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate(sql);
-            conn.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
 
 }

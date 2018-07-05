@@ -75,7 +75,7 @@ public class contentServlet extends HttpServlet {
                     "Sorry this Servlet only handles file upload request");
         }
 
-        request.getRequestDispatcher("result.jsp").forward(request, response);
+        request.getRequestDispatcher("/pharmacist/contentOverview.jsp").forward(request, response);
 
     }
 }

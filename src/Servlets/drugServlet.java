@@ -20,6 +20,8 @@ public class drugServlet extends HttpServlet {
        String drugSideEffect = request.getParameter("drugSideEffect");
        Medicine newMedicine = new Medicine(medicineName,brand,medicineFormId,description,drugSideEffect);
        newMedicine.addNewMedicine();
+       String URL= "/pharmacist/medicationOverview.jsp";
+       response.sendRedirect(URL);
 
 
 
