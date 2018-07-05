@@ -20,18 +20,29 @@ public class preorderServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String NRIC = "S1234567A";
-        int medID = Integer.valueOf(request.getParameter("medicationPreorder"));
-        //String quantity = request.getParameter("quantity");
+        String[] medIDs = request.getParameterValues("medicationPreorder");
         int quantity = Integer.valueOf(request.getParameter("quantity"));
         String mode = request.getParameter("method");
-        System.out.println(medID);
+        //System.out.println(medID);
         System.out.println(mode);
 
-        Preorder preorder = new Preorder(NRIC, mode, medID, quantity);
+        Preorder preorder = new Preorder(NRIC, mode, quantity);
         preorder.addPreorder();
-        int preorderid = preorder.getPreorderID();
-        System.out.println(preorderid);
-        preorder.addPreorderDrugs(preorderid);
+
+        for (int i = 0; i<medIDs.length; i++) {
+            System.out.println(medIDs[i]);
+            String medID = medIDs[i];
+            int preorderid = preorder.getPreorderID();
+            System.out.println(preorderid);
+            preorder.addPreorderDrugs(preorderid, medID);
+        }
+
+
+//        Preorder preorder = new Preorder(NRIC, mode, medID, quantity);
+//        preorder.addPreorder();
+//        int preorderid = preorder.getPreorderID();
+//        System.out.println(preorderid);
+//        preorder.addPreorderDrugs(preorderid);
 
     }
 
