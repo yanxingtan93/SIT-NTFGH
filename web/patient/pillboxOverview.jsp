@@ -42,7 +42,7 @@
         <div class="modal-content">
             <h1>Edit Entry</h1>
             <br>
-            <form>
+            <form action="http://localhost:8080/patient/editPillbox" method="post">
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-4">
@@ -56,11 +56,11 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Dose</label>
                     <div class="col-sm-4">
-                        <input type="number" class="form-control" name="editDrugDose" name="editDrugDose"min="1" max="10">
+                        <input type="number" class="form-control" name="editDrugDose" id="editDrugDose"min="1" max="10">
                     </div>
                     <label class="col-sm-2 col-form-label">Meals</label>
                     <div class="col-sm-4">
-                        <select name="editDrugMeals" name="editDrugMeals">
+                        <select name="editDrugMeals" id="editDrugMeals">
                             <option value="1">Before Meal</option>
                             <option value="2">After Meal</option>
                             <option value="3">Meal Independent</option>
@@ -71,7 +71,7 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Frequency</label>
                     <div class="col-sm-4">
-                        <select name="editDrugFrequency" name="editDrugFrequency">
+                        <select name="editDrugFrequency" id="editDrugFrequency">
                             <option value="1">1 time</option>
                             <option value="2">2 times</option>
                             <option value="3">3 times</option>
@@ -82,7 +82,7 @@
                     </div>
                     <label class="col-sm-2 col-form-label">Interval</label>
                     <div class="col-sm-4">
-                        <select name="editDrugInterval" name="editDrugInterval">
+                        <select name="editDrugInterval" id="editDrugInterval">
                             <option value="1">Daily</option>
                             <option value="2">Weekly</option>
                             <option value="3">Fortnightly</option>
@@ -95,11 +95,11 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Instructions</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" name="editDrugInstructions" name="editDrugInstructions" placeholder="">
+                        <input type="text" class="form-control" name="editDrugInstructions" id="editDrugInstructions" disabled>
                     </div>
                     <label class="col-sm-2 col-form-label">Strictness</label>
                     <div class="col-sm-4">
-                        <select name="editDrugStrictness">
+                        <select name="editDrugStrictness" id="editDrugStrictness" >
                             <option value="true">Compulsory</option>
                             <option value="false">If needed</option>
                         </select>
@@ -108,7 +108,7 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Start Date</label>
                     <div class="col-sm-4">
-                        <input type="date" name="editDrugStartDate">
+                        <input type="text" class="form-control" name="editDrugStartDate" id="editDrugStartDate" disabled>
                     </div>
                 </div>
                 <br>
@@ -243,6 +243,33 @@
         function openEditModal(id) {
             editModal.style.display = "block";
             var item = pillboxlist[parseInt(id)];
+            console.log(item);
+            $('#editDrugName').empty().append($('<option>', {
+                value: item.inventory_ID,
+                text : item.drug_name
+            }));
+            $('#editDrugQuantity').val(item.inventory_balance);
+            $('#editDrugDose').val(item.inventory_balance);
+            $('#editDrugMeals').val(item.drugintake_ID);
+
+            $('#editDrugFrequency').val(item.frequency);
+
+            $('#editDrugInterval').val(item.drugphase_ID);
+
+            $('#editDrugInstructions').val(item.instructions);
+            if(item.strictness){
+                $('#editDrugStrictness').empty().append($('<option>', {
+                    text: "Compulsory"
+                }));
+            }
+            else {
+                $('#editDrugStrictness').empty().append($('<option>', {
+                    text: "If needed"
+                }));
+            }
+            $('#editDrugStartDate').val(item.inventory_startdate);
+
+            /*
             $('#editDrugName').empty().append($('<option>', {
                 value: 0,
                 text : item.drug_name
@@ -250,15 +277,7 @@
             $('#editDrugName').empty().append($('<option>', {
                 value: 0,
                 text : item.drug_name
-            }));
-            $('#editDrugName').empty().append($('<option>', {
-                value: 0,
-                text : item.drug_name
-            }));
-            $('#editDrugName').empty().append($('<option>', {
-                value: 0,
-                text : item.drug_name
-            }));
+            }));*/
 
         }
         function openDeleteModal(id) {

@@ -28,6 +28,10 @@ public class patientServlet extends HttpServlet {
                 addToPillbox(request);
                 response.sendRedirect("http://localhost:8080/patient/pillboxOverview.jsp");
                 break;
+            case "editPillbox":
+                editPillbox(request);
+                response.sendRedirect("http://localhost:8080/patient/pillboxOverview.jsp");
+                break;
             case "deleteFromPillbox":
                 deleteFromPillbox(request.getParameter("id"));
                 response.sendRedirect("http://localhost:8080/patient/pillboxOverview.jsp");
@@ -97,6 +101,7 @@ public class patientServlet extends HttpServlet {
                 map.put("instructions", resultSet.getString("instructions"));
                 map.put("strictness", resultSet.getString("strictness"));
                 map.put("inventory_startdate", resultSet.getString("inventory_startdate"));
+
                 list.add(map);
 
             }
@@ -109,7 +114,6 @@ public class patientServlet extends HttpServlet {
 
     private void addToPillbox(HttpServletRequest request){
 
-        System.out.println(request.getParameter("addDrugName"));
         System.out.println(request.getParameter("addDrugQuantity"));//
         System.out.println(request.getParameter("addDrugDose"));//
         System.out.println(request.getParameter("addDrugMeals"));
@@ -141,7 +145,39 @@ public class patientServlet extends HttpServlet {
                 ps.setBoolean(10, false);
             }
 
+            System.out.println(ps.toString());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 
+    private void editPillbox(HttpServletRequest request){
+
+
+        System.out.println(request.getParameter("editDrugQuantity"));//
+        System.out.println(request.getParameter("editDrugDose"));//
+        System.out.println(request.getParameter("editDrugMeals"));
+        System.out.println(request.getParameter("editDrugFrequency"));
+        System.out.println(request.getParameter("editDrugInterval"));
+        System.out.println(request.getParameter("editDrugName"));
+
+        String sql = "UPDATE INVENTORY SET inventory_balance=?,dose=?,drugintake_ID=?,frequency=?,drugphase_ID=? "+
+                "WHERE inventory_ID = ?;";
+        //String sql = "UPDATE INVENTORY SET inventory_balance=?,dose=?,drugintake_ID=?,frequency=?,drugphase_ID=? "+
+          //      "WHERE inventory_ID = ?;";
+
+
+        try {
+            PreparedStatement ps = DBConn.getPreparedStatement(sql);
+
+            ps.setInt(1, Integer.valueOf(request.getParameter("editDrugQuantity")));
+            ps.setInt(2, Integer.valueOf(request.getParameter("editDrugDose")));
+            ps.setInt(3, Integer.valueOf(request.getParameter("editDrugMeals")));
+            ps.setInt(4, Integer.valueOf(request.getParameter("editDrugFrequency")));
+            ps.setInt(5, Integer.valueOf(request.getParameter("editDrugInterval")));
+            ps.setInt(6, Integer.valueOf(request.getParameter("editDrugName")));
+            System.out.println(ps.toString());
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

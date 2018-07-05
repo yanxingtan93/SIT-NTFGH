@@ -74,6 +74,7 @@
         <url-pattern>/patient/getMedicationNames</url-pattern>
         <url-pattern>/patient/listPillbox</url-pattern>
         <url-pattern>/patient/addToPillbox</url-pattern>
+        <url-pattern>/patient/editPillbox</url-pattern>
         <url-pattern>/patient/deleteFromPillbox</url-pattern>
     </servlet-mapping>
 
