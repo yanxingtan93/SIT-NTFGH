@@ -2,10 +2,7 @@ package DatabaseConnector;
 
 import model.Medicine;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,26 +74,104 @@ public class DrugDaoImpl implements DrugsDao {
 
     @Override
     public void addNewDrug(Medicine med) {
+        String SQL = "INSERT INTO DRUGS(drug_name,drug_brand,medicineform_ID,drug_description,drug_side_effect) VALUES(?,?,?,?,?);";
+        try {
+            Connection conn = db.getConnection();
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setString(1,med.getMedicineName());
+            ps.setString(2,med.getBrand());
+            ps.setInt(3,med.getMedicineFormId());
+            ps.setString(4,med.getDescription());
+            ps.setString(5,med.getSideEffect());
+            ps.executeUpdate();
+            conn.commit();
+            conn.close();
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
 
     }
 
     @Override
     public Medicine getDrug(int id) {
-        return null;
+        Medicine drug = new Medicine();
+        String SQL ="SELECT * FROM DRUGS WHERE drug_ID = ?";
+        try{
+            Connection connection = db.getConnection();
+            PreparedStatement ps = connection.prepareStatement(SQL);
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                drug.setMedicineName(rs.getString("drug_name"));
+                drug.setBrand(rs.getString("drug_brand"));
+                drug.setMedicineFormId(rs.getInt("medicineform_ID"));
+                drug.setDescription(rs.getString("drug_description"));
+                drug.setSideEffect(rs.getString("drug_side_effect"));
+
+            }
+            connection.commit();
+            connection.close();
+
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        return drug;
     }
 
     @Override
     public void updateDrug(Medicine med) {
 
+        String sql = "UPDATE DRUGS SET drug_name = ?,drug_brand = ?,medicineform_ID = ?,drug_description = ?,drug_side_effect = ? WHERE drug_ID = ?";
+
+
+        try {
+            Connection conn = db.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1,med.getMedicineName());
+            ps.setString(2,med.getBrand());
+            ps.setInt(3,med.getMedicineFormId());
+            ps.setString(4,med.getDescription());
+            ps.setString(5,med.getSideEffect());
+            ps.setInt(6,med.getId());
+            ps.executeUpdate();
+            conn.commit();
+            conn.close();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
     public void deleteDrug(int id) {
+        String sql = "DELETE FROM DRUGS WHERE drug_ID = ?";
+        try{
+            Connection connection = db.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1,id);
+            ps.executeUpdate();
+            connection.commit();
+            connection.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
 
     }
 
     @Override
     public void deleteAllMedicine() {
+        String sql = "truncate table DRUGS";
+        try {
+            Connection con = db.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.execute();
+            con.commit();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 }

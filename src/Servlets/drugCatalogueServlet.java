@@ -22,7 +22,6 @@ import java.util.ArrayList;
 @WebServlet(name = "drugCatalogueServlet")
 public class drugCatalogueServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         DrugsDao drugsDao = new DrugDaoImpl();
         String mode = request.getParameter("mode");
         String medicineID = request.getParameter("drugid");
@@ -30,7 +29,6 @@ public class drugCatalogueServlet extends HttpServlet {
 
         if(mode.equals("Edit")) {
             System.out.println("In Editting mode of medEdit.jsp");
-
             String nextJSP = "/pharmacist/medicationEdit.jsp";
             ArrayList<Medicine> list = drugsDao.getAllDrugEdit(medicineID);
             request.setAttribute("list", list);
@@ -53,9 +51,7 @@ public class drugCatalogueServlet extends HttpServlet {
             String description = request.getParameter("drug_desc");
             String drugSideEffect = request.getParameter("drug_sideEffects");
             Medicine newMedicine = new Medicine(medicineName,brand,medicineFormId,description,drugSideEffect);
-            newMedicine.updateMedicine(Integer.parseInt(medicineID));
-
-
+            drugsDao.updateDrug(newMedicine);
             String nextJSP = "/pharmacist/medicationOverview.jsp";
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
             dispatcher.forward(request, response);
@@ -65,10 +61,7 @@ public class drugCatalogueServlet extends HttpServlet {
         else if(mode.equals("Delete")) {
 
             System.out.println("In Delete mode of medEdit.jsp");
-
-            Medicine.deleteMedicine(Integer.parseInt(medicineID));
-
-
+           drugsDao.deleteDrug(Integer.parseInt(medicineID));
             String nextJSP = "/pharmacist/medicationOverview.jsp";
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
             dispatcher.forward(request, response);
