@@ -60,7 +60,7 @@
 
             });
             $(document).ready(function() {
-                $.get("/drugCatalogueServlet", function(responseJson) {
+                $.get("/drugCatalogueServlet?route=all", function(responseJson) {
 
 
                     $.each(responseJson, function(key,value) {

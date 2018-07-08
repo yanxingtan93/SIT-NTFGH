@@ -1,6 +1,8 @@
 package Servlets;
 
 import DatabaseConnector.DBConn;
+import DatabaseConnector.UsersDao;
+import DatabaseConnector.UsersDaoImpl;
 import com.google.gson.Gson;
 import model.User;
 
@@ -9,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,6 +38,39 @@ public class UserServlet extends HttpServlet {
                // User.addNewUser(NRIC,name,Integer.parseInt(contact),email,address,dob,password,role);
                 response.sendRedirect("/admin/patientOverview.jsp");
                 break;
+
+            case "login":
+                    String userNRIC = request.getParameter("userName");
+                    String userPass = request.getParameter("userPassword");
+                    String userRole = request.getParameter("optradio");
+                    System.out.println(userNRIC+" "+userPass+" "+userRole);
+                    UsersDao userDao = new UsersDaoImpl();
+                    boolean valid = userDao.validateUser(userNRIC,userPass,userRole);
+                    if(valid){
+                        String myRole = userRole.toLowerCase().trim();
+
+                        HttpSession session=request.getSession();
+                        session.setAttribute("userID",userNRIC);
+
+                        if(myRole.equals("patient")){
+                            response.sendRedirect("http://localhost:8080/patient/pillboxOverview.jsp");
+                        }
+                        else if(myRole.equals("caregiver")){
+                            response.sendRedirect("http://localhost:8080/caregiver/pillboxOverview.jsp");
+                        }
+                        else if(myRole.equals("admin")){
+                            response.sendRedirect("http://localhost:8080/pharmacist/patientOverview.jsp");
+                        }
+                        else if(myRole.equals("pharmacist")){
+                            response.sendRedirect("http://localhost:8080/admin/patientOverview.jsp");
+                        }
+
+                    }
+                    else {
+                        response.sendRedirect("http://localhost:8080/registration.jsp");
+                    }
+                    break;
+
                 default:
                     System.out.println("Error in adding (Via Admin Add Account)");
                     break;
