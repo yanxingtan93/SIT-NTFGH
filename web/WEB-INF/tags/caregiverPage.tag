@@ -5,7 +5,7 @@
     <jsp:attribute name="header">
         <div class="float-right" style="margin: -60px 130px 0px 0px;">
             <img style="border-radius: 50%; margin: 0 10px 0 0" width="50" src="https://pbs.twimg.com/profile_images/997074101620559872/AHWWdl5J_200x200.jpg">
-            <span class="float-right">Patient<br>Hello, Umar Malik</span>
+            <span class="float-right" name="welcome" id="welcome"></span>
         </div>
 
 
@@ -31,3 +31,14 @@
         <jsp:doBody/>
     </jsp:body>
 </t:pageTemplate>
+
+<script>
+
+    $(document).ready(function(){
+        var userWelcome = $('#welcome');
+        var validAcc = "${sessionScope.userID}";
+        userWelcome.html("Patient<br>Hello, " + validAcc);
+
+    });
+
+</script>

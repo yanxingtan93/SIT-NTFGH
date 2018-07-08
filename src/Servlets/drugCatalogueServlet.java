@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -64,6 +65,10 @@ public class drugCatalogueServlet extends HttpServlet {
 
 
             case "all":
+                HttpSession session=request.getSession(false);
+                String name=(String)session.getAttribute("userID");
+                System.out.println(name+" _-> SESSION");
+
 
             DrugsDao drugDao = new DrugDaoImpl();
             int count = 0;

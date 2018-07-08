@@ -275,17 +275,38 @@ public class UserServlet extends HttpServlet {
 
             case "patient":
 
-                //HARDCODED
-                String userNRIC = "S1234567A";
+                String userNRIC = request.getParameter("id");
+
+                String myProfileSQL = "SELECT * from USERS WHERE user_NRIC = '"+userNRIC+"'";
+
 
                 String patientSQL = "SELECT pc.patient_NRIC,pc.caregiver_NRIC,u.user_NRIC,u.user_name,u.user_contact,u.user_email,u.user_address " +
                         "FROM PATIENTCAREGIVER pc,USERS u WHERE pc.caregiver_NRIC = u.user_NRIC AND pc.patient_NRIC = '"+userNRIC+"'";
-// AND pc.patient_NRIC = '"+userNRIC+"'
+
+
+
+
                 ArrayList<User> caregiverList = new ArrayList<User>();
 
                 try {
+                    PreparedStatement ps0 = DBConn.getPreparedStatement(myProfileSQL);
+                    ResultSet resultSet = ps0.executeQuery();
+                    while (resultSet.next()) {
+
+                        User user = new User();
+                        user.setNRIC(resultSet.getString("user_NRIC"));
+                        user.setName(resultSet.getString("user_name"));
+                        user.setContact(resultSet.getInt("user_contact"));
+                        user.setEmail(resultSet.getString("user_email"));
+                        user.setDob(resultSet.getString("user_dob"));
+                        user.setAddress(resultSet.getString("user_address"));
+
+                        caregiverList.add(user);
+                    }
+
+
                     PreparedStatement ps = DBConn.getPreparedStatement(patientSQL);
-                    ResultSet resultSet = ps.executeQuery();
+                    resultSet = ps.executeQuery();
 
                     while (resultSet.next()) {
 
@@ -294,6 +315,7 @@ public class UserServlet extends HttpServlet {
                         user.setName(resultSet.getString("user_name"));
                         user.setContact(resultSet.getInt("user_contact"));
                         user.setEmail(resultSet.getString("user_email"));
+                        user.setDob(resultSet.getString("user_dob"));
                         user.setAddress(resultSet.getString("user_address"));
 
                         caregiverList.add(user);
@@ -347,7 +369,41 @@ public class UserServlet extends HttpServlet {
                 break;
 
 
+            case "myprofile":
 
+                String myNRIC = request.getParameter("id");
+
+                String myProfileSQL1 = "SELECT * from USERS WHERE user_NRIC = '"+myNRIC+"'";
+
+                ArrayList<User> myProfile = new ArrayList<User>();
+
+                try {
+                    PreparedStatement ps0 = DBConn.getPreparedStatement(myProfileSQL1);
+                    ResultSet resultSet = ps0.executeQuery();
+                    while (resultSet.next()) {
+
+                        User user = new User();
+                        user.setNRIC(resultSet.getString("user_NRIC"));
+                        user.setName(resultSet.getString("user_name"));
+                        user.setContact(resultSet.getInt("user_contact"));
+                        user.setEmail(resultSet.getString("user_email"));
+                        user.setDob(resultSet.getString("user_dob"));
+                        user.setAddress(resultSet.getString("user_address"));
+
+                        myProfile.add(user);
+                    }
+
+
+                    String json = new Gson().toJson(myProfile);
+
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write(json);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+
+                }
+                break;
 
 
         }

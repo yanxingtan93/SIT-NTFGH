@@ -33,17 +33,11 @@
 
 <script>
 
-
     $(document).ready(function(){
         var userWelcome = $('#welcome');
-        userWelcome.html("Patient<br>Hello, " + "<?php echo $_SESSION['userID'] ?>");
-
-
+        var validAcc = "${sessionScope.userID}";
+        userWelcome.html("Patient<br>Hello, " + validAcc);
 
     });
-
-
-
-
 
 </script>
