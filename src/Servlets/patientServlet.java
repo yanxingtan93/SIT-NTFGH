@@ -9,12 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Array;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @WebServlet(name = "patientServlet")
 public class patientServlet extends HttpServlet {
@@ -48,7 +51,9 @@ public class patientServlet extends HttpServlet {
             case "getMedicationNames":
                 response.getWriter().write(getMedicationNames());
                 break;
-
+            case "getMedicationForms":
+                response.getWriter().write(getMedicationForms());
+                break;
             case "listPillbox":
                 response.getWriter().write(listPillbox());
                 break;
@@ -66,6 +71,27 @@ public class patientServlet extends HttpServlet {
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("drug_ID", resultSet.getString("drug_ID"));
                 map.put("drug_name", resultSet.getString("drug_name"));
+                list.add(map);
+
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+
+        }
+        return gson.toJson(list);
+    }
+
+    private String getMedicationForms(){
+        String sql = "SELECT * FROM MEDICINEFORM";
+        ArrayList<Map> list = new ArrayList<>();
+        try {
+            PreparedStatement ps = DBConn.getPreparedStatement(sql);
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("medicineform_ID", resultSet.getString("medicineform_ID"));
+                map.put("medicineform_name", resultSet.getString("medicineform_name"));
                 list.add(map);
 
             }
@@ -112,19 +138,105 @@ public class patientServlet extends HttpServlet {
         return gson.toJson(list);
     }
 
+    //Function to translate form inputs into an array of intake datetimes
+    private List<String> getIntakeTimes(HttpServletRequest request){
+        List<String> intakeDateTimes = new ArrayList<String>();
+
+
+        Double dose = Double.valueOf(request.getParameter("addDrugDose"));
+        Double totalQuantity = Double.valueOf(request.getParameter("addDrugQuantity"));
+
+        //Dummy Variables for testing
+        //Double totalQuantity= 11.0;
+        //Double dose = 2.0;
+
+        String interval = request.getParameter("addDrugInterval");
+
+        Map<String, Boolean> dayOfWeekMap = new HashMap<String, Boolean>();
+        if (interval.equalsIgnoreCase("2")){
+            System.out.println("Inside");
+
+            if(request.getParameterMap().containsKey("addDayOfWeek1")){ dayOfWeekMap.replace("MONDAY", true); System.out.println("check1");}
+            else { dayOfWeekMap.put("MONDAY", false); }
+            if(request.getParameterMap().containsKey("addDayOfWeek2")){ dayOfWeekMap.replace("TUESDAY", true); System.out.println("check2");}
+            else { dayOfWeekMap.put("TUESDAY", false); }
+            if(request.getParameterMap().containsKey("addDayOfWeek3")){ dayOfWeekMap.replace("WEDNESDAY", true); }
+            else { dayOfWeekMap.put("WEDNESDAY", false); }
+            if(request.getParameterMap().containsKey("addDayOfWeek4")){ dayOfWeekMap.replace("THURSDAY", true); }
+            else { dayOfWeekMap.put("THURSDAY", false); }
+            if(request.getParameterMap().containsKey("addDayOfWeek5")){ dayOfWeekMap.replace("FRIDAY", true); }
+            else { dayOfWeekMap.put("FRIDAY", false); }
+            if(request.getParameterMap().containsKey("addDayOfWeek6")){ dayOfWeekMap.replace("SATURDAY", true); }
+            else { dayOfWeekMap.put("SATURDAY", false); }
+            if(request.getParameterMap().containsKey("addDayOfWeek7")){ dayOfWeekMap.replace("SUNDAY", true); }
+            else { dayOfWeekMap.put("SUNDAY", false); }
+        }
+        else {
+            dayOfWeekMap.put("MONDAY", true);
+            dayOfWeekMap.put("TUESDAY", true);
+            dayOfWeekMap.put("WEDNESDAY", true);
+            dayOfWeekMap.put("THURSDAY", true);
+            dayOfWeekMap.put("FRIDAY", true);
+            dayOfWeekMap.put("SATURDAY", true);
+            dayOfWeekMap.put("SUNDAY", true);
+        }
+
+
+        //Get the rounded up number of intakes
+        int numIntakes = (int)Math.ceil(totalQuantity/dose);
+        String rawStartDate = request.getParameter("addDrugStartDate");
+
+        //Freq is twice a day at 1100 and 1800
+        String[] consumptionTimes = request.getParameter("addDrugFrequency").split(",");
+
+        LocalDate startDate = LocalDate.parse(rawStartDate);
+        LocalDate currentDate = startDate;
+        LocalDateTime currentDateTime;
+        int daysSinceStart = 0;
+        for (int i = 0; i<numIntakes; i++){
+            int intakeGroup = i%consumptionTimes.length;
+            int hour = Integer.valueOf(consumptionTimes[intakeGroup]);
+            //Go to next day
+            if(intakeGroup==0 && i>0){
+                daysSinceStart++;
+            }
+
+            currentDateTime = startDate.plusDays(daysSinceStart).atTime(hour, 0);
+
+            if(dayOfWeekMap.get(currentDateTime.getDayOfWeek().toString())){
+                intakeDateTimes.add(currentDateTime.getDayOfWeek().toString()+currentDateTime);
+            }
+            //if day is not included, prevent the counter from increasing and move to next day with same time
+            else{
+                i--;
+            }
+        }
+        return intakeDateTimes;
+    }
+
     private void addToPillbox(HttpServletRequest request){
+        List<String> intakeDateTimes = getIntakeTimes(request);
+        for (String datetime: intakeDateTimes) {
+            System.out.println(datetime);
+        }
+        String[] consumptionTimes = request.getParameter("addDrugFrequency").split(",");
 
-        System.out.println(request.getParameter("addDrugQuantity"));//
-        System.out.println(request.getParameter("addDrugDose"));//
+
+
+
+        /*
+        System.out.println(request.getParameter("addDrugName"));
         System.out.println(request.getParameter("addDrugMeals"));
-        System.out.println(request.getParameter("addDrugFrequency"));
         System.out.println(request.getParameter("addDrugInterval"));
-        System.out.println(request.getParameter("addDrugInstructions"));//
-        System.out.println(request.getParameter("addDrugStrictness"));
+        System.out.println(request.getParameter("addDrugQuantity"));
         System.out.println(request.getParameter("addDrugStartDate"));
-
-        String sql = "INSERT INTO INVENTORY(drug_ID, drugintake_ID,drugphase_ID,inventory_balance,inventory_status,inventory_startdate,dose,instructions,frequency,strictness) " +
-                "VALUES(?,?,?,?,?,?,?,?,?,?);";
+        System.out.println(request.getParameter("addDrugDose"));
+        System.out.println(request.getParameter("addDrugInstructions"));//
+        System.out.println(request.getParameter("addDrugFrequency"));
+        System.out.println(request.getParameter("addDrugForm"));
+        */
+        String sql = "INSERT INTO INVENTORY(drug_ID, drugintake_ID,drugphase_ID,inventory_balance,inventory_status,inventory_startdate,dose,instructions,frequency,strictness,medicineform_ID) " +
+                "VALUES(?,?,?,?,?,?,?,?,?,?,?);";
 
         try {
             PreparedStatement ps = DBConn.getPreparedStatement(sql);
@@ -136,7 +248,7 @@ public class patientServlet extends HttpServlet {
             ps.setString(6, request.getParameter("addDrugStartDate"));
             ps.setInt(7, Integer.valueOf(request.getParameter("addDrugDose")));
             ps.setString(8, request.getParameter("addDrugInstructions"));
-            ps.setInt(9, Integer.valueOf(request.getParameter("addDrugFrequency")));
+            ps.setInt(9, consumptionTimes.length);
 
             if (request.getParameter("addDrugStrictness").equalsIgnoreCase("true")){
                 ps.setBoolean(10, true);
@@ -144,8 +256,8 @@ public class patientServlet extends HttpServlet {
             else{
                 ps.setBoolean(10, false);
             }
-
-            System.out.println(ps.toString());
+            ps.setInt(11, Integer.valueOf(request.getParameter("addDrugForm")));
+            System.out.println(request.getParameter("addDrugForm"));
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

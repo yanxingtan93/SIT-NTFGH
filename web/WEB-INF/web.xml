@@ -72,6 +72,7 @@
     <servlet-mapping>
         <servlet-name>patientServlet</servlet-name>
         <url-pattern>/patient/getMedicationNames</url-pattern>
+        <url-pattern>/patient/getMedicationForms</url-pattern>
         <url-pattern>/patient/listPillbox</url-pattern>
         <url-pattern>/patient/addToPillbox</url-pattern>
         <url-pattern>/patient/editPillbox</url-pattern>

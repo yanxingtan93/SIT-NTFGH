@@ -138,13 +138,16 @@
                     </div>
                     <label class="col-sm-2 col-form-label">Total Quantity</label>
                     <div class="col-sm-4">
-                        <input type="number" class="form-control" name="addDrugQuantity" min="1" max="60">
+                        <input type="number" class="form-control" name="addDrugQuantity" min="1" max="60" value="9">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Dose</label>
-                    <div class="col-sm-4">
-                        <input type="number" class="form-control" name="addDrugDose" min="1" max="10">
+                    <div class="col-sm-2">
+                        <input type="number" class="form-control" name="addDrugDose" min="0.25" max="10" step="0.25" value="2">
+                    </div>
+                    <div class="col-sm-2">
+                        <select name="addDrugForm" id="addDrugForm"></select>
                     </div>
                     <label class="col-sm-2 col-form-label">Meals</label>
                     <div class="col-sm-4">
@@ -152,31 +155,6 @@
                             <option value="1">Before Meal</option>
                             <option value="2">After Meal</option>
                             <option value="3">Meal Independent</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Frequency</label>
-                    <div class="col-sm-4">
-                        <select name="addDrugFrequency">
-                            <option value="1">1 time</option>
-                            <option value="2">2 times</option>
-                            <option value="3">3 times</option>
-                            <option value="4">4 times</option>
-                            <option value="5">5 times</option>
-                            <option value="6">6 times</option>
-                        </select>
-                    </div>
-                    <label class="col-sm-2 col-form-label">Interval</label>
-                    <div class="col-sm-4">
-                        <select name="addDrugInterval">
-                            <option value="1">Daily</option>
-                            <option value="2">Weekly</option>
-                            <option value="3">Fortnightly</option>
-                            <option value="4">Monthly</option>
-                            <option value="5">Yearly</option>
-                            <option value="6">Custom</option>
                         </select>
                     </div>
                 </div>
@@ -194,9 +172,44 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Frequency</label>
+                    <div class="col-sm-4">
+                        <select name="addDrugFrequency" id="addDrugFrequency">
+                            <option value="10,18">1 time (1300)</option>
+                            <option value="2">2 times (1000, 1800)</option>
+                            <option value="3">3 times (0800,1400,2000)</option>
+                            <option value="4">4 times (0800,1400,2000,2300)</option>
+                            <option value="5">5 times</option>
+                            <option value="6">6 times</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-2 col-form-label">Interval</label>
+                    <div class="col-sm-4">
+                        <select name="addDrugInterval" onchange="toggleDayOfWeek(this);">
+                            <option value="1">Daily</option>
+                            <option value="2">Custom</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Start Date</label>
                     <div class="col-sm-4">
-                        <input type="date" name="addDrugStartDate">
+                        <input type="date" name="addDrugStartDate" id="addDrugStartDate">
+                    </div>
+                    <div class="col-sm-6">
+                        <table id="addDaySelector" style="text-align: center; table-layout: fixed; width: 100%; display:none;">
+                            <tr><td>Mon</td><td>Tue</td><td>Wed</td><td>Thu</td><td>Fri</td><td>Sat</td><td>Sun</td></tr>
+                            <tr>
+                                <td><input type="checkbox" name="addDayOfWeek1" value="1"> </td>
+                                <td><input type="checkbox" name="addDayOfWeek2" value="1"> </td>
+                                <td><input type="checkbox" name="addDayOfWeek3" value="1"> </td>
+                                <td><input type="checkbox" name="addDayOfWeek4" value="1"> </td>
+                                <td><input type="checkbox" name="addDayOfWeek5" value="1"> </td>
+                                <td><input type="checkbox" name="addDayOfWeek6" value="1"> </td>
+                                <td><input type="checkbox" name="addDayOfWeek7" value="1"> </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
                 <br>
@@ -236,6 +249,17 @@
         var editModal = document.getElementById('editModal');
         var deleteModal = document.getElementById('deleteModal');
 
+        //Show/hide dayofweek selector
+        function toggleDayOfWeek(sel)
+        {
+            if(sel.value.toString()==="2"){
+                $("#addDaySelector").show();
+            }
+            else{
+                $("#addDaySelector").hide();
+            }
+        }
+
         // Get the button that opens the modal
         function openAddModal() {
             addModal.style.display = "block";
@@ -269,15 +293,6 @@
             }
             $('#editDrugStartDate').val(item.inventory_startdate);
 
-            /*
-            $('#editDrugName').empty().append($('<option>', {
-                value: 0,
-                text : item.drug_name
-            }));
-            $('#editDrugName').empty().append($('<option>', {
-                value: 0,
-                text : item.drug_name
-            }));*/
 
         }
         function openDeleteModal(id) {
@@ -313,13 +328,35 @@
             }
         }
 
+        function setDateToday(){
+            var now = new Date();
+            var day = ("0" + now.getDate()).slice(-2);
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            var today = now.getFullYear()+"-"+(month)+"-"+(day);
+            $('#addDrugStartDate').val(today);
+        }
+
         $(document).ready(function(){
+            setDateToday();
+
+
             $.get( "http://localhost:8080/patient/getMedicationNames" ).then(
                 function(data,status) {
                     $.each(JSON.parse(data), function (i, item) {
                         $('#addDrugName').append($('<option>', {
                             value: item.drug_ID,
                             text : item.drug_name
+                        }));
+                    });
+                }
+            );
+
+            $.get( "http://localhost:8080/patient/getMedicationForms" ).then(
+                function(data,status) {
+                    $.each(JSON.parse(data), function (i, item) {
+                        $('#addDrugForm').append($('<option>', {
+                            value: item.medicineform_ID,
+                            text : item.medicineform_name
                         }));
                     });
                 }
