@@ -4,12 +4,13 @@
 <t:adminPage>
     <h1>Manage personal details</h1>
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,dt-1.10.8/datatables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/r/bs-3.3.5/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
     <br>
     <div class="container">
         <div class="row">
 
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
-
+            <div class="col-xs-12 col-sm-12 col-md-11 col-lg-11 toppad" >
 
                 <div class="panel panel-info">
                     <div class="panel-heading">

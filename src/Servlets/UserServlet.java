@@ -51,7 +51,7 @@ public class UserServlet extends HttpServlet {
                     boolean valid = userDao.validateUser(userNRIC,userPass,userRole);
                     if(valid){
                         String myRole = userRole.toLowerCase().trim();
-
+                        System.out.println(myRole+" Accessing");
                         HttpSession session=request.getSession();
                         session.setAttribute("userID",userNRIC);
 
@@ -62,10 +62,10 @@ public class UserServlet extends HttpServlet {
                             response.sendRedirect("http://localhost:8080/caregiver/pillboxOverview.jsp");
                         }
                         else if(myRole.equals("admin")){
-                            response.sendRedirect("http://localhost:8080/pharmacist/patientOverview.jsp");
+                            response.sendRedirect("http://localhost:8080/admin/patientOverview.jsp");
                         }
                         else if(myRole.equals("pharmacist")){
-                            response.sendRedirect("http://localhost:8080/admin/patientOverview.jsp");
+                            response.sendRedirect("http://localhost:8080/pharmacist/patientOverview.jsp");
                         }
 
                     }
@@ -92,6 +92,11 @@ public class UserServlet extends HttpServlet {
                 usersDao.addNewUser(user1);
 
                 break;
+
+            case "View":
+
+                break;
+
 
                 default:
                     System.out.println("Error in adding (Via Admin Add Account)");
@@ -167,7 +172,7 @@ public class UserServlet extends HttpServlet {
                         user.setName(resultSet.getString("user_name"));
                         user.setContact(resultSet.getInt("user_contact"));
                         user.setEmail(resultSet.getString("user_email"));
-
+                        user.setAddress(resultSet.getString("user_address"));
 
 
                         list.add(user);
@@ -302,7 +307,7 @@ public class UserServlet extends HttpServlet {
                 String myProfileSQL = "SELECT * from USERS WHERE user_NRIC = '"+userNRIC+"'";
 
 
-                String patientSQL = "SELECT pc.patient_NRIC,pc.caregiver_NRIC,u.user_NRIC,u.user_name,u.user_contact,u.user_email,u.user_address " +
+                String patientSQL = "SELECT pc.patient_NRIC,pc.caregiver_NRIC,u.user_NRIC,u.user_name,u.user_contact,u.user_email,u.user_address,u.user_DOB " +
                         "FROM PATIENTCAREGIVER pc,USERS u WHERE pc.caregiver_NRIC = u.user_NRIC AND pc.patient_NRIC = '"+userNRIC+"'";
 
 
@@ -320,7 +325,7 @@ public class UserServlet extends HttpServlet {
                         user.setName(resultSet.getString("user_name"));
                         user.setContact(resultSet.getInt("user_contact"));
                         user.setEmail(resultSet.getString("user_email"));
-                        user.setDob(resultSet.getString("user_dob"));
+                        user.setDob(resultSet.getString("user_DOB"));
                         user.setAddress(resultSet.getString("user_address"));
 
                         caregiverList.add(user);
@@ -337,7 +342,7 @@ public class UserServlet extends HttpServlet {
                         user.setName(resultSet.getString("user_name"));
                         user.setContact(resultSet.getInt("user_contact"));
                         user.setEmail(resultSet.getString("user_email"));
-                        user.setDob(resultSet.getString("user_dob"));
+                        user.setDob(resultSet.getString("user_DOB"));
                         user.setAddress(resultSet.getString("user_address"));
 
                         caregiverList.add(user);

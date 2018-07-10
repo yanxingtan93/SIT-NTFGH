@@ -67,13 +67,14 @@
       <form method="post" action="/UserServlet">
       <div class="form-login">
 
+          <div class="pull-right">  <a href="loginPharmacist.jsp" style="background-color: black" class="btn btn-primary btn-sm"><i class="fa fa-arrows-h"></i><b>&nbspPharmacist</b> </a></div>
         <img src="https://www.gov.sg/sgdi/~/media/sgdi/ntfgh.png" alt="logo_ntfgh" width="291">
         <h4><b>NTFGH Pharmacy Application</b></h4>
 
         <input type="hidden" id="route" name="route" class="form-control input-sm chat-input" value="login" />
-        <input type="text" name="userName" id="userName"  class="form-control input-sm chat-input" placeholder="NRIC" value="S1234567B"/>
+        <input type="text" style="font-weight: bold" name="userName" id="userName"  class="form-control input-sm chat-input" placeholder="NRIC" value="S1234567A"/>
         </br>
-        <input type="password" name="userPassword" id="userPassword" class="form-control input-sm chat-input" placeholder="Password" />
+        <input type="password" style="font-weight: bold" name="userPassword" id="userPassword" class="form-control input-sm chat-input" placeholder="Password" />
         </br>
         <span class="label label-success">&nbsp; My Role: &nbsp; &nbsp;</span>
         &nbsp;&nbsp;<label class="radio-inline"><input type="radio" id="role" name="optradio" value="Patient" checked="checked">Patient</label>
@@ -82,8 +83,8 @@
           <br><br>
           <span class="group-btn">
 
-              <button type="submit" class="btn btn-primary"><b>Login</b> <i class="fa fa-sign-in"></i></button>
-                <a href="registration.jsp" class="btn btn-primary btn-md"><b>Register</b> <i class="fa fa-user-plus"></i></a>
+              <button type="submit" style="background-color: black" class="btn btn-primary"><b>Login</b> <i class="fa fa-sign-in"></i></button>
+                <a href="registration.jsp" style="background-color: black" class="btn btn-primary btn-md"><b>Register</b> <i class="fa fa-group"></i></a>
             </span>
         </div>
 

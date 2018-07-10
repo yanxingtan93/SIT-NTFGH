@@ -64,29 +64,31 @@
 <div class="container">
     <div class="row">
         <div class="col-md-offset-5 col-md-4">
+            <form method="post" action="/UserServlet">
             <div class="form-login">
-
+                <div class="pull-right">  <a href="index.jsp" style="background-color: black" class="btn btn-primary btn-sm"><i class="fa fa-arrows-h"></i><b>&nbspPatient</b> </a></div>
                 <img src="https://www.gov.sg/sgdi/~/media/sgdi/ntfgh.png" alt="logo_ntfgh" width="291">
                 <h4><b>NTFGH Pharmacy Application</b></h4>
-                <form method="post" action="/UserServlet?route=login">
-                <input type="text" id="userName" class="form-control input-sm chat-input" placeholder="NRIC" />
+
+                    <input type="hidden" id="route" name="route" class="form-control input-sm chat-input" value="login" />
+                <input type="text" style="font-weight: bold" id="userName" name="userName" class="form-control input-sm chat-input" placeholder="NRIC" />
                 </br>
-                <input type="text" id="userPassword" class="form-control input-sm chat-input" placeholder="Password" />
+                <input type="password" style="font-weight: bold" id="userPassword" name="userPassword" class="form-control input-sm chat-input" placeholder="Password" />
                 </br>
                 <span class="label label-success">&nbsp; My Role: &nbsp; &nbsp;</span>
-                &nbsp;&nbsp;<label class="radio-inline"><input type="radio" id="role" name="optradio">Pharmacist</label>
-                <label class="radio-inline"><input type="radio" name="optradio">Administrator</label>
+                &nbsp;&nbsp;<label class="radio-inline"><input type="radio" id="role" name="optradio" value="Pharmacist" checked="checked">Pharmacist</label>
+                <label class="radio-inline"><input type="radio" name="optradio" value="Admin">Administrator</label>
                 <div class="wrapper">
                     <br><br>
             <span class="group-btn">
-                 <button type="submit" class="btn btn-primary"><b>Login</b> <i class="fa fa-sign-in"></i></button>
+                 <button type="submit" style="background-color: black" class="btn btn-primary"><b>Login</b> <i class="fa fa-sign-in"></i></button>
 
-                <a href="#" class="btn btn-primary btn-md"><b>Register</b> <i class="fa fa-user-plus"></i></a>
+                <a href="#"  style="background-color: black"class="btn btn-primary btn-md"><b>Register</b> <i class="fa fa-group"></i></a>
             </span>
                 </div>
-                </form>
-            </div>
 
+            </div>
+            </form>
         </div>
     </div>
 </div>

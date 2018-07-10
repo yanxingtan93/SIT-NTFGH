@@ -146,14 +146,22 @@ public class DrugDaoImpl implements DrugsDao {
 
     @Override
     public void deleteDrug(int id) {
+
+
+        String sql1 = "DELETE FROM PREORDERDRUGS WHERE drug_ID = ?";
         String sql = "DELETE FROM DRUGS WHERE drug_ID = ?";
         try{
             Connection connection = db.getConnection();
+            PreparedStatement ps1 = connection.prepareStatement(sql1);
+            ps1.setInt(1,id);
+            ps1.executeUpdate();
+
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1,id);
             ps.executeUpdate();
             connection.commit();
             connection.close();
+
         }catch(SQLException e){
             e.printStackTrace();
         }

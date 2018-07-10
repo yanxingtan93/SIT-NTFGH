@@ -28,6 +28,7 @@ public class drugCatalogueServlet extends HttpServlet {
 
         String medicineID = request.getParameter("drugid");
 
+        System.out.println("MODE: "+mode);
 
         if(mode.equals("Save")) {
 
