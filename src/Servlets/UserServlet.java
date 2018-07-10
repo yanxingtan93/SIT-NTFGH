@@ -23,6 +23,8 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String route = request.getParameter("route");
+        UsersDao usersDao = new UsersDaoImpl();
+
 
         switch(route){
             case "adminAdd":
@@ -34,9 +36,10 @@ public class UserServlet extends HttpServlet {
                 String address = request.getParameter("user_address");
                 String password = request.getParameter("user_password");
                 String role = request.getParameter("role");
-                System.out.println("My Role: "+role+" of NRIC: "+NRIC+" name-> "+name);
-               // User.addNewUser(NRIC,name,Integer.parseInt(contact),email,address,dob,password,role);
-                response.sendRedirect("/admin/patientOverview.jsp");
+
+                User user =  new User(NRIC,name,password,dob,Integer.parseInt(contact),email,address,role);
+                usersDao.addNewUser(user);
+
                 break;
 
             case "login":
@@ -70,6 +73,25 @@ public class UserServlet extends HttpServlet {
                         response.sendRedirect("http://localhost:8080/registration.jsp");
                     }
                     break;
+
+
+            case "userAdd":
+                String name1 = request.getParameter("user_name");
+                String NRIC1 = request.getParameter("user_NRIC");
+                String email1 = request.getParameter("user_email");
+                String contact1  = request.getParameter("user_contact");
+                String dob1 = request.getParameter("user_dob");
+                String address1 = request.getParameter("user_address");
+                String password1 = request.getParameter("user_password");
+                String condition = request.getParameter("user_condition");
+                String role1 = request.getParameter("roleA");
+
+                System.out.println(role1+" -- "+condition);
+
+                User user1 =  new User(NRIC1,name1,password1,dob1,Integer.parseInt(contact1),email1,address1,role1,condition);
+                usersDao.addNewUser(user1);
+
+                break;
 
                 default:
                     System.out.println("Error in adding (Via Admin Add Account)");

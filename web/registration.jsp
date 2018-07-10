@@ -65,6 +65,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-offset-5 col-md-4">
+            <form method="post" action="/UserServlet">
             <div class="form-login">
 
                 <img src="https://www.gov.sg/sgdi/~/media/sgdi/ntfgh.png" alt="logo_ntfgh" width="291">
@@ -73,10 +74,23 @@
 
                     <tr>
                         <td>
+                            <label for="userName">&nbsp;Name: </label>
+                        </td>
+                        <td>
+                            <input type="text" id="userName" name="user_name" class="form-control input-sm chat-input" placeholder="Name" /> <br>
+                        </td>
+                    </tr>
+
+                    <br>
+
+
+                    <tr>
+                        <td>
+                            <input type="hidden" id="route" name="route" class="form-control input-sm chat-input" value="adminAdd" />
                     <label for="userName">&nbsp;NRIC: </label>
                         </td>
                         <td>
-                    <input type="text" id="userName" class="form-control input-sm chat-input" placeholder="NRIC" /> <br>
+                    <input type="text" id="userNRIC" name="user_NRIC" class="form-control input-sm chat-input" placeholder="NRIC" /> <br>
                         </td>
 
 
@@ -90,7 +104,7 @@
                     <label for="userPassword">&nbsp;Password: </label>
                         </td>
                         <td>
-                    <input type="password" id="userPassword" class="form-control input-sm chat-input" placeholder="Password" /> <br>
+                    <input type="password" id="userPassword" name="user_password" class="form-control input-sm chat-input" placeholder="Password" /> <br>
                         </td>
                     </tr>
 
@@ -101,18 +115,30 @@
                     <label for="userEmail">&nbsp;Email: </label>
                         </td>
                         <td>
-                    <input type="email" id="userEmail" class="form-control input-sm chat-input" placeholder="Email" /> <br>
+                    <input type="email" id="userEmail" name="user_email" class="form-control input-sm chat-input" placeholder="Email" /> <br>
                         </td>
                     </tr>
                 </div>
                 <br>
+                    <tr>
+                        <td>
+                            <label for="userDOB">&nbsp;Date Of Birth: </label>
+                        </td>
+                        <td>
+                            <input type="text" id="userDOB" name="user_dob" class="form-control input-sm chat-input" placeholder="Date of Birth" /> <br>
+                        </td>
+                    </tr>
+
+                <br>
+
+
                 <div class="row">
                     <tr>
                         <td>
                     <label for="userContact">&nbsp;Contact: </label>
                         </td>
                         <td>
-                    <input type="number" id="userContact" class="form-control input-sm chat-input" placeholder="Contact Number" /> <br>
+                    <input type="number" id="userContact" name="user_contact" class="form-control input-sm chat-input" placeholder="Contact Number" /> <br>
                         </td>
                     </tr>
                 </div>
@@ -123,7 +149,7 @@
                     <label for="userAddress">&nbsp;Address: </label>
                         </td>
                         <td>
-                    <input type="text" id="userAddress" class="form-control input-sm chat-input" placeholder="Address" /> <br>
+                    <input type="text" id="userAddress" name= "user_address" class="form-control input-sm chat-input" placeholder="Address" /> <br>
                         </td>
                     </tr>
                 </div>
@@ -134,7 +160,7 @@
                     <label for="userCondition">&nbsp;My Conditions: &nbsp </label>
                         </td>
                         <td>
-                    <textarea class="form-control" name="userCondition" id="userCondition" rows="4"></textarea> <br>
+                    <textarea class="form-control" name="user_condition" id="userCondition" rows="4"></textarea> <br>
                         </td>
                     </tr>
                 </div>
@@ -142,16 +168,19 @@
 
                 <br>
                 <span class="label label-success">&nbsp; My Role: &nbsp; &nbsp;</span>
-                &nbsp;&nbsp;<label class="radio-inline"><input type="radio" id="role" name="optradio">Patient</label>
-                <label class="radio-inline"><input type="radio" name="optradio">Caregiver</label>
+                &nbsp;&nbsp;
+                <label class="radio-inline"><input type="radio" name="roleA" value="Patient" checked="checked">Patient</label>
+                <label class="radio-inline"><input type="radio" name="roleA" value="Caregiver">Caregiver</label>
+
                 <div class="wrapper">
                     <br><br>
             <span class="group-btn">
-                <a href="registration.jsp" class="btn btn-primary btn-md">Register <i class="fa fa-user-plus"></i></a>
+                 <button type="submit" class="btn btn-primary">Register <i class="fa fa-user-plus"></i></button>
             </span>
                 </div>
             </div>
 
+            </form>
         </div>
     </div>
 </div>
