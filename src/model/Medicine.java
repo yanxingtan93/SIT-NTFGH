@@ -103,45 +103,6 @@ public class Medicine {
         this.sideEffect = sideEffect;
     }
 
-    public void addNewMedicine(){
-        DBConn db = new DBConn();
-        String sql = "INSERT INTO DRUGS(drug_name,drug_brand,medicineform_ID,drug_description,drug_side_effect) " +
-                "VALUES('"+medicineName+"','"+brand+"',"+medicineFormId+",'"+description+"','"+sideEffect+"');";
-        try {
-            Connection conn = db.getConnection();
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate(sql);
-            conn.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-
-    public void updateMedicine(int id){
-        DBConn db = new DBConn();
-
-        String sql = "UPDATE DRUGS SET drug_name = '"+medicineName +"',drug_brand = '"+ brand+"'," +
-                "medicineform_ID = '"+ medicineFormId+"',drug_description = '"+ description+"',drug_side_effect = '"+sideEffect +"' " +
-                "WHERE drug_ID = '"+id+"'";
-
-
-        try {
-            Connection conn = db.getConnection();
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate(sql);
-            conn.commit();
-            conn.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
     public static void deleteMedicine(int id){
         DBConn db = new DBConn();
 

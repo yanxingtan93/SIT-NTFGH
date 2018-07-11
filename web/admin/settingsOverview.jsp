@@ -27,7 +27,7 @@
                         <li class="active"><a href="#one" data-toggle="tab"><i class="fa fa-gear"></i> Medicine Forms</a></li>
                         <li><a href="#two" data-toggle="tab"><i class="fa fa-gear"></i> Medicine Phases</a></li>
                         <li><a href="#three" data-toggle="tab"><i class="fa fa-gear"></i> Medicine Intake Periods</a></li>
-                        <li><a href="#four" data-toggle="tab"><i class="fa fa-gear"></i> Allergies</a></li>
+
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="one">
@@ -64,12 +64,7 @@
                             </table>
 
                         </div>
-                        <div class="tab-pane" id="four">
-                            <h4>System's Available Medicine Forms</h4>
-                            Fouranjd, ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate. Quisque mauris augue, molestie tincidunt condimentum vitae.
 
-
-                        </div>
                     </div>
                 </div>
                 <!-- /tabs -->

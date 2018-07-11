@@ -5,50 +5,55 @@
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
-<style>
+    <style>
 
-    @import url(http://fonts.googleapis.com/css?family=Roboto:400);
-    body {
-        background-color:#fff;
-        -webkit-font-smoothing: antialiased;
-        font: normal 14px Roboto,arial,sans-serif;
-    }
+        @import url(http://fonts.googleapis.com/css?family=Roboto:400);
+        body {
+            background-color:#54C5C3;
+            -webkit-font-smoothing: antialiased;
+            font: normal 14px Roboto,arial,sans-serif;
+        }
 
-    .container {
-        padding: 25px;
-        position: relative;
-    }
+        .container {
 
-    .form-login {
-        background-color: #EDEDED;
-        padding-top: 10px;
-        padding-bottom: 20px;
-        padding-left: 20px;
-        padding-right: 20px;
-        border-radius: 5px;
-        border-color:#d2d2d2;
-        border-width: 5px;
-        box-shadow:0 1px 0 #cfcfcf;
-    }
+            padding: 10px;
+            padding-top: 120px;
+            padding-right: 80px;
+            position: center;
+            align-self: center;
+        }
 
-    h4 {
-        border:0 solid #fff;
-        border-bottom-width:1px;
-        padding-bottom:10px;
-        text-align: center;
-    }
+        .form-login {
+            background-color: #EDEDED;
+            padding-top: 10px;
+            padding-bottom: 20px;
+            padding-left: 20px;
+            padding-right: 20px;
+            border-radius: 15px;
+            border-color:#d2d2d2;
+            border-width: 5px;
+            box-shadow:0 1px 0 #cfcfcf;
+        }
 
-    .form-control {
-        border-radius: 10px;
-    }
+        h4 {
+            border:0 solid #fff;
+            border-bottom-width:1px;
+            padding-bottom:10px;
+            text-align: center;
+        }
 
-    .wrapper {
-        text-align: center;
-    }
+        .form-control {
+            border-radius: 10px;
+        }
+
+        .wrapper {
+            text-align: center;
+        }
 
 
+        body {background-color: #54C5C3;}
+    </style>
 
-</style>
 
 
 
@@ -60,6 +65,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-offset-5 col-md-4">
+            <form method="post" action="/UserServlet">
             <div class="form-login">
 
                 <img src="https://www.gov.sg/sgdi/~/media/sgdi/ntfgh.png" alt="logo_ntfgh" width="291">
@@ -68,10 +74,23 @@
 
                     <tr>
                         <td>
+                            <label for="userName">&nbsp;Name: </label>
+                        </td>
+                        <td>
+                            <input type="text" id="userName" name="user_name" class="form-control input-sm chat-input" placeholder="Name" /> <br>
+                        </td>
+                    </tr>
+
+                    <br>
+
+
+                    <tr>
+                        <td>
+                            <input type="hidden" id="route" name="route" class="form-control input-sm chat-input" value="adminAdd" />
                     <label for="userName">&nbsp;NRIC: </label>
                         </td>
                         <td>
-                    <input type="text" id="userName" class="form-control input-sm chat-input" placeholder="NRIC" /> <br>
+                    <input type="text" id="userNRIC" name="user_NRIC" class="form-control input-sm chat-input" placeholder="NRIC" /> <br>
                         </td>
 
 
@@ -85,7 +104,7 @@
                     <label for="userPassword">&nbsp;Password: </label>
                         </td>
                         <td>
-                    <input type="password" id="userPassword" class="form-control input-sm chat-input" placeholder="Password" /> <br>
+                    <input type="password" id="userPassword" name="user_password" class="form-control input-sm chat-input" placeholder="Password" /> <br>
                         </td>
                     </tr>
 
@@ -96,18 +115,30 @@
                     <label for="userEmail">&nbsp;Email: </label>
                         </td>
                         <td>
-                    <input type="email" id="userEmail" class="form-control input-sm chat-input" placeholder="Email" /> <br>
+                    <input type="email" id="userEmail" name="user_email" class="form-control input-sm chat-input" placeholder="Email" /> <br>
                         </td>
                     </tr>
                 </div>
                 <br>
+                    <tr>
+                        <td>
+                            <label for="userDOB">&nbsp;Date Of Birth: </label>
+                        </td>
+                        <td>
+                            <input type="text" id="userDOB" name="user_dob" class="form-control input-sm chat-input" placeholder="Date of Birth" /> <br>
+                        </td>
+                    </tr>
+
+                <br>
+
+
                 <div class="row">
                     <tr>
                         <td>
                     <label for="userContact">&nbsp;Contact: </label>
                         </td>
                         <td>
-                    <input type="number" id="userContact" class="form-control input-sm chat-input" placeholder="Contact Number" /> <br>
+                    <input type="number" id="userContact" name="user_contact" class="form-control input-sm chat-input" placeholder="Contact Number" /> <br>
                         </td>
                     </tr>
                 </div>
@@ -118,7 +149,7 @@
                     <label for="userAddress">&nbsp;Address: </label>
                         </td>
                         <td>
-                    <input type="text" id="userAddress" class="form-control input-sm chat-input" placeholder="Address" /> <br>
+                    <input type="text" id="userAddress" name= "user_address" class="form-control input-sm chat-input" placeholder="Address" /> <br>
                         </td>
                     </tr>
                 </div>
@@ -129,7 +160,7 @@
                     <label for="userCondition">&nbsp;My Conditions: &nbsp </label>
                         </td>
                         <td>
-                    <textarea class="form-control" name="userCondition" id="userCondition" rows="4"></textarea> <br>
+                    <textarea class="form-control" name="user_condition" id="userCondition" rows="4"></textarea> <br>
                         </td>
                     </tr>
                 </div>
@@ -137,16 +168,19 @@
 
                 <br>
                 <span class="label label-success">&nbsp; My Role: &nbsp; &nbsp;</span>
-                &nbsp;&nbsp;<label class="radio-inline"><input type="radio" id="role" name="optradio">Patient</label>
-                <label class="radio-inline"><input type="radio" name="optradio">Caregiver</label>
+                &nbsp;&nbsp;
+                <label class="radio-inline"><input type="radio" name="roleA" value="Patient" checked="checked">Patient</label>
+                <label class="radio-inline"><input type="radio" name="roleA" value="Caregiver">Caregiver</label>
+
                 <div class="wrapper">
                     <br><br>
             <span class="group-btn">
-                <a href="registration.jsp" class="btn btn-primary btn-md">Register <i class="fa fa-user-plus"></i></a>
+                 <button type="submit" class="btn btn-primary">Register <i class="fa fa-user-plus"></i></button>
             </span>
                 </div>
             </div>
 
+            </form>
         </div>
     </div>
 </div>

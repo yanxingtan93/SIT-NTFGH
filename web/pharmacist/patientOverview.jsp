@@ -22,7 +22,7 @@
     <div class="tabbable">
     <ul class="nav nav-tabs">
         <li class="active"><a href="#one" data-toggle="tab"><i class="fa fa-users"></i> Patients</a></li>
-        <li><a href="#two" data-toggle="tab"><i class="fa fa-address-book"></i> NTFGH Pharmacists</a></li>
+        <li><a href="#two" data-toggle="tab"><i class="fas fa-user-md"></i> NTFGH Pharmacists</a></li>
     </ul>
     <div class="tab-content">
     <div class="tab-pane active" id="one">
@@ -44,7 +44,7 @@
         <h4>Search My Pharmacists</h4>
         <table id="myMainTable2" class="table table-striped table-bordered" style="width:100%">
             <thead class="thead-dark">
-            <tr><th>Name</th><th>Contact Number</th><th>Email</th><th>Functions</th></tr>
+            <tr><th>Name</th><th>Contact Number</th><th>Email</th><th>Address</th></tr>
             </thead>
 
             <tbody>
@@ -106,9 +106,9 @@
             $.each(responseJson, function(key,value) {
 
                 var button = "\n" +
-                    "                    <form method=\"post\" action=\"/drugCatalogueServlet\">\n" +
-                    "                        <input type=\"hidden\" class=\"form-control\" name=\"mode\"  value=\"Delete\">\n" +
-                    "                        <input type=\"hidden\" class=\"form-control\" name=\"drugid\"  value="+value.NRIC+">\n" +
+                    "  <form method=\"post\" action=\"/pharmacist/patientProfile.jsp?userID="+value.NRIC+" \">\n" +
+                    "                        <input type=\"hidden\" class=\"form-control\" name=\"mode\"  value=\"View\">\n" +
+                    "                        <input type=\"hidden\" class=\"form-control\" name=\"userID\"  value="+value.NRIC+">\n" +
                     "                    <button type=\"submit\" class=\"btn btn-danger\">View</button>\n" +
                     "                    </form>";
 
@@ -127,15 +127,9 @@
 
             $.each(responseJson1, function(key,value) {
 
-                var button = "\n" +
-                    "                    <form method=\"post\" action=\"/drugCatalogueServlet\">\n" +
-                    "                        <input type=\"hidden\" class=\"form-control\" name=\"mode\"  value=\"Delete\">\n" +
-                    "                        <input type=\"hidden\" class=\"form-control\" name=\"drugid\"  value="+value.NRIC+">\n" +
-                    "                    <button type=\"submit\" class=\"btn btn-danger\">View</button>\n" +
-                    "                    </form>";
 
 
-                mytable2.row.add([value.name.toUpperCase(), value.contact, value.email,button]);
+                mytable2.row.add([value.name.toUpperCase(), value.contact, value.email,value.address]);
 
 
             });

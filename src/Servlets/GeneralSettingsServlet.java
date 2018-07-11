@@ -1,6 +1,7 @@
 package Servlets;
 
 import DatabaseConnector.DBConn;
+import DatabaseConnector.MedicineFormDaoImpl;
 import com.google.gson.Gson;
 import model.DrugIntake;
 import model.DrugPhase;
@@ -26,7 +27,10 @@ public class GeneralSettingsServlet extends HttpServlet {
         switch (route){
             case "medForm":
                 String name = request.getParameter("name");
-                MedicineForm.addForm(name);
+                MedicineForm medicineForm = new MedicineForm();
+                medicineForm.setFormName(name);
+                MedicineFormDaoImpl medicineFormDao= new MedicineFormDaoImpl();
+                medicineFormDao.addNewMedicineForm(medicineForm);
                 break;
             case "phase":
                 String phase = request.getParameter("name");

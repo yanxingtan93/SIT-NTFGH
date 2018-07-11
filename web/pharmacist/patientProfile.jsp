@@ -1,8 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<t:patientPage>
-  <h1>Manage personal details</h1>
+<t:pharmacistPage>
+  <h1>User's Profile</h1>
 
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,dt-1.10.8/datatables.min.css">
@@ -98,7 +98,7 @@
     </div>
   </div>
 
-</t:patientPage>
+</t:pharmacistPage>
 <script>
 
 
@@ -125,8 +125,9 @@
         var dob = $('#user_dob');
         var validAcc = "${sessionScope.userID}";
         var x = 0;
+        var id = getParameterByName("userID");
 
-        $.get("/UserServlet?mode=patient&id="+validAcc, function(responseJson) {
+        $.get("/UserServlet?mode=patient&id="+id, function(responseJson) {
 
 
             $.each(responseJson, function(key,value) {
@@ -160,5 +161,17 @@
         });
 
     });
+
+
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
 
 </script>

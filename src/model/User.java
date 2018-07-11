@@ -16,6 +16,7 @@ public class User {
 
     private String NRIC;
     private String name;
+    private String password;
     private String dob;
     private int contact;
     private String email;
@@ -26,8 +27,30 @@ public class User {
     public User() {
     }
 
+    public User(String NRIC,String name, String password, String dob, int contact, String email, String address,String role){
+        this.NRIC = NRIC;
+        this.name = name;
+        this.password = password;
+        this.dob = dob;
+        this.contact = contact;
+        this.email = email;
+        this.address = address;
+        this.role = role;
 
+    }
 
+    public User(String NRIC,String name, String password, String dob, int contact, String email, String address,String role,String condition){
+        this.NRIC = NRIC;
+        this.name = name;
+        this.password = password;
+        this.dob = dob;
+        this.contact = contact;
+        this.email = email;
+        this.address = address;
+        this.role = role;
+        this.specialCondition = condition;
+
+    }
 
     public String getNRIC() {
         return NRIC;
@@ -43,6 +66,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getDob() {

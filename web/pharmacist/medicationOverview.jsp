@@ -60,7 +60,7 @@
 
             });
             $(document).ready(function() {
-                $.get("/drugCatalogueServlet", function(responseJson) {
+                $.get("/drugCatalogueServlet?route=all", function(responseJson) {
 
 
                     $.each(responseJson, function(key,value) {
@@ -72,7 +72,7 @@
                             "                    <button type=\"submit\" class=\"btn btn-success\">Edit</button>\n" +
                             "                </form>\n" +
                             "                    <form method=\"post\" action=\"/drugCatalogueServlet\">\n" +
-                            "                        <input type=\"hidden\" class=\"form-control\" name=\"mode\"  value=\"Delete\">\n" +
+                            "                        <input type=\"hidden\" class=\"form-control\" name=\"route\"  value=\"Delete\">\n" +
                             "                        <input type=\"hidden\" class=\"form-control\" name=\"drugid\"  value="+value.id+">\n" +
                             "                    <button type=\"submit\" class=\"btn btn-danger\">Delete</button>\n" +
                             "                    </form>";

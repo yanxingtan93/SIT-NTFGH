@@ -128,12 +128,6 @@ public class ContentDaoImpl implements ContentDao {
     }
 }
 
-//class test {
-//    public static void main(String[] args) {
-//        ContentDao dao = new ContentDaoImpl();
-//        dao.deleteAllContent();
-//
-//    }
-//}
+
 
 

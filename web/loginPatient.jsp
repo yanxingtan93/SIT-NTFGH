@@ -9,14 +9,18 @@
 
     @import url(http://fonts.googleapis.com/css?family=Roboto:400);
     body {
-        background-color:#fff;
+        background-color:#54C5C3;
         -webkit-font-smoothing: antialiased;
         font: normal 14px Roboto,arial,sans-serif;
     }
 
     .container {
-        padding: 25px;
-        position: fixed;
+
+        padding: 10px;
+        padding-top: 120px;
+        padding-right: 80px;
+        position: center;
+        align-self: center;
     }
 
     .form-login {
@@ -47,7 +51,7 @@
     }
 
 
-
+    body {background-color: #54C5C3;}
 </style>
 
 
@@ -63,7 +67,7 @@
             <div class="form-login">
 
                 <img src="https://www.gov.sg/sgdi/~/media/sgdi/ntfgh.png" alt="logo_ntfgh" width="291">
-                <h4>NTFGH Pharmacy Application</h4>
+                <h4><b>NTFGH Pharmacy Application</b></h4>
                 <input type="text" id="userName" class="form-control input-sm chat-input" placeholder="NRIC" />
                 </br>
                 <input type="text" id="userPassword" class="form-control input-sm chat-input" placeholder="Password" />
@@ -74,8 +78,8 @@
                 <div class="wrapper">
                     <br><br>
             <span class="group-btn">
-                <a href="#" class="btn btn-primary btn-md">Login <i class="fa fa-sign-in"></i></a>
-                <a href="registration.jsp" class="btn btn-primary btn-md">Register <i class="fa fa-user-plus"></i></a>
+                <a href="#" class="btn btn-primary btn-md"><b>Login</b> <i class="fa fa-sign-in"></i></a>
+                <a href="registration.jsp" class="btn btn-primary btn-md"><b>Register</b> <i class="fa fa-user-plus"></i></a>
             </span>
                 </div>
             </div>

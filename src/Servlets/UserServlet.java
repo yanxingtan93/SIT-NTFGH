@@ -1,6 +1,8 @@
 package Servlets;
 
 import DatabaseConnector.DBConn;
+import DatabaseConnector.UsersDao;
+import DatabaseConnector.UsersDaoImpl;
 import com.google.gson.Gson;
 import model.User;
 
@@ -9,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,6 +23,8 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String route = request.getParameter("route");
+        UsersDao usersDao = new UsersDaoImpl();
+
 
         switch(route){
             case "adminAdd":
@@ -31,10 +36,68 @@ public class UserServlet extends HttpServlet {
                 String address = request.getParameter("user_address");
                 String password = request.getParameter("user_password");
                 String role = request.getParameter("role");
-                System.out.println("My Role: "+role+" of NRIC: "+NRIC+" name-> "+name);
-               // User.addNewUser(NRIC,name,Integer.parseInt(contact),email,address,dob,password,role);
-                response.sendRedirect("/admin/patientOverview.jsp");
+
+                User user =  new User(NRIC,name,password,dob,Integer.parseInt(contact),email,address,role);
+                usersDao.addNewUser(user);
+
                 break;
+
+            case "login":
+                    String userNRIC = request.getParameter("userName");
+                    String userPass = request.getParameter("userPassword");
+                    String userRole = request.getParameter("optradio");
+                    System.out.println(userNRIC+" "+userPass+" "+userRole);
+                    UsersDao userDao = new UsersDaoImpl();
+                    boolean valid = userDao.validateUser(userNRIC,userPass,userRole);
+                    if(valid){
+                        String myRole = userRole.toLowerCase().trim();
+                        System.out.println(myRole+" Accessing");
+                        HttpSession session=request.getSession();
+                        session.setAttribute("userID",userNRIC);
+
+                        if(myRole.equals("patient")){
+                            response.sendRedirect("http://localhost:8080/patient/pillboxOverview.jsp");
+                        }
+                        else if(myRole.equals("caregiver")){
+                            response.sendRedirect("http://localhost:8080/caregiver/pillboxOverview.jsp");
+                        }
+                        else if(myRole.equals("admin")){
+                            response.sendRedirect("http://localhost:8080/admin/patientOverview.jsp");
+                        }
+                        else if(myRole.equals("pharmacist")){
+                            response.sendRedirect("http://localhost:8080/pharmacist/patientOverview.jsp");
+                        }
+
+                    }
+                    else {
+                        response.sendRedirect("http://localhost:8080/registration.jsp");
+                    }
+                    break;
+
+
+            case "userAdd":
+                String name1 = request.getParameter("user_name");
+                String NRIC1 = request.getParameter("user_NRIC");
+                String email1 = request.getParameter("user_email");
+                String contact1  = request.getParameter("user_contact");
+                String dob1 = request.getParameter("user_dob");
+                String address1 = request.getParameter("user_address");
+                String password1 = request.getParameter("user_password");
+                String condition = request.getParameter("user_condition");
+                String role1 = request.getParameter("roleA");
+
+                System.out.println(role1+" -- "+condition);
+
+                User user1 =  new User(NRIC1,name1,password1,dob1,Integer.parseInt(contact1),email1,address1,role1,condition);
+                usersDao.addNewUser(user1);
+
+                break;
+
+            case "View":
+
+                break;
+
+
                 default:
                     System.out.println("Error in adding (Via Admin Add Account)");
                     break;
@@ -109,7 +172,7 @@ public class UserServlet extends HttpServlet {
                         user.setName(resultSet.getString("user_name"));
                         user.setContact(resultSet.getInt("user_contact"));
                         user.setEmail(resultSet.getString("user_email"));
-
+                        user.setAddress(resultSet.getString("user_address"));
 
 
                         list.add(user);
@@ -239,17 +302,38 @@ public class UserServlet extends HttpServlet {
 
             case "patient":
 
-                //HARDCODED
-                String userNRIC = "S1234567A";
+                String userNRIC = request.getParameter("id");
 
-                String patientSQL = "SELECT pc.patient_NRIC,pc.caregiver_NRIC,u.user_NRIC,u.user_name,u.user_contact,u.user_email,u.user_address " +
+                String myProfileSQL = "SELECT * from USERS WHERE user_NRIC = '"+userNRIC+"'";
+
+
+                String patientSQL = "SELECT pc.patient_NRIC,pc.caregiver_NRIC,u.user_NRIC,u.user_name,u.user_contact,u.user_email,u.user_address,u.user_DOB " +
                         "FROM PATIENTCAREGIVER pc,USERS u WHERE pc.caregiver_NRIC = u.user_NRIC AND pc.patient_NRIC = '"+userNRIC+"'";
-// AND pc.patient_NRIC = '"+userNRIC+"'
+
+
+
+
                 ArrayList<User> caregiverList = new ArrayList<User>();
 
                 try {
+                    PreparedStatement ps0 = DBConn.getPreparedStatement(myProfileSQL);
+                    ResultSet resultSet = ps0.executeQuery();
+                    while (resultSet.next()) {
+
+                        User user = new User();
+                        user.setNRIC(resultSet.getString("user_NRIC"));
+                        user.setName(resultSet.getString("user_name"));
+                        user.setContact(resultSet.getInt("user_contact"));
+                        user.setEmail(resultSet.getString("user_email"));
+                        user.setDob(resultSet.getString("user_DOB"));
+                        user.setAddress(resultSet.getString("user_address"));
+
+                        caregiverList.add(user);
+                    }
+
+
                     PreparedStatement ps = DBConn.getPreparedStatement(patientSQL);
-                    ResultSet resultSet = ps.executeQuery();
+                    resultSet = ps.executeQuery();
 
                     while (resultSet.next()) {
 
@@ -258,6 +342,7 @@ public class UserServlet extends HttpServlet {
                         user.setName(resultSet.getString("user_name"));
                         user.setContact(resultSet.getInt("user_contact"));
                         user.setEmail(resultSet.getString("user_email"));
+                        user.setDob(resultSet.getString("user_DOB"));
                         user.setAddress(resultSet.getString("user_address"));
 
                         caregiverList.add(user);
@@ -311,7 +396,41 @@ public class UserServlet extends HttpServlet {
                 break;
 
 
+            case "myprofile":
 
+                String myNRIC = request.getParameter("id");
+
+                String myProfileSQL1 = "SELECT * from USERS WHERE user_NRIC = '"+myNRIC+"'";
+
+                ArrayList<User> myProfile = new ArrayList<User>();
+
+                try {
+                    PreparedStatement ps0 = DBConn.getPreparedStatement(myProfileSQL1);
+                    ResultSet resultSet = ps0.executeQuery();
+                    while (resultSet.next()) {
+
+                        User user = new User();
+                        user.setNRIC(resultSet.getString("user_NRIC"));
+                        user.setName(resultSet.getString("user_name"));
+                        user.setContact(resultSet.getInt("user_contact"));
+                        user.setEmail(resultSet.getString("user_email"));
+                        user.setDob(resultSet.getString("user_dob"));
+                        user.setAddress(resultSet.getString("user_address"));
+
+                        myProfile.add(user);
+                    }
+
+
+                    String json = new Gson().toJson(myProfile);
+
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write(json);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+
+                }
+                break;
 
 
         }

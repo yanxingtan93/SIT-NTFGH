@@ -1,21 +1,16 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: daniel
-  Date: 3/6/18
-  Time: 1:25 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
 <t:pharmacistPage>
     <h1>Manage personal details</h1>
-
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,dt-1.10.8/datatables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/r/bs-3.3.5/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
     <br>
     <div class="container">
         <div class="row">
 
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+            <div class="col-xs-12 col-sm-12 col-md-11 col-lg-11 toppad" >
 
 
                 <div class="panel panel-info">
@@ -36,27 +31,29 @@
                                     <tbody>
                                     <tr>
                                         <td>Name:</td>
-                                        <td><input type="text" class="form-control" name="user_name" value="Umar" placeholder="Enter Medicine Name"></td>
+                                        <td><input type="text" style="font-weight: bolder" class="form-control" name="user_name" id="user_name"placeholder="Enter Name"></td>
                                     </tr>
                                     <tr>
                                         <td>NRIC:</td>
-                                        <td><input type="text" class="form-control" name="user_NRIC" value="S9318913X" placeholder="Enter Brand"></td>
+                                        <td><input type="text" style="font-weight: bolder" class="form-control" name="user_NRIC" id="user_NRIC"  placeholder="Enter NRIC"></td>
                                     </tr>
                                     <tr>
-                                        <td>Email</td>
-                                        <td><input type="email" class="form-control" name="user_email" value="Juoae@gmail.com" placeholder="Enter Price"></td>
+                                        <td>Email: </td>
+                                        <td><input type="email" style="font-weight: bolder" class="form-control" name="user_email" id="user_email" placeholder="Enter Email"></td>
                                     </tr>
                                     <tr>
-                                        <td>Address</td>
-                                        <td><input type="email" class="form-control" name="user_address" value="Clementi Ave 2" placeholder="Enter Price"></td>
+                                        <td>Contact: </td>
+                                        <td><input type="text" style="font-weight: bolder" class="form-control" name="user_contact" id="user_contact"  placeholder="Enter Contact"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address: </td>
+                                        <td><input type="text" style="font-weight: bolder" class="form-control" name="user_address" id="user_address"  placeholder="Enter Address"></td>
                                     </tr>
                                     <tr>
 
                                     <tr>
-                                        <td>Date of Birth</td>
-                                        <td><input type="text" class="form-control" id="user_dob" value="16/12/1994" placeholder="Enter DOB"></td>
-                                    </tr>
-
+                                        <td>Date of Birth: </td>
+                                        <td><input type="text" style="font-weight: bolder" class="form-control" name="user_dob" id="user_dob"  placeholder="Enter DOB"></td>
                                     </tr>
 
                                     </tbody>
@@ -80,3 +77,37 @@
 
 
 </t:pharmacistPage>
+
+
+<script>
+
+
+    $(document).ready(function() {
+
+        var name = $('#user_name');
+        var ic = $('#user_NRIC');
+        var email = $('#user_email');
+        var address = $('#user_address');
+        var contact = $('#user_contact');
+        var dob = $('#user_dob');
+        var validAcc = "${sessionScope.userID}";
+        var x = 0;
+
+        $.get("/UserServlet?mode=myprofile&id="+validAcc, function(responseJson) {
+
+            $.each(responseJson, function(key,value) {
+
+                    name.val(value.name.toUpperCase());
+                    ic.val(value.NRIC.toUpperCase());
+                    email.val(value.email);
+                    contact.val(value.contact);
+                    address.val(value.address);
+                    dob.val(value.dob);
+
+
+            });
+        });
+
+    });
+
+</script>

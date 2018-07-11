@@ -39,7 +39,7 @@
 
                             <div class=" col-md-9 col-lg-9 ">
                                 <form method="post" action="/drugCatalogueServlet">
-                                    <input type="hidden" class="form-control" name="mode" id="mode" value="Save">
+                                    <input type="text" class="form-control" name="route" id="route" value="Save" >
                                     <input type="text" class="form-control" name="drugid" id="drugid" value="" >
                                 <table class="table table-user-information">
 
@@ -47,11 +47,11 @@
                                     <tbody>
                                     <tr>
                                         <td>Medicine Name:</td>
-                                        <td><input type="text" class="form-control" name="drug_name"  placeholder="Enter Medicine Name" ></td>
+                                        <td><input type="text" class="form-control" name="drug_name" id="drug_name"  placeholder="Enter Medicine Name" ></td>
                                     </tr>
                                     <tr>
                                         <td>Brand:</td>
-                                        <td><input type="text" class="form-control" name="drug_brand"  placeholder="Enter Brand" ></td>
+                                        <td><input type="text" class="form-control" name="drug_brand" id="drug_brand"  placeholder="Enter Brand" ></td>
                                     </tr>
 
 
@@ -66,11 +66,11 @@
                                     </tr>
                                     <tr>
                                         <td>Description</td>
-                                        <td><textarea class="form-control" name="drug_desc" rows="4"></textarea></td>
+                                        <td><textarea class="form-control" name="drug_desc" id="drug_desc" rows="4"></textarea></td>
                                     </tr>
                                     <tr>
                                         <td>Side Effects</td>
-                                        <td><textarea class="form-control" name="drug_sideEffects"  rows="4"></textarea></td>
+                                        <td><textarea class="form-control" name="drug_sideEffects" id="drug_sideEffects"  rows="4"></textarea></td>
                                     </tr>
 
                                     </tr>
@@ -107,14 +107,27 @@
 <script>
 
 
+
     $(document).ready(function() {
 
-       // alert("ADW "+url.);
-        $.get("/drugCatalogueServletroute=individual", function(responseJson) {
+        var drugid = $('#drugid');
+        var name = $('#drug_name');
+        var brand = $('#drug_brand');
+        var desc = $('#drug_desc');
+        var side = $('#drug_sideEffects');
+
+        var id = getParameterByName("xmedID");
+
+        $.get("/drugCatalogueServlet?route=individual&id="+id, function(responseJson) {
 
 
             $.each(responseJson, function(key,value) {
 
+                drugid.val(value.id)
+               name.val(value.medicineName).trigger('change');
+               brand.val(value.brand);
+               desc.val(value.description);
+                side.val(value.sideEffect);
 
             });
 
@@ -122,4 +135,13 @@
 
     });
 
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
 </script>

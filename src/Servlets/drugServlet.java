@@ -1,5 +1,8 @@
 package Servlets;
 
+import DatabaseConnector.DrugDaoImpl;
+import DatabaseConnector.DrugsDao;
+import DatabaseConnector.MedicineFormDao;
 import model.Medicine;
 
 import javax.servlet.ServletException;
@@ -19,7 +22,10 @@ public class drugServlet extends HttpServlet {
        String description = request.getParameter("drugDescription");
        String drugSideEffect = request.getParameter("drugSideEffect");
        Medicine newMedicine = new Medicine(medicineName,brand,medicineFormId,description,drugSideEffect);
-       newMedicine.addNewMedicine();
+       DrugsDao drugsDao = new DrugDaoImpl();
+       drugsDao.addNewDrug(newMedicine);
+       String URL= "/pharmacist/medicationOverview.jsp";
+       response.sendRedirect(URL);
 
 
 
