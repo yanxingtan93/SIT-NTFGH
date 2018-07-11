@@ -175,12 +175,15 @@
                     <label class="col-sm-2 col-form-label">Frequency</label>
                     <div class="col-sm-4">
                         <select name="addDrugFrequency" id="addDrugFrequency">
-                            <option value="10,18">1 time (1300)</option>
-                            <option value="2">2 times (1000, 1800)</option>
-                            <option value="3">3 times (0800,1400,2000)</option>
-                            <option value="4">4 times (0800,1400,2000,2300)</option>
-                            <option value="5">5 times</option>
-                            <option value="6">6 times</option>
+                            <option value="8">Every Morning</option>
+                            <option value="14">Every Afternoon</option>
+                            <option value="20">Every Night</option>
+                            <option value="22">At Bedtime</option>
+                            <option value="8,20">2 times a day</option>
+                            <option value="8,14,20">3 times a day</option>
+                            <option value="8,12,16,20">4 times a day</option>
+                            <option value="7,10,13,16,19">5 times a day</option>
+                            <option value="7,10,13,16,19,22">6 times a day</option>
                         </select>
                     </div>
                     <label class="col-sm-2 col-form-label">Interval</label>
@@ -366,7 +369,7 @@
                 function(data,status) {
                     pillboxlist = JSON.parse(data);
                     $.each(pillboxlist, function (i, item) {
-                        console.log(i);
+                        console.log(item["today"]);
                         $("#pillboxTable").find('tbody')
                             .append($('<tr>')
                                 .append($('<td>')
@@ -384,8 +387,8 @@
                                 )
                                 .append($('<td>')
                                     .append("<div class='pillbox'>")
-                                    .append("<button type='button' class='btn btn-info btn-block btn-lg' onclick='openEditModal("+i+")'>Edit</button>")
-                                    .append("<button type='button' class='btn btn-danger btn-block btn-lg' onclick='openDeleteModal("+i+")'>Delete</button>")
+                                    .append("<button type='button' class='btn btn-info btn-block btn-lg' onclick='openEditModal("+item['inventory_ID']+")'>Edit</button>")
+                                    .append("<button type='button' class='btn btn-danger btn-block btn-lg' onclick='openDeleteModal("+item['inventory_ID']+")'>Delete</button>")
                                 )
                             );
                     });

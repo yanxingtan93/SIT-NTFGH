@@ -102,10 +102,25 @@ public class patientServlet extends HttpServlet {
         return gson.toJson(list);
     }
     private String listPillbox(){
-        //TODO:Add JOIN to get latest schedule
         //TODO:Split frontend
         //TODO:Modify for user NRIC
-        String sql = "SELECT * FROM INVENTORY INNER JOIN DRUGS on INVENTORY.drug_ID = DRUGS.drug_ID INNER JOIN DRUGINTAKE on INVENTORY.drugintake_ID = DRUGINTAKE.drugintake_ID INNER JOIN DRUGPHASE on INVENTORY.drugphase_ID = DRUGPHASE.drugphase_ID";
+        String sql = "SELECT * FROM INVENTORY INNER JOIN DRUGS on INVENTORY.drug_ID = DRUGS.drug_ID INNER JOIN DRUGINTAKE on INVENTORY.drugintake_ID = DRUGINTAKE.drugintake_ID INNER JOIN DRUGPHASE on INVENTORY.drugphase_ID = DRUGPHASE.drugphase_ID INNER JOIN REMINDERS on INVENTORY.inventory_ID = REMINDERS.inventory_ID";
+        /*
+        String sql = "SELECT *\n" +
+                "FROM\n" +
+                "  (SELECT DISTINCT inventory_ID, reminder_time\n" +
+                "  FROM\n" +
+                "    (   SELECT inventory_ID, reminder_time, ROW_NUMBER() over(partition by inventory_ID order by reminder_time) Orden\n" +
+                "        FROM REMINDERS\n" +
+                "    ) A\n" +
+                "  WHERE A.Orden = 1) R\n" +
+                "INNER JOIN INVENTORY on INVENTORY.inventory_ID = R.inventory_ID\n" +
+                "INNER JOIN DRUGS on INVENTORY.drug_ID = DRUGS.drug_ID\n" +
+                "INNER JOIN DRUGINTAKE on INVENTORY.drugintake_ID = DRUGINTAKE.drugintake_ID\n" +
+                "INNER JOIN DRUGPHASE on INVENTORY.drugphase_ID = DRUGPHASE.drugphase_ID";*/
+
+        LocalDate today = LocalDate.now();
+        LocalDate test;
         ArrayList<Map> list = new ArrayList<>();
         try {
             PreparedStatement ps = DBConn.getPreparedStatement(sql);
@@ -113,6 +128,14 @@ public class patientServlet extends HttpServlet {
 
             while (resultSet.next()) {
                 Map<String, String> map = new HashMap<String, String>();
+                test = LocalDateTime.parse(resultSet.getString("reminder_time")).toLocalDate();
+                if (today.toString().equalsIgnoreCase(test.toString())){
+                    map.put("today", "true");
+                }
+                else{
+                    map.put("today", "false");
+                }
+
                 map.put("inventory_ID", resultSet.getString("inventory_ID"));
                 map.put("drug_brand", resultSet.getString("drug_brand"));
                 map.put("drugintake_term", resultSet.getString("drugintake_term"));
@@ -159,19 +182,19 @@ public class patientServlet extends HttpServlet {
         if (interval.equalsIgnoreCase("2")){
             System.out.println("Inside");
 
-            if(request.getParameterMap().containsKey("addDayOfWeek1")){ dayOfWeekMap.replace("MONDAY", true); System.out.println("check1");}
+            if(request.getParameterMap().containsKey("addDayOfWeek1")){ dayOfWeekMap.put("MONDAY", true); }
             else { dayOfWeekMap.put("MONDAY", false); }
-            if(request.getParameterMap().containsKey("addDayOfWeek2")){ dayOfWeekMap.replace("TUESDAY", true); System.out.println("check2");}
+            if(request.getParameterMap().containsKey("addDayOfWeek2")){ dayOfWeekMap.put("TUESDAY", true); }
             else { dayOfWeekMap.put("TUESDAY", false); }
-            if(request.getParameterMap().containsKey("addDayOfWeek3")){ dayOfWeekMap.replace("WEDNESDAY", true); }
+            if(request.getParameterMap().containsKey("addDayOfWeek3")){ dayOfWeekMap.put("WEDNESDAY", true); }
             else { dayOfWeekMap.put("WEDNESDAY", false); }
-            if(request.getParameterMap().containsKey("addDayOfWeek4")){ dayOfWeekMap.replace("THURSDAY", true); }
+            if(request.getParameterMap().containsKey("addDayOfWeek4")){ dayOfWeekMap.put("THURSDAY", true); }
             else { dayOfWeekMap.put("THURSDAY", false); }
-            if(request.getParameterMap().containsKey("addDayOfWeek5")){ dayOfWeekMap.replace("FRIDAY", true); }
+            if(request.getParameterMap().containsKey("addDayOfWeek5")){ dayOfWeekMap.put("FRIDAY", true); }
             else { dayOfWeekMap.put("FRIDAY", false); }
-            if(request.getParameterMap().containsKey("addDayOfWeek6")){ dayOfWeekMap.replace("SATURDAY", true); }
+            if(request.getParameterMap().containsKey("addDayOfWeek6")){ dayOfWeekMap.put("SATURDAY", true); }
             else { dayOfWeekMap.put("SATURDAY", false); }
-            if(request.getParameterMap().containsKey("addDayOfWeek7")){ dayOfWeekMap.replace("SUNDAY", true); }
+            if(request.getParameterMap().containsKey("addDayOfWeek7")){ dayOfWeekMap.put("SUNDAY", true); }
             else { dayOfWeekMap.put("SUNDAY", false); }
         }
         else {
@@ -207,7 +230,7 @@ public class patientServlet extends HttpServlet {
             currentDateTime = startDate.plusDays(daysSinceStart).atTime(hour, 0);
 
             if(dayOfWeekMap.get(currentDateTime.getDayOfWeek().toString())){
-                intakeDateTimes.add(currentDateTime.getDayOfWeek().toString()+currentDateTime);
+                intakeDateTimes.add(currentDateTime.toString());
             }
             //if day is not included, prevent the counter from increasing and move to next day with same time
             else{
@@ -219,12 +242,10 @@ public class patientServlet extends HttpServlet {
 
     private void addToPillbox(HttpServletRequest request){
         List<String> intakeDateTimes = getIntakeTimes(request);
-        for (String datetime: intakeDateTimes) {
-            System.out.println(datetime);
-        }
+
         String[] consumptionTimes = request.getParameter("addDrugFrequency").split(",");
 
-
+        long insertID = 0;
 
 
         /*
@@ -260,21 +281,35 @@ public class patientServlet extends HttpServlet {
                 ps.setBoolean(10, false);
             }
             ps.setInt(11, Integer.valueOf(request.getParameter("addDrugForm")));
-            System.out.println(request.getParameter("addDrugForm"));
+
             ps.executeUpdate();
+            //Get primary key to reference in REMINDERS table
+            ResultSet generatedKeys = ps.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                insertID = generatedKeys.getLong(1);
+            }
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        //TODO:Create SCHEDULE table
-        //TODO:Insert into SCHEDULE
-        /*
-        sql = "";
-        try {
-            PreparedStatement ps = DBConn.getPreparedStatement(sql);
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }*/
+
+        if (insertID>0){
+
+            for (String datetime: intakeDateTimes) {
+                System.out.println(datetime);
+
+                sql = "INSERT INTO REMINDERS(inventory_ID, reminder_time) " +
+                        "VALUES(?,?);";
+                try {
+                    PreparedStatement ps = DBConn.getPreparedStatement(sql);
+                    ps.setInt(1, (int)insertID);
+                    ps.setString(2, datetime);
+                    ps.executeUpdate();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
 
 
     }
@@ -312,13 +347,18 @@ public class patientServlet extends HttpServlet {
     }
 
     private void deleteFromPillbox(String id){
-        String sql = "DELETE FROM INVENTORY WHERE inventory_ID="+id;
+        String sql = "DELETE FROM REMINDERS WHERE inventory_ID="+id;
+        System.out.println(sql);
         try {
             PreparedStatement ps = DBConn.getPreparedStatement(sql);
+            ps.executeUpdate();
+            sql = "DELETE FROM INVENTORY WHERE inventory_ID="+id;
+            ps = DBConn.getPreparedStatement(sql);
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+
     }
 
 

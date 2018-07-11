@@ -50,7 +50,7 @@ public class DBConn {
         String password = "dbPassword!";
         String url = String.format("jdbc:sqlserver://%s:1433;database=%s;user=%s;password=%s;encrypt=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;", hostName, dbName, user, password);
         Connection connection = DriverManager.getConnection(url);
-        ps = connection.prepareStatement(sql);
+        ps = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
         return ps;
     }
 
