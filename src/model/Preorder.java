@@ -12,23 +12,34 @@ public class Preorder {
     private String drugID; //prev int
     private String drugname;
     private int quantity;
+    private String collectiondate;
+    private String status;
 
-    public Preorder(int preorderID, String nric, String mode, int preorderDrugID, String drugID, String drugname, int quantity) {
+//    public Preorder(int preorderID, String nric, String mode, int preorderDrugID, String drugID, String drugname, int quantity, String collectiondate) {
+//        this.preorderID = preorderID;
+//        this.nric = nric;
+//        this.mode = mode;
+//        this.preorderDrugID = preorderDrugID;
+//        this.drugID = drugID;
+//        this.drugname = drugname;
+//        this.quantity = quantity;
+//        this.collectiondate = collectiondate;
+//    }
+
+    public Preorder(int preorderID, String mode, String collectiondate, String status) {
         this.preorderID = preorderID;
-        this.nric = nric;
         this.mode = mode;
-        this.preorderDrugID = preorderDrugID;
-        this.drugID = drugID;
-        this.drugname = drugname;
-        this.quantity = quantity;
-    }
+        this.collectiondate = collectiondate;
+        this.status = status;
 
-    public Preorder(String nric, String mode, String drugID, int quantity) {
+    } //prev one
+
+    public Preorder(String nric, String mode, int quantity, String collectiondate) {
         this.nric = nric;
         this.mode = mode;
-        this.drugID = drugID;
         this.quantity = quantity;
-    } //prev one
+        this.collectiondate = collectiondate;
+    }
 
     public Preorder(String nric, String mode, int quantity) {
         this.nric = nric;
@@ -96,7 +107,21 @@ public class Preorder {
         this.drugID = drugID;
     }
 
-    public void addPreorder(){
+    public void addCollectionPreorder(){
+        String sql = "INSERT INTO PREORDER (user_NRIC,preorder_mode, collection_date)" +
+                "VALUES ('"+nric+"','"+mode+"', '"+collectiondate+"');";
+
+        try {
+            DBConn db = new DBConn();
+            Connection conn = db.getConnection();
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addDeliveryPreorder(){
         String sql = "INSERT INTO PREORDER (user_NRIC,preorder_mode)" +
                 "VALUES ('"+nric+"','"+mode+"');";
 
@@ -125,6 +150,20 @@ public class Preorder {
         }
     }
 
+    public void getPreorderDrugs(int preorderID) {
+        String sql = "SELECT d.drug_name, pd.quantity FROM PREORDERDRUGS pd, PREORDER p, DRUGS d" +
+                " WHERE p.preorder_ID = '"+preorderID+"' and pd.drug_ID = d.drug_ID";
+
+        try {
+            DBConn db = new DBConn();
+            Connection conn = db.getConnection();
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String getDrugname() {
         return drugname;
     }
@@ -139,5 +178,21 @@ public class Preorder {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getCollectiondate() {
+        return collectiondate;
+    }
+
+    public void setCollectiondate(String collectiondate) {
+        this.collectiondate = collectiondate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

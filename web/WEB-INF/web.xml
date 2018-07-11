@@ -64,6 +64,15 @@
         <url-pattern>/preorderServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>preorderViewServlet</servlet-name>
+        <servlet-class>Servlets.preorderViewServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>preorderViewServlet</servlet-name>
+        <url-pattern>/preorderViewServlet</url-pattern>
+    </servlet-mapping>
+
 
     <servlet>
         <servlet-name>patientServlet</servlet-name>
