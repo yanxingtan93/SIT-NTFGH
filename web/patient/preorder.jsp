@@ -5,10 +5,7 @@
 
 <%--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>--%>
 
-
-
 <t:patientPage>
-
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/base/jquery-ui.css"/>
@@ -44,9 +41,12 @@
         <table id="myMainTable" class="dailyMedTable table table-striped table-bordered">
             <thead class="thead-dark">
             <tr>
-                <th style="width:60%">Medication</th>
-                <th style="width:15%">Quantity</th>
-                <th style="width:25%">Collection Mode</th>
+
+                <th style="width:10%">Preorder ID</th>
+                <th style="width:15%">Method of Collection</th>
+                <th style="width:15%">Collection Date</th>
+                <th style="width:15%">Status</th>
+                <th style="width:15%">View</th>
             </tr>
             </thead>
             <div id ="pillbox-table" class="pillbox">
@@ -73,8 +73,7 @@
                 <div class="input_fields_wrap">
                     <div>
                         <label class="col-sm-4 col-form-label">Medication</label>
-                        <input type="text" id="medication-Preorder" name="medicationPreorder">
-
+                        <input type="text" id="medicationPreorder" name="medicationPreorder">
                         <label class="col-sm-4 col-form-label">Total Quantity</label>
                         <input type="number" name="quantity" min="1" max="5">
                     </div>
@@ -88,15 +87,10 @@
 
                 <%--</select>--%>
             </div>
-            <%--<label class="col-sm-2 col-form-label">Total Quantity</label>--%>
-            <%--<div class="col-sm-4">--%>
-                <%--&lt;%&ndash;<input type="number" name="quantity" min="1" max="5">&ndash;%&gt;--%>
-            <%--</div>--%>
         </div>
         <br>
         <div class="col-sm-2">
-            <button class="add_field_button">Add More Fields</button>
-            <%--<button id="addRow" type="button" class="btn btn-info">Add more medication</button>--%>
+            <button class="add_field_button">Add Medication</button>
         </div>
         <br>
 
@@ -123,6 +117,7 @@
     </form>
 
     <script>
+
         $(document).ready(function() {
             var max_fields      = 10; //maximum input boxes allowed
             var wrapper         = $(".input_fields_wrap"); //Fields wrapper
@@ -147,39 +142,6 @@
             })
         });
 
-
-        $(document).ready(function(){
-            var data = ["Boston Celtics", "Chicago Bulls", "Miami Heat", "Orlando Magic", "Atlanta Hawks", "Philadelphia Sixers", "New York Knicks", "Indiana Pacers", "Charlotte Bobcats", "Milwaukee Bucks", "Detroit Pistons", "New Jersey Nets", "Toronto Raptors", "Washington Wizards", "Cleveland Cavaliers"];
-            $("#medication-Preorder").autocomplete({
-                source: "/preorderFormServlet"
-            });
-        });
-
-
-
-        // $(document).ready(function() {
-        //     $(function() {
-        //         $("#medication-Preorder").autocomplete({
-        //             source: function(request, response) {
-        //                 $.ajax({
-        //                     url: "/preorderFormServlet",
-        //                     type: "GET",
-        //                     data: { term: request.term },
-        //
-        //                     dataType: "json",
-        //
-        //                     success: function(data) {
-        //                         response(data);
-        //                     }
-        //                 });
-        //             }
-        //         });
-        //     });
-        // });
-
-
-        // $("#medicationPreorder").autocomplete("preorderFormServlet");
-
         $("#addRow").click(function () {
             $("<div id= \"medicationRow\" class=\"form-group row\">\n" +
                 "          <label class=\"col-sm-2 col-form-label\">Medication</label>\n" +
@@ -201,7 +163,7 @@
                 if(collection){
                     $("<div id=\"toshow\" class=\"col-sm-6\">\n" +
                         "                <label class=\"col-sm-4 col-form-label\">Collection Date</label>\n" +
-                        "                <input type=\"text\" id=\"datepicker\">\n" +
+                        "                <input type=\"text\" id=\"datepicker\" name=\"date\">\n" +
                         "            </div>").insertAfter('#radiobtn');
                     $( "#datepicker" ).datepicker();
                     //$("#toshow").show();
@@ -219,11 +181,21 @@
             $.get("/preorderServlet?mode=get", function(responseJson) {
                 var $table = $('<tbody>').appendTo($('#myMainTable'));
                 $.each(responseJson, function(key,value) {
-                    $('<tr>').appendTo($table)
-                        .append($('<td>').text(value.drugname))
-                        .append($('<td>').text(value.quantity))
-                        .append($('<td>').text(value.mode))
+                        console.log(key)
+                        $('<tr>').appendTo($table)
+                            .append($('<td>').text(value.preorder_ID))
+                            .append($('<td>').text(value.preorder_mode))
+                            .append($('<td>').text(value.collection_date))
+                            .append($('<td>').text(value.status))
 
+                            .append($('<td>')
+                                .append("<form method=\"post\" action=\"/preorderServlet\">\n" +
+                                    "                <input type=\"hidden\" class=\"form-control\" name=\"action\" value=\"View\">\n" +
+                                    "                <input type=\"hidden\" class=\"form-control\" name=\"preorder_ID\" value="+value.preorder_ID+">\n" +
+                                    "                <button type=\"submit\" class=\"btn btn-info btn-block btn-lg\">Submit</button>\n" +
+                                    "                <form>")
+                                // .append("<button type='submit' class='btn btn-info btn-block btn-lg' name='viewPreorder' onclick='submit'>View</button>")
+                            )
                 });
             });
 

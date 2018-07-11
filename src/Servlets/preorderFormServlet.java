@@ -19,12 +19,26 @@ import java.util.Map;
 @WebServlet(name = "preorderFormServlet")
 public class preorderFormServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+//        response.setContentType("application/json");
+//        try {
+//            String term = request.getParameter("term");
+//            DataDao dataDao = new DataDao();
+//            ArrayList<String> list = dataDao.getFrameWork(term);
+//
+//            String searchList = new Gson().toJson(list);
+//            response.getWriter().write(searchList);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
+
+
+
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Map<String, String> map = new LinkedHashMap<>();
-        List<String> drugList = new ArrayList<String>();
+        ArrayList<String> drugList = new ArrayList<String>();
         String[] drugLists = new String[]{};
         String sql = "SELECT * FROM DRUGS";
 
@@ -36,9 +50,19 @@ public class preorderFormServlet extends HttpServlet {
                 //map.put(rs.getString(1), rs.getString(2));
             }
 
+            String countries[] = {
+                    "Afghanistan",
+                    "Albania",
+                    "Algeria",
+                    "Andorra",
+                    "Angola",
+                    "Antigua and Barbuda",
+                    "Argentina",
+                    "Armenia"};
+
             //String json = new Gson().toJson(map);
             String json = new Gson().toJson(drugList);
-            System.out.print("form:" + json);
+            System.out.print("form:" + drugList);
 //            PrintWriter writer = response.getWriter();
 //            writer.write(json);
 
