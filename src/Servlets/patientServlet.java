@@ -102,6 +102,9 @@ public class patientServlet extends HttpServlet {
         return gson.toJson(list);
     }
     private String listPillbox(){
+        //TODO:Add JOIN to get latest schedule
+        //TODO:Split frontend
+        //TODO:Modify for user NRIC
         String sql = "SELECT * FROM INVENTORY INNER JOIN DRUGS on INVENTORY.drug_ID = DRUGS.drug_ID INNER JOIN DRUGINTAKE on INVENTORY.drugintake_ID = DRUGINTAKE.drugintake_ID INNER JOIN DRUGPHASE on INVENTORY.drugphase_ID = DRUGPHASE.drugphase_ID";
         ArrayList<Map> list = new ArrayList<>();
         try {
@@ -235,9 +238,9 @@ public class patientServlet extends HttpServlet {
         System.out.println(request.getParameter("addDrugFrequency"));
         System.out.println(request.getParameter("addDrugForm"));
         */
+        //Insert into INVENTORY
         String sql = "INSERT INTO INVENTORY(drug_ID, drugintake_ID,drugphase_ID,inventory_balance,inventory_status,inventory_startdate,dose,instructions,frequency,strictness,medicineform_ID) " +
                 "VALUES(?,?,?,?,?,?,?,?,?,?,?);";
-
         try {
             PreparedStatement ps = DBConn.getPreparedStatement(sql);
             ps.setInt(1, Integer.valueOf(request.getParameter("addDrugName")));
@@ -262,6 +265,18 @@ public class patientServlet extends HttpServlet {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        //TODO:Create SCHEDULE table
+        //TODO:Insert into SCHEDULE
+        /*
+        sql = "";
+        try {
+            PreparedStatement ps = DBConn.getPreparedStatement(sql);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }*/
+
+
     }
 
     private void editPillbox(HttpServletRequest request){
@@ -308,40 +323,19 @@ public class patientServlet extends HttpServlet {
 
 
 
-
+    //TODO:Mark as consumed in SCHEDULE table, decrement quantity in INVENTORY
     private String consumeMedication(){
+        /*
+        sql = "";
+        try {
+            PreparedStatement ps = DBConn.getPreparedStatement(sql);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }*/
         Map<String, String> map = new HashMap<String, String>();
         map.put("response", "success");
         return gson.toJson(map);
     }
 
 }
-/*
-        List<pillbox> list = new ArrayList<pillbox>();
-
-        try {
-            Connection conn = DBConn.getConnection();
-            PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM INVENTORY");
-            String id = "1";
-            preparedStatement.setString(1, id);
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                pillbox p = new pillbox();
-                p.setInventory_id(rs.getString(1));
-                p.setDrugintake_id(rs.getString(2));
-                p.setDrugphase_id(rs.getString(3));
-                p.setInventory_balance(rs.getString(4));
-                p.setInventory_days(rs.getString(5));
-                p.setInventory_startdate(rs.getString(6));
-                p.setInventory_status(rs.getString(8));
-                p.setDrug_ID(rs.getString(9));
-                list.add(p);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        System.out.println("test");
-        System.out.println(gson.toJson(list));
-        return gson.toJson(list);
-* */
