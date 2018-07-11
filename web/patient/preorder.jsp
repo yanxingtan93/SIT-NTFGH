@@ -72,6 +72,7 @@
             <div class="col-sm-12">
                 <div class="input_fields_wrap">
                     <div>
+                        <input type="hidden" class="form-control" name="action" value="Form">
                         <label class="col-sm-4 col-form-label">Medication</label>
                         <input type="text" id="medicationPreorder" name="medicationPreorder">
                         <label class="col-sm-4 col-form-label">Total Quantity</label>
