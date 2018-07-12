@@ -15,8 +15,8 @@ public class ContentDaoImpl implements ContentDao {
     }
 
     @Override
-    public List<Content> getAllContent() {
-        List<Content> contentList = new ArrayList<Content>();
+    public ArrayList<Content> getAllContent() {
+        ArrayList<Content> contentList = new ArrayList<Content>();
         String sql = "SELECT * FROM CONTENT";
         try {
             Connection con = db.getConnection();

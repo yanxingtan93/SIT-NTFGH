@@ -19,7 +19,7 @@ $(document).ready(function() {
 
                 "  <form method=\"post\" action=\"/pharmacist/medicationEdit.jsp?xmedID="+value.id+" \">\n" +
                 "                    <input type=\"hidden\" class=\"form-control\" name=\"mode\" value=\"Edit\">\n" +
-                "                    <input type=\"hidden\" class=\"form-control\" name=\"xmedID\"  value="+value.id+">\n" +
+                "                    <input type=\"hidden\" class=\"form-control\" name=\"medID\"  value="+value.id+">\n" +
                 "                    <button type=\"submit\" class=\"btn btn-success\">Edit</button>\n" +
                 "                </form>\n" +
                 "                    <form method=\"post\" action=\"/drugCatalogueServlet\">\n" +
