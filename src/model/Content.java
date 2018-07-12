@@ -10,21 +10,24 @@ public class Content {
     private int id;
     private String contentTitle;
     private String contentPath;
+    private String contentCategory;
 
     //Default Constructor
     public Content(){
 
     }
     //Constructor with ID
-    public Content(int id, String contentTitle,String contentPath){
+    public Content(int id, String contentTitle,String contentPath,String contentCategory){
         this.id =id;
         this.contentTitle=contentTitle;
         this.contentPath=contentPath;
+        this.contentCategory = contentCategory;
     }
     //Constructor without ID
-    public Content(String contentTitle,String contentPath){
+    public Content(String contentTitle,String contentPath, String contentCategory){
         this.contentTitle = contentTitle;
         this.contentPath=contentPath;
+        this.contentCategory = contentCategory;
     }
 
     public int getId() {
@@ -49,6 +52,12 @@ public class Content {
 
     public void setContentPath(String contentPath) {
         this.contentPath = contentPath;
+    }
+    public String getContentCategory(){
+        return contentCategory;
+    }
+    public void setContentCategory(String contentCategory){
+        this.contentCategory = contentCategory;
     }
 
 }

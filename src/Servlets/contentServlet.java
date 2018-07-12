@@ -21,6 +21,7 @@ public class contentServlet extends HttpServlet {
     private final String UPLOAD_DIRECTORY = "data";
     private String uploded_directory="";
     private String documentTitle="";
+    private String contentCategory ="";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -58,7 +59,13 @@ public class contentServlet extends HttpServlet {
                             documentTitle = item.getString();
                             System.out.println(documentTitle);
                         }
-                        Content addNewContent = new Content(documentTitle,uploded_directory);
+                        if(item.getFieldName().equals("contentCategory")){
+                            contentCategory = item.getString();
+                            System.out.println(contentCategory);
+
+
+                        }
+                        Content addNewContent = new Content(documentTitle,uploded_directory,contentCategory);
                         ContentDao contentDao = new ContentDaoImpl();
                         contentDao.addContent(addNewContent);
                     }
@@ -76,6 +83,9 @@ public class contentServlet extends HttpServlet {
         }
 
         request.getRequestDispatcher("/pharmacist/contentOverview.jsp").forward(request, response);
+
+    }
+    protected  void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
 
     }
 }

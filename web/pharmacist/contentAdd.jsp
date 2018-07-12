@@ -7,6 +7,8 @@
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="../JS/contentCategory.js"></script>
 
 <t:pharmacistPage>
     <h1>Manage Content such as PDF uploads here</h1>
@@ -15,6 +17,11 @@
         <br/>
         <label>Document Title:</label>
         <input type="text" name ="content-title">
+        <br/>
+        <label>Content Category:</label>
+        <select name="contentCategory" id="content-category">
+
+    </select>
         <br/>
 
         <input type="submit" value="upload" />

@@ -23,7 +23,7 @@ public class ContentDaoImpl implements ContentDao {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                Content content = new Content(rs.getInt(1), rs.getString(2), rs.getString(3));
+                Content content = new Content(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
                 contentList.add(content);
 
             }
@@ -38,13 +38,14 @@ public class ContentDaoImpl implements ContentDao {
 
     @Override
     public void addContent(Content content) {
-        String sql = "INSERT INTO CONTENT(content_title,content_document) VALUES(?,?)";
+        String sql = "INSERT INTO CONTENT(content_title,content_document,content_category) VALUES(?,?,?)";
 
         try {
             Connection conn = db.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, content.getContentTitle());
             ps.setString(2, content.getContentPath());
+            ps.setString(3,content.getContentCategory());
             ps.executeUpdate();
             conn.commit();
             conn.close();
@@ -67,6 +68,7 @@ public class ContentDaoImpl implements ContentDao {
             while (rs.next()) {
                 theContent.setContentTitle(rs.getString(2));
                 theContent.setContentPath(rs.getString(3));
+                theContent.setContentCategory(rs.getString(4));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -78,13 +80,14 @@ public class ContentDaoImpl implements ContentDao {
 
     @Override
     public void updateContent(Content content) {
-        String sql = "UPDATE CONTENT SET content_title = ?, content_document=? WHERE content_ID=?";
+        String sql = "UPDATE CONTENT SET content_title = ?, content_document=?,content_category=? WHERE content_ID=?";
         try {
             Connection con = db.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, content.getContentTitle());
             ps.setString(2, content.getContentPath());
-            ps.setInt(3, content.getId());
+            ps.setString(3,content.getContentCategory());
+            ps.setInt(4, content.getId());
             ps.executeUpdate();
             con.commit();
             con.close();
@@ -128,6 +131,13 @@ public class ContentDaoImpl implements ContentDao {
     }
 }
 
+class test{
+    public static void main(String [] args){
+        ContentDao dao = new ContentDaoImpl();
+        dao.deleteAllContent();
+
+    }
+}
 
 
 
