@@ -135,6 +135,8 @@ public class contentServlet extends HttpServlet {
                 outs.flush();
                 outs.close();
                 in.close();
+                String url= "/pharmacist/contentOverview.jsp";
+                response.sendRedirect(url);
 
 
 
