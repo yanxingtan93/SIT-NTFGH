@@ -65,6 +65,24 @@
         <url-pattern>/preorderViewServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>pharmacistPreorderServlet</servlet-name>
+        <servlet-class>Servlets.pharmacistPreorderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>pharmacistPreorderServlet</servlet-name>
+        <url-pattern>/pharmacistPreorderServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>patientFormServlet</servlet-name>
+        <servlet-class>Servlets.patientFormServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>patientFormServlet</servlet-name>
+        <url-pattern>/patientFormServlet</url-pattern>
+    </servlet-mapping>
+
 
     <servlet>
         <servlet-name>patientServlet</servlet-name>
