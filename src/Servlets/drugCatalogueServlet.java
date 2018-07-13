@@ -69,16 +69,14 @@ public class drugCatalogueServlet extends HttpServlet {
                 HttpSession session=request.getSession(false);
                 String name=(String)session.getAttribute("userID");
                 System.out.println(name+" _-> SESSION");
-
-
-            DrugsDao drugDao = new DrugDaoImpl();
-            int count = 0;
-            ArrayList<Medicine> list = drugDao.getAllDrugs();
-            String json = new Gson().toJson(list);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(json);
-            break;
+                DrugsDao drugDao = new DrugDaoImpl();
+                int count = 0;
+                ArrayList<Medicine> list = drugDao.getAllDrugs();
+                String json = new Gson().toJson(list);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(json);
+                break;
 
             case "individual":
 
