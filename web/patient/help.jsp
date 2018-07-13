@@ -20,6 +20,6 @@
   <h4>Outpatient Pharmacy Email</h4>
   <p>For preorder purposes, kindly email to: <a href="mailto:JHCampus_OutpatientPharmacy@nuhs.edu.sg">JHCampus_OutpatientPharmacy@nuhs.edu.sg</a></p>
   <h2>Patient Education</h2>
-  <p><a href="/PatientEducation">View patient education leaflets</a></p>
+  <p><a href="/PatientEducation.jsp">View patient education leaflets</a></p>
 
 </t:patientPage>

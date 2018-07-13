@@ -39,6 +39,10 @@ public class patientServlet extends HttpServlet {
                 deleteFromPillbox(request.getParameter("id"));
                 response.sendRedirect("http://localhost:8080/patient/pillboxOverview.jsp");
                 break;
+            case "recordConsumption":
+                recordConsumption(request.getParameter("id"),request.getParameter("remainder"), request.getParameter("inventoryID"));
+                response.sendRedirect("http://localhost:8080/patient/pillboxOverview.jsp");
+                break;
         }
     }
 
@@ -102,9 +106,8 @@ public class patientServlet extends HttpServlet {
         return gson.toJson(list);
     }
     private String listPillbox(){
-        //TODO:Split frontend
         //TODO:Modify for user NRIC
-        String sql = "SELECT * FROM INVENTORY INNER JOIN DRUGS on INVENTORY.drug_ID = DRUGS.drug_ID INNER JOIN DRUGINTAKE on INVENTORY.drugintake_ID = DRUGINTAKE.drugintake_ID INNER JOIN DRUGPHASE on INVENTORY.drugphase_ID = DRUGPHASE.drugphase_ID INNER JOIN REMINDERS on INVENTORY.inventory_ID = REMINDERS.inventory_ID";
+        String sql = "SELECT * FROM INVENTORY INNER JOIN DRUGS on INVENTORY.drug_ID = DRUGS.drug_ID INNER JOIN DRUGINTAKE on INVENTORY.drugintake_ID = DRUGINTAKE.drugintake_ID INNER JOIN DRUGPHASE on INVENTORY.drugphase_ID = DRUGPHASE.drugphase_ID INNER JOIN REMINDERS on INVENTORY.inventory_ID = REMINDERS.inventory_ID INNER JOIN MEDICINEFORM on INVENTORY.medicineform_ID = MEDICINEFORM.medicineform_ID WHERE consumed=0";
         /*
         String sql = "SELECT *\n" +
                 "FROM\n" +
@@ -121,47 +124,78 @@ public class patientServlet extends HttpServlet {
 
         LocalDate today = LocalDate.now();
         LocalDate test;
-        ArrayList<Map> list = new ArrayList<>();
+        ArrayList<Map> todayList = new ArrayList<>();
+        ArrayList<Map> pillboxList = new ArrayList<>();
+        Map<String, ArrayList<Map>> dataMap = new HashMap<String, ArrayList<Map>>();
+        try {
+            PreparedStatement ps = DBConn.getPreparedStatement(sql);
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                Map<String, String> todayMap = new HashMap<String, String>();
+                test = LocalDateTime.parse(resultSet.getString("reminder_time")).toLocalDate();
+                if (today.toString().equalsIgnoreCase(test.toString())){
+                    todayMap.put("inventory_ID", resultSet.getString("inventory_ID"));
+                    todayMap.put("drug_brand", resultSet.getString("drug_brand"));
+                    todayMap.put("drugintake_term", resultSet.getString("drugintake_term"));
+                    todayMap.put("drugphase_term", resultSet.getString("drugphase_term"));
+                    todayMap.put("drug_description", resultSet.getString("drug_description"));
+                    todayMap.put("drug_side_effect", resultSet.getString("drug_side_effect"));
+
+                    todayMap.put("drug_name", resultSet.getString("drug_name"));
+                    todayMap.put("inventory_balance", resultSet.getString("inventory_balance"));
+                    todayMap.put("dose", resultSet.getString("dose"));
+                    todayMap.put("drugintake_ID", resultSet.getString("drugintake_ID"));
+                    todayMap.put("frequency", resultSet.getString("frequency"));
+                    todayMap.put("drugphase_ID", resultSet.getString("drugphase_ID"));
+                    todayMap.put("instructions", resultSet.getString("instructions"));
+                    todayMap.put("strictness", resultSet.getString("strictness"));
+                    todayMap.put("inventory_startdate", resultSet.getString("inventory_startdate"));
+                    todayMap.put("reminder_time", resultSet.getString("reminder_time"));
+                    todayMap.put("reminder_ID", resultSet.getString("reminder_ID"));
+                    todayMap.put("medicineform_name", resultSet.getString("medicineform_name"));
+                    todayList.add(todayMap);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+
+        }
+
+        sql = "SELECT * FROM INVENTORY INNER JOIN DRUGS on INVENTORY.drug_ID = DRUGS.drug_ID INNER JOIN DRUGINTAKE on INVENTORY.drugintake_ID = DRUGINTAKE.drugintake_ID INNER JOIN DRUGPHASE on INVENTORY.drugphase_ID = DRUGPHASE.drugphase_ID INNER JOIN MEDICINEFORM on INVENTORY.medicineform_ID = MEDICINEFORM.medicineform_ID";
         try {
             PreparedStatement ps = DBConn.getPreparedStatement(sql);
             ResultSet resultSet = ps.executeQuery();
 
             while (resultSet.next()) {
                 Map<String, String> map = new HashMap<String, String>();
-                test = LocalDateTime.parse(resultSet.getString("reminder_time")).toLocalDate();
-                if (today.toString().equalsIgnoreCase(test.toString())){
-                    map.put("today", "true");
-                }
-                else{
-                    map.put("today", "false");
-                }
+                    map.put("inventory_ID", resultSet.getString("inventory_ID"));
+                    map.put("drug_brand", resultSet.getString("drug_brand"));
+                    map.put("drugintake_term", resultSet.getString("drugintake_term"));
+                    map.put("drugphase_term", resultSet.getString("drugphase_term"));
+                    map.put("drug_description", resultSet.getString("drug_description"));
+                    map.put("drug_side_effect", resultSet.getString("drug_side_effect"));
 
-                map.put("inventory_ID", resultSet.getString("inventory_ID"));
-                map.put("drug_brand", resultSet.getString("drug_brand"));
-                map.put("drugintake_term", resultSet.getString("drugintake_term"));
-                map.put("drugphase_term", resultSet.getString("drugphase_term"));
-                map.put("drug_description", resultSet.getString("drug_description"));
-                map.put("drug_side_effect", resultSet.getString("drug_side_effect"));
-
-
-                map.put("drug_name", resultSet.getString("drug_name"));
-                map.put("inventory_balance", resultSet.getString("inventory_balance"));
-                map.put("dose", resultSet.getString("dose"));
-                map.put("drugintake_ID", resultSet.getString("drugintake_ID"));
-                map.put("frequency", resultSet.getString("frequency"));
-                map.put("drugphase_ID", resultSet.getString("drugphase_ID"));
-                map.put("instructions", resultSet.getString("instructions"));
-                map.put("strictness", resultSet.getString("strictness"));
-                map.put("inventory_startdate", resultSet.getString("inventory_startdate"));
-
-                list.add(map);
+                    map.put("drug_name", resultSet.getString("drug_name"));
+                    map.put("inventory_balance", resultSet.getString("inventory_balance"));
+                    map.put("dose", resultSet.getString("dose"));
+                    map.put("drugintake_ID", resultSet.getString("drugintake_ID"));
+                    map.put("frequency", resultSet.getString("frequency"));
+                    map.put("drugphase_ID", resultSet.getString("drugphase_ID"));
+                    map.put("instructions", resultSet.getString("instructions"));
+                    map.put("strictness", resultSet.getString("strictness"));
+                    map.put("inventory_startdate", resultSet.getString("inventory_startdate"));
+                    map.put("medicineform_name", resultSet.getString("medicineform_name"));
+                    pillboxList.add(map);
 
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
 
         }
-        return gson.toJson(list);
+        dataMap.put("today", todayList);
+        dataMap.put("pillbox", pillboxList);
+        return gson.toJson(dataMap);
     }
 
     //Function to translate form inputs into an array of intake datetimes
@@ -347,13 +381,15 @@ public class patientServlet extends HttpServlet {
     }
 
     private void deleteFromPillbox(String id){
-        String sql = "DELETE FROM REMINDERS WHERE inventory_ID="+id;
-        System.out.println(sql);
+        String sql = "DELETE FROM REMINDERS WHERE inventory_ID=?";
         try {
             PreparedStatement ps = DBConn.getPreparedStatement(sql);
+            ps.setInt(1, Integer.valueOf(id));
             ps.executeUpdate();
-            sql = "DELETE FROM INVENTORY WHERE inventory_ID="+id;
+            sql = "DELETE FROM INVENTORY WHERE inventory_ID=?";
             ps = DBConn.getPreparedStatement(sql);
+            ps.setInt(1, Integer.valueOf(id));
+
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -363,19 +399,25 @@ public class patientServlet extends HttpServlet {
 
 
 
-    //TODO:Mark as consumed in SCHEDULE table, decrement quantity in INVENTORY
-    private String consumeMedication(){
-        /*
-        sql = "";
+    private void recordConsumption(String id, String remainder, String inventory_ID){
+        System.out.println(id);
+        System.out.println(remainder);
+        System.out.println(inventory_ID);
+
+        String sql = "UPDATE REMINDERS SET consumed = 1 WHERE reminder_ID = ?";
+
         try {
             PreparedStatement ps = DBConn.getPreparedStatement(sql);
+            ps.setInt(1, Integer.valueOf(id));
+            ps.executeUpdate();
+            sql = "UPDATE INVENTORY SET inventory_balance = ? WHERE inventory_ID = ?";
+            ps = DBConn.getPreparedStatement(sql);
+            ps.setInt(1, Integer.valueOf(remainder));
+            ps.setInt(2, Integer.valueOf(inventory_ID));
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }*/
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("response", "success");
-        return gson.toJson(map);
+        }
     }
 
 }

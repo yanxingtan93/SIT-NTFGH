@@ -8,12 +8,13 @@ import model.Medicine;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
+import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -60,25 +61,23 @@ public class drugCatalogueServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String route  = request.getParameter("route");
+        String route = request.getParameter("route");
 
         switch (route) {
 
 
             case "all":
-                HttpSession session=request.getSession(false);
-                String name=(String)session.getAttribute("userID");
-                System.out.println(name+" _-> SESSION");
-
-
-            DrugsDao drugDao = new DrugDaoImpl();
-            int count = 0;
-            ArrayList<Medicine> list = drugDao.getAllDrugs();
-            String json = new Gson().toJson(list);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(json);
-            break;
+                HttpSession session = request.getSession(false);
+                String name = (String) session.getAttribute("userID");
+                System.out.println(name + " _-> SESSION");
+                DrugsDao drugDao = new DrugDaoImpl();
+                int count = 0;
+                ArrayList<Medicine> list = drugDao.getAllDrugs();
+                String json = new Gson().toJson(list);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(json);
+                break;
 
             case "individual":
 
@@ -90,8 +89,6 @@ public class drugCatalogueServlet extends HttpServlet {
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write(json1);
                 break;
-
-
         }
     }
 
