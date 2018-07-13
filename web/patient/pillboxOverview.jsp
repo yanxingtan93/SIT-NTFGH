@@ -3,15 +3,24 @@
 
 
 <t:patientPage>
-    <h1>Pillbox overview</h1>
+    <h1>Reminders</h1>
+    <div class="row">
 
+        <table id="todayTable" class="table table-striped table-bordered">
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+
+    <h1>Pillbox</h1>
     <div class="row">
         <button type="button" class="btn btn-success btn-block btn-lg" onclick="openAddModal()">Add new medication</button>
     </div>
     <div class="row">
 
         <table id="pillboxTable" class="table table-striped table-bordered">
-            <tbody id="pillboxListContent">
+            <tbody>
 
             </tbody>
         </table>
@@ -36,8 +45,20 @@
         </tbody>
     </table>
 
-
-    <!-- editModal -->
+    <div id="recordModal" class="modal">
+        <div class="modal-content">
+            <h2>Please confirm.</h2><br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <button type="button" class="btn btn-success btn-block btn-lg" onclick="recordConsumption()">Confirm</button>
+                </div>
+                <div class="col-sm-6">
+                    <button type="button" class="btn btn-default btn-block btn-lg"  onclick="closeRecordModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- editModal
     <div id="editModal" class="modal">
         <div class="modal-content">
             <h1>Edit Entry</h1>
@@ -124,7 +145,7 @@
 
         </div>
     </div>
-
+    -->
     <!-- addModal -->
     <div id="addModal" class="modal">
         <div class="modal-content">
@@ -246,11 +267,15 @@
     <script>
         var pillboxlist;
         var deleteID;
+        var recordID;
+        var inventoryID;
+        var remainder;
 
         // Get the modal
         var addModal = document.getElementById('addModal');
         var editModal = document.getElementById('editModal');
         var deleteModal = document.getElementById('deleteModal');
+        var recordModal = document.getElementById('recordModal');
 
         //Show/hide dayofweek selector
         function toggleDayOfWeek(sel)
@@ -307,8 +332,23 @@
             $.post( "http://localhost:8080/patient/deleteFromPillbox", {id: deleteID})
                 .then(location.reload());
         }
+        function openRecordModal(id,dose,invId) {
+            recordID = id;
+            remainder = dose;
+            inventoryID = invId;
+            recordModal.style.display = "block";
+        }
+        function recordConsumption() {
+            console.log(recordID);
+
+            $.post( "http://localhost:8080/patient/recordConsumption", {id: recordID, remainder: remainder, inventoryID: inventoryID})
+                .then(location.reload());
+        }
 
         // When the user clicks on <span> (x), close the modal
+        function closeRecordModal() {
+            recordModal.style.display = "none";
+        }
         function closeAddModal() {
             addModal.style.display = "none";
         }
@@ -320,6 +360,9 @@
         }
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
+            if (event.target == recordModal) {
+                recordModal.style.display = "none";
+            }
             if (event.target == addModal) {
                 addModal.style.display = "none";
             }
@@ -368,8 +411,41 @@
             $.get( "http://localhost:8080/patient/listPillbox" ).then(
                 function(data,status) {
                     pillboxlist = JSON.parse(data);
-                    $.each(pillboxlist, function (i, item) {
-                        console.log(item["today"]);
+                    console.log(pillboxlist);
+                    var today = pillboxlist["today"];
+                    var pillbox = pillboxlist["pillbox"];
+                    if(today.length<1){
+                        $("#todayTable").find('tbody')
+                            .append($('<th>')
+                                .append("<strong>You have no medications left for today!</strong>")
+                            );
+                    }
+                    $.each(today, function (i, item) {
+                        var remainder = parseInt(item['inventory_balance']) - parseInt(item['dose']);
+                        if (remainder<0){ remainder = 0;}
+                        $("#todayTable").find('tbody')
+                            .append($('<tr>')
+                            .append($('<td>')
+                                .append($('<img>')
+                                    .attr('src', 'https://img.tesco.com/Groceries/pi/718/5000158100718/IDShot_540x540.jpg')
+                                    .height('150px')
+                                )
+                            )
+                            .append($('<td>')
+                                .append("<div class='pillbox'>")
+                                .append("<h2>"+item['reminder_time'].slice(11)+" - "+item['drugintake_term']+"</h2>")
+                                .append("<h3>"+item['drug_name']+" - "+item['dose']+" "+item['medicineform_name']+"</h3>")
+                                .append("<p>Side Effects: "+item['drug_side_effect']+"</p>")
+                                .append("</div>")
+                            )
+                            .append($('<td>')
+                                .append("<div class='pillbox'>")
+                                .append("<button type='button' class='btn btn-success btn-block btn-lg' onclick='openRecordModal("+item['reminder_ID']+", "+remainder+","+item['inventory_ID']+")'>Record</button>")
+                            )
+                        );
+                    });
+
+                    $.each(pillbox, function (i, item) {
                         $("#pillboxTable").find('tbody')
                             .append($('<tr>')
                                 .append($('<td>')
@@ -380,9 +456,9 @@
                                 )
                                 .append($('<td>')
                                     .append("<div class='pillbox'>")
-                                    .append("<h2>"+item['drug_name']+"<small> phase "+item['drugphase_term']+"</small></h2>")
-                                    .append("<h4>Balance: "+item['inventory_balance']+" pills</h4>")
-                                    .append("<p>Side Effects: "+item['drug_side_effect']+" pills</p>")
+                                    .append("<h2>"+item['drug_name']+"</h2>")
+                                    .append("<h3>Quantity: "+item['inventory_balance']+" "+item['medicineform_name']+"</h3>")
+                                    .append("<p>Start Date: "+item['inventory_startdate']+"</p>")
                                     .append("</div>")
                                 )
                                 .append($('<td>')
