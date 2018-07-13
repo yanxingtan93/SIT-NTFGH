@@ -9,46 +9,33 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
-@WebServlet(name = "preorderFormServlet")
-public class preorderFormServlet extends HttpServlet {
+@WebServlet(name = "patientFormServlet")
+public class patientFormServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        response.setContentType("application/json");
-//        try {
-//            String term = request.getParameter("term");
-//            DataDao dataDao = new DataDao();
-//            ArrayList<String> list = dataDao.getFrameWork(term);
-//
-//            String searchList = new Gson().toJson(list);
-//            response.getWriter().write(searchList);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+
     }
 
-
-
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         Map<String, String> map = new LinkedHashMap<>();
-        String sql = "SELECT * FROM DRUGS";
+        String sql = "SELECT * FROM PATIENTS";
 
         try {
             PreparedStatement ps = DBConn.getPreparedStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                map.put(rs.getString(1), rs.getString(2));
+                map.put(rs.getString(1), rs.getString(1));
             }
 
             String json = new Gson().toJson(map);
-            System.out.print("form:" + json);
+            System.out.print("patients:" + json);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);

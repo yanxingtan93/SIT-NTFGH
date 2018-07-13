@@ -29,6 +29,7 @@
               <div class="navbar-nav">
                   <a class="nav-item nav-link" href="/pharmacist/patientOverview.jsp"><b><i class="fa fa-users"></i> Patients</b></a>
                   <a class="nav-item nav-link" href="/pharmacist/medicationOverview.jsp"><b><i class="fas fa-medkit"></i> Medication</b></a>
+                  <a class="nav-item nav-link" href="/pharmacist/preorder.jsp"><b><i class="fa fa-money"></i> Preorder</b></a>
                   <a class="nav-item nav-link" href="/pharmacist/contentOverview.jsp"><b><i class="fa fa-book"></i> Content</b></a>
                   <a class="nav-item nav-link" href="/pharmacist/profile.jsp"><b><i class="fa fa-user"></i> Profile</b></a>
               </div>
