@@ -306,7 +306,7 @@ public class patientServlet extends HttpServlet {
             ps.setString(6, request.getParameter("addDrugStartDate"));
             ps.setInt(7, Integer.valueOf(request.getParameter("addDrugDose")));
             ps.setString(8, request.getParameter("addDrugInstructions"));
-            ps.setInt(9, consumptionTimes.length);
+            ps.setString(9, request.getParameter("addDrugFrequency"));
 
             if (request.getParameter("addDrugStrictness").equalsIgnoreCase("true")){
                 ps.setBoolean(10, true);
