@@ -1,13 +1,13 @@
 package Servlets;
 
-import java.io.File;
+import java.io.*;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -111,10 +111,42 @@ public class contentServlet extends HttpServlet {
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write(json);
                 break;
+            case "Download":
+                String contentPath = request.getParameter("contentPath");
+                System.out.print(contentPath);
+                String disHeader = "Attachment; Filename='"+contentPath+"'";
+                response.setContentType("application/octet-stream");
+                response.setHeader("Content-Disposition",disHeader);
+                File fileToDownload = new File(contentPath);
+                InputStream in = null;
+                ServletOutputStream outs = response.getOutputStream();
+
+                try {
+                    in = new BufferedInputStream(new FileInputStream(fileToDownload));
+                    int ch;
+                    while ((ch = in.read()) != -1) {
+                        outs.print((char) ch);
+                    }
+                }
+                finally {
+                    if (in != null) in.close(); // very important
+                }
+
+                outs.flush();
+                outs.close();
+                in.close();
+                String url= "/pharmacist/contentOverview.jsp";
+                response.sendRedirect(url);
+
+
+
+
+
+        }
 
 
         }
 
 
     }
-}
+

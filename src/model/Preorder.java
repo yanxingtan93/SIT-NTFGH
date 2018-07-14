@@ -136,8 +136,10 @@ public class Preorder {
     }
 
     public void addPreorderDrugs(int preorderID, String drugID) {
-
-        String sql = "INSERT INTO PREORDERDRUGS (preorder_ID,drug_ID,quantity)" +
+        System.out.println("ID: " + preorderID);
+        System.out.println("drug ID: " + drugID);
+        System.out.println("Quantity: " + quantity);
+        String sql = "INSERT INTO PREORDERDRUGS (preorder_ID,drug_ID, quantity)" +
                 "VALUES ('"+preorderID+"','"+drugID+"', '"+quantity+"');";
 
         try {
