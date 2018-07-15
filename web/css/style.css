@@ -89,3 +89,40 @@ ul.sub-menu li:hover a {
     width: 50px;
     height: 50px;
 }
+
+.flex-container {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    -webkit-flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+.flex-item {
+    background: #55c5c3;
+    padding: 5px;
+    width:  280px;
+    height: 260px;
+    margin-top: 50px;
+
+    text-align: center;
+}
+
+.dashboard-item{
+    padding: 2.25rem;
+}
+
+.dashboard-item i{
+    font-size: 120px;
+}
+.dashboard-item h5{
+    margin-top: 16px;
+    font-size: 32px;
+}
