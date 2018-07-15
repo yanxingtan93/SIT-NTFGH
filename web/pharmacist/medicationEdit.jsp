@@ -117,6 +117,7 @@
         var side = $('#drug_sideEffects');
 
         var id = getParameterByName("xmedID");
+        console.log("id is:" + id);
 
         $.get("/drugCatalogueServlet?route=individual&id="+id, function(responseJson) {
 
