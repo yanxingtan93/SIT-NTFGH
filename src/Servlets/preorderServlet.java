@@ -24,6 +24,9 @@ public class preorderServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 
         if(request.getParameter("action").equals("View")) {
+            String mode = null;
+            String date = null;
+            String status = null;
             String ID = request.getParameter("preorder_ID");
             System.out.println("Servlet ID is: " + ID);
 
@@ -42,7 +45,6 @@ public class preorderServlet extends HttpServlet {
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("drug_name", resultSet.getString(1));
                     map.put("quantity", resultSet.getString(2));
-                    map.put("ID", ID);
 
                     System.out.println(resultSet.getString(1));
                     System.out.println(resultSet.getString(2));
@@ -53,8 +55,28 @@ public class preorderServlet extends HttpServlet {
                 e.printStackTrace();
             }
 
+            String sql2 = "SELECT * FROM PREORDER" +
+                    " WHERE preorder_ID = '"+ID+"'";
+
+            try {
+                ps = DBConn.getPreparedStatement(sql2);
+                ResultSet resultSet= ps.executeQuery();
+                while (resultSet.next()){
+                    mode = resultSet.getString("preorder_mode");
+                    date = resultSet.getString("collection_date");
+                    status = resultSet.getString("status");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
             String nextJSP = "/patient/preorderView.jsp";
             request.setAttribute("list", list);
+            request.setAttribute("id", ID);
+            request.setAttribute("mode", mode);
+            request.setAttribute("date", date);
+            request.setAttribute("status", status);
+
             System.out.print("\n"+ "rows --> " + list);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
             try {

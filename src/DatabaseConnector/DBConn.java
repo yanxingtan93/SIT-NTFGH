@@ -60,27 +60,11 @@ public class DBConn {
 //        String sql = "SELECT drug_ID FROM DRUGS " +
 //                "WHERE drug_name ='"+medName+"'";
         String NRIC = "S1234567A";
-        String preorderID = "19";
-//        String sql = "SELECT preorder_ID, preorder_mode, collection_date, status FROM PREORDER " +
-//                "WHERE user_NRIC = '"+NRIC+"'" ;
-//        String sql = "SELECT d.drug_name, pd.quantity FROM PREORDERDRUGS pd, DRUGS d" +
-//                " WHERE pd.preorder_ID = '"+preorderID+"' and pd.drug_ID = d.drug_ID";
+        String preorderID = "44";
 
-//        String sql = "SELECT p.preorder_ID, p.preorder_mode, p.collection_date, p.status FROM PREORDER p WHERE p.user_NRIC ='"+NRIC+"' " ;
-
-        String sql = "SELECT d.drug_name, pd.quantity FROM PREORDERDRUGS pd, DRUGS d" +
-                " WHERE pd.preorder_ID = '"+preorderID+"' and pd.drug_ID = d.drug_ID";
+        String sql = "DELETE FROM PREORDER WHERE preorder_ID = '"+preorderID+"' ";
         PreparedStatement ps = getPreparedStatement(sql);
         ResultSet resultSet= ps.executeQuery();
-        while (resultSet.next()){
-            System.out.println(resultSet.getString(1));
-            System.out.println(resultSet.getString(2));
-//            System.out.println(resultSet.getString(3));
-//            System.out.println(resultSet.getString(4));
-//            System.out.println(resultSet.getString(5));
-//            System.out.println(resultSet.getString(6));
-            System.out.print("\n");
-        }
     }
 
 
