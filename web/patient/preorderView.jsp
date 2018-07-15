@@ -9,13 +9,23 @@
 
     <head>
         <title>Title</title>
-        <h2>View Preorder</h2>
+        <h2>View Preorder #${id}</h2>
     </head>
-        <%--<label class="col-sm-4 col-form-label">Preorder ID:</label>--%>
-        <%--<input type="text" id="preorderID" name="preorderID" value ="" readonly >--%>
 
     <br>
     <body>
+        <label class="col-sm-4 col-form-label">Preorder Mode:</label>
+        <input type="text" id="Mode" name="preorderMode" value =" ${mode}" readonly >
+        <br>
+
+        <label class="col-sm-4 col-form-label">Preorder Date:</label>
+        <input type="text" id="Date" name="preorderDate" value =" ${date}" readonly >
+        <br>
+
+        <label class="col-sm-4 col-form-label">Preorder Status:</label>
+        <input type="text" id="Status" name="preorderStatus" value =" ${status}" readonly >
+        <br><br>
+
     <table id="myMainTable" class="dailyMedTable table table-striped table-bordered">
         <thead class="thead-dark">
         <tr>
