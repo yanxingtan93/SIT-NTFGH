@@ -35,7 +35,7 @@ $(document).ready(function(){
         );
 
     //=============== Get today's medication and pillbox in a Map {today:[], pillbox:[]} ===============
-    $.get( "http://localhost:8080/patient/listPillbox" )
+    $.post( "http://localhost:8080/patient/listPillbox", {userID: userID})
         .then(
             function(data,status) {
                 pillboxlist = JSON.parse(data);

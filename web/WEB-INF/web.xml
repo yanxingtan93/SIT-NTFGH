@@ -97,6 +97,7 @@
         <url-pattern>/patient/editPillbox</url-pattern>
         <url-pattern>/patient/deleteFromPillbox</url-pattern>
         <url-pattern>/patient/recordConsumption</url-pattern>
+        <url-pattern>/patient/listHistory</url-pattern>
     </servlet-mapping>
 
 

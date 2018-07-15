@@ -137,6 +137,7 @@
                 <br>
                 <div class="form-group row">
                     <div class="col-sm-6">
+                        <input type="hidden" id="userID" name="userID" value="S1234567C">
                         <button type="submit" class="btn btn-success btn-block btn-lg" onclick="">Submit</button>
                     </div>
                     <div class="col-sm-6">
@@ -255,5 +256,8 @@
             </div>
         </div>
     </div>
+    <script>
+        var userID = "S1234567C";
+    </script>
     <script src ="../JS/pillboxOverview.js"></script>
 </t:patientPage>

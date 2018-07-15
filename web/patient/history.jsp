@@ -2,6 +2,8 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <t:patientPage>
+
+    <!--
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,dt-1.10.8/datatables.min.css">
   <script type="text/javascript" src="https://cdn.datatables.net/r/bs-3.3.5/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
   <script type="text/javascript" charset="utf-8">
@@ -12,8 +14,6 @@
               "iDisplayLength": 5
           });
       } );
-
-
   </script>
 
   <style>
@@ -57,5 +57,21 @@
 
     </tbody>
 
-  </table>
+  </table>-->
+
+    <h1>History</h1>
+    <div class="row">
+
+        <table id="historyTable" class="table table-striped table-bordered">
+
+            <tbody>
+
+
+            </tbody>
+        </table>
+    </div>
+    <script>
+        var userID = "S1234567C";
+    </script>
+    <script src ="../JS/patientHistory.js"></script>
 </t:patientPage>

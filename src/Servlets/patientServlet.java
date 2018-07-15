@@ -27,6 +27,9 @@ public class patientServlet extends HttpServlet {
         String route = request.getRequestURL().toString().split("/patient/")[1];
         //Sort the request by url i.e. /patient/listMedication
         switch (route) {
+            case "listPillbox":
+                response.getWriter().write(listPillbox(request.getParameter("userID")));
+                break;
             case "addToPillbox":
                 addToPillbox(request);
                 response.sendRedirect("http://localhost:8080/patient/pillboxOverview.jsp");
@@ -43,6 +46,9 @@ public class patientServlet extends HttpServlet {
                 recordConsumption(request.getParameter("id"),request.getParameter("remainder"), request.getParameter("inventoryID"));
                 response.sendRedirect("http://localhost:8080/patient/pillboxOverview.jsp");
                 break;
+            case "listHistory":
+                response.getWriter().write(listHistory(request.getParameter("userID")));
+                break;
         }
     }
 
@@ -58,9 +64,7 @@ public class patientServlet extends HttpServlet {
             case "getMedicationForms":
                 response.getWriter().write(getMedicationForms());
                 break;
-            case "listPillbox":
-                response.getWriter().write(listPillbox());
-                break;
+
         }
     }
 
@@ -105,23 +109,9 @@ public class patientServlet extends HttpServlet {
         }
         return gson.toJson(list);
     }
-    private String listPillbox(){
+    private String listPillbox(String userID){
         //TODO:Modify for user NRIC
-        String sql = "SELECT * FROM INVENTORY INNER JOIN DRUGS on INVENTORY.drug_ID = DRUGS.drug_ID INNER JOIN DRUGINTAKE on INVENTORY.drugintake_ID = DRUGINTAKE.drugintake_ID INNER JOIN DRUGPHASE on INVENTORY.drugphase_ID = DRUGPHASE.drugphase_ID INNER JOIN REMINDERS on INVENTORY.inventory_ID = REMINDERS.inventory_ID INNER JOIN MEDICINEFORM on INVENTORY.medicineform_ID = MEDICINEFORM.medicineform_ID WHERE consumed=0";
-        /*
-        String sql = "SELECT *\n" +
-                "FROM\n" +
-                "  (SELECT DISTINCT inventory_ID, reminder_time\n" +
-                "  FROM\n" +
-                "    (   SELECT inventory_ID, reminder_time, ROW_NUMBER() over(partition by inventory_ID order by reminder_time) Orden\n" +
-                "        FROM REMINDERS\n" +
-                "    ) A\n" +
-                "  WHERE A.Orden = 1) R\n" +
-                "INNER JOIN INVENTORY on INVENTORY.inventory_ID = R.inventory_ID\n" +
-                "INNER JOIN DRUGS on INVENTORY.drug_ID = DRUGS.drug_ID\n" +
-                "INNER JOIN DRUGINTAKE on INVENTORY.drugintake_ID = DRUGINTAKE.drugintake_ID\n" +
-                "INNER JOIN DRUGPHASE on INVENTORY.drugphase_ID = DRUGPHASE.drugphase_ID";*/
-
+        String sql = "SELECT * FROM INVENTORY INNER JOIN DRUGS on INVENTORY.drug_ID = DRUGS.drug_ID INNER JOIN DRUGINTAKE on INVENTORY.drugintake_ID = DRUGINTAKE.drugintake_ID INNER JOIN DRUGPHASE on INVENTORY.drugphase_ID = DRUGPHASE.drugphase_ID INNER JOIN REMINDERS on INVENTORY.inventory_ID = REMINDERS.inventory_ID INNER JOIN MEDICINEFORM on INVENTORY.medicineform_ID = MEDICINEFORM.medicineform_ID WHERE consumed=0 AND user_NRIC=?";
         LocalDate today = LocalDate.now();
         LocalDate test;
         ArrayList<Map> todayList = new ArrayList<>();
@@ -129,6 +119,7 @@ public class patientServlet extends HttpServlet {
         Map<String, ArrayList<Map>> dataMap = new HashMap<String, ArrayList<Map>>();
         try {
             PreparedStatement ps = DBConn.getPreparedStatement(sql);
+            ps.setString(1, userID);
             ResultSet resultSet = ps.executeQuery();
 
             while (resultSet.next()) {
@@ -294,7 +285,7 @@ public class patientServlet extends HttpServlet {
         System.out.println(request.getParameter("addDrugForm"));
         */
         //Insert into INVENTORY
-        String sql = "INSERT INTO INVENTORY(drug_ID, drugintake_ID,drugphase_ID,inventory_balance,inventory_status,inventory_startdate,dose,instructions,frequency,strictness,medicineform_ID) " +
+        String sql = "INSERT INTO INVENTORY(drug_ID, drugintake_ID,drugphase_ID,inventory_balance,inventory_status,inventory_startdate,dose,instructions,strictness,medicineform_ID,user_NRIC) " +
                 "VALUES(?,?,?,?,?,?,?,?,?,?,?);";
         try {
             PreparedStatement ps = DBConn.getPreparedStatement(sql);
@@ -306,16 +297,15 @@ public class patientServlet extends HttpServlet {
             ps.setString(6, request.getParameter("addDrugStartDate"));
             ps.setInt(7, Integer.valueOf(request.getParameter("addDrugDose")));
             ps.setString(8, request.getParameter("addDrugInstructions"));
-            ps.setString(9, request.getParameter("addDrugFrequency"));
 
             if (request.getParameter("addDrugStrictness").equalsIgnoreCase("true")){
-                ps.setBoolean(10, true);
+                ps.setBoolean(9, true);
             }
             else{
-                ps.setBoolean(10, false);
+                ps.setBoolean(9, false);
             }
-            ps.setInt(11, Integer.valueOf(request.getParameter("addDrugForm")));
-
+            ps.setInt(10, Integer.valueOf(request.getParameter("addDrugForm")));
+            ps.setString(11, request.getParameter("userID"));
             ps.executeUpdate();
             //Get primary key to reference in REMINDERS table
             ResultSet generatedKeys = ps.getGeneratedKeys();
@@ -397,8 +387,6 @@ public class patientServlet extends HttpServlet {
 
     }
 
-
-
     private void recordConsumption(String id, String remainder, String inventory_ID){
         System.out.println(id);
         System.out.println(remainder);
@@ -418,6 +406,39 @@ public class patientServlet extends HttpServlet {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    private String listHistory(String userID){
+        String sql = "SELECT * FROM INVENTORY INNER JOIN DRUGS on INVENTORY.drug_ID = DRUGS.drug_ID INNER JOIN DRUGINTAKE on INVENTORY.drugintake_ID = DRUGINTAKE.drugintake_ID INNER JOIN DRUGPHASE on INVENTORY.drugphase_ID = DRUGPHASE.drugphase_ID INNER JOIN REMINDERS on INVENTORY.inventory_ID = REMINDERS.inventory_ID INNER JOIN MEDICINEFORM on INVENTORY.medicineform_ID = MEDICINEFORM.medicineform_ID WHERE user_NRIC=?";
+        LocalDateTime today = LocalDateTime.now();
+        LocalDateTime test;
+        ArrayList<Map> historyList = new ArrayList<>();
+        Map<String, ArrayList<Map>> dataMap = new HashMap<String, ArrayList<Map>>();
+        try {
+            PreparedStatement ps = DBConn.getPreparedStatement(sql);
+            ps.setString(1, userID);
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                Map<String, String> todayMap = new HashMap<String, String>();
+                test = LocalDateTime.parse(resultSet.getString("reminder_time"));
+                if (today.isAfter(test)){
+
+                    todayMap.put("drug_name", resultSet.getString("drug_name"));
+                    todayMap.put("dose", resultSet.getString("dose"));
+                    todayMap.put("strictness", resultSet.getString("strictness"));
+                    todayMap.put("reminder_time", resultSet.getString("reminder_time"));
+                    todayMap.put("medicineform_name", resultSet.getString("medicineform_name"));
+                    todayMap.put("consumed", resultSet.getString("consumed"));
+                    historyList.add(todayMap);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+
+        }
+
+        return gson.toJson(historyList);
     }
 
 }
