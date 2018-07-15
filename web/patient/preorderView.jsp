@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/base/jquery-ui.css"/>
 
     <head>
-        <title>Title</title>
         <h2>View Preorder #${id}</h2>
     </head>
 
