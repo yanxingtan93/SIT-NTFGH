@@ -11,5 +11,6 @@ public interface UsersDao {
     public void updateUser(User user);
     public void deleteUser(String NRIC);
     public boolean validateUser(String NRIC,String password,String role);
+    public boolean validateRole(String NRIC,String role);
 
 }

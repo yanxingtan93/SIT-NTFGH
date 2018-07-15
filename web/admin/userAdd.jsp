@@ -3,12 +3,16 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <t:adminPage>
     <h1>Account Creation</h1>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,dt-1.10.8/datatables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/r/bs-3.3.5/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
+
     <form action="/UserServlet?route=adminAdd" method="post">
     <br>
     <div class="container">
         <div class="row">
 
-            <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+            <div class="col-xs-12 col-sm-12 col-md-11 col-lg-11 toppad" >
 
 
                 <div class="panel panel-info">
@@ -45,7 +49,7 @@
                                     </td>
                                         <td>
 
-                                            <button type="button" class="input-group-addon fa fa-eye btn btn-primary btn-sm bg-primary text-white" name="password_visibility" id="password_visibility"></button>
+                                            <button type="button" class="input-group-addon fa fa-eye btn btn-primary btn-md bg-primary text-white" name="password_visibility" id="password_visibility"></button>
                                         </td>
                                     </tr>
                                     <tr>

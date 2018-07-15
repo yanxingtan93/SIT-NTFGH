@@ -109,7 +109,7 @@
                     "  <form method=\"post\" action=\"/pharmacist/patientProfile.jsp?userID="+value.NRIC+" \">\n" +
                     "                        <input type=\"hidden\" class=\"form-control\" name=\"mode\"  value=\"View\">\n" +
                     "                        <input type=\"hidden\" class=\"form-control\" name=\"userID\"  value="+value.NRIC+">\n" +
-                    "                    <button type=\"submit\" class=\"btn btn-danger\">View</button>\n" +
+                    "                    <button type=\"submit\" class=\"btn btn-success\">View</button>\n" +
                     "                    </form>";
 
 

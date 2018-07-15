@@ -86,7 +86,7 @@
 
                     <tr>
                         <td>
-                            <input type="hidden" id="route" name="route" class="form-control input-sm chat-input" value="adminAdd" />
+                            <input type="hidden" id="route" name="route" class="form-control input-sm chat-input" value="userAdd" />
                     <label for="userName">&nbsp;NRIC: </label>
                         </td>
                         <td>

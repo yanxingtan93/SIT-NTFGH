@@ -51,10 +51,10 @@
             $.each(responseJson, function(key,value) {
 
                 var button = "\n" +
-                    "                    <form method=\"post\" action=\"/drugCatalogueServlet\">\n" +
-                    "                        <input type=\"hidden\" class=\"form-control\" name=\"mode\"  value=\"Delete\">\n" +
-                    "                        <input type=\"hidden\" class=\"form-control\" name=\"drugid\"  value="+value.id+">\n" +
-                    "                    <button type=\"submit\" class=\"btn btn-danger\">View</button>\n" +
+                    "                    <form method=\"post\" action=\"/UserServlet\">\n" +
+                    "                        <input type=\"hidden\" class=\"form-control\" name=\"route\"  value=\"Delete\">\n" +
+                    "                        <input type=\"hidden\" class=\"form-control\" name=\"user_NRIC\"  value="+value.NRIC+">\n" +
+                    "                    <button type=\"submit\" class=\"btn btn-danger\">Remove</button>\n" +
                     "                    </form>";
 
 

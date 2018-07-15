@@ -7,8 +7,12 @@
 
          <div class="row" style="margin: 0px 0px 0px 92%;">
              <div class="pull-right" name="logout" id="logout">
-                 <button type="button" style="background-color: #3FBEBB" class="btn btn-primary pull-right" value="Logout">Logout
-                     <i class="fa fa-lock"></i></button>
+                 <form method="post" action="/UserServlet">
+                     <input type="hidden" class="form-control" name="route" id="route"  placeholder="" value="logout" >
+
+                     <button type="submit" style="background-color: #3FBEBB" class="btn btn-primary pull-right"  name="btnLog" value="Logout">Logout
+                         <i class="fa fa-lock"></i></button>
+                 </form>
              </div>
          </div>
         <div class="float-right" style="margin: -60px 130px 0px 0px;">
@@ -46,5 +50,21 @@
         userWelcome.html("<b>Patient</b><br>Hello, " + validAcc);
 
     });
+
+
+    function check(){
+        var validAcc1 = "${sessionScope.userID}";
+        $.get("/UserServlet?mode=validate&role=patient&NRIC="+validAcc1, function(responseJson) {
+
+            var access = responseJson.toString();
+            if(access=="false"){
+                window.history.back();
+            }
+
+
+        });
+    }
+
+    window.onload(check());
 
 </script>

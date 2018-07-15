@@ -25,6 +25,7 @@ public class UserServlet extends HttpServlet {
         String route = request.getParameter("route");
         UsersDao usersDao = new UsersDaoImpl();
 
+        System.out.println("route in UserServlet = "+route);
 
         switch(route){
             case "adminAdd":
@@ -83,21 +84,53 @@ public class UserServlet extends HttpServlet {
                 String dob1 = request.getParameter("user_dob");
                 String address1 = request.getParameter("user_address");
                 String password1 = request.getParameter("user_password");
-                String condition = request.getParameter("user_condition");
-                String role1 = request.getParameter("roleA");
+                String condition = "";
+                String role1 = "";
+                 condition = request.getParameter("user_condition");
+                 role1 = request.getParameter("roleA");
 
-                System.out.println(role1+" -- "+condition);
+                System.out.println(role1+" -- "+role1);
+                System.out.println(condition+" -- "+condition);
 
                 User user1 =  new User(NRIC1,name1,password1,dob1,Integer.parseInt(contact1),email1,address1,role1,condition);
+                user1.setSpecialCondition(condition);
                 usersDao.addNewUser(user1);
-
+                response.sendRedirect("http://localhost:8080/index.jsp");
                 break;
 
             case "View":
 
                 break;
 
+            // FOR ADMINS REMOVING USERS
+            case "Delete":
+                String delNRIC = request.getParameter("user_NRIC");
+                User removeUser = new User();
+                usersDao.deleteUser(delNRIC);
+                response.sendRedirect("http://localhost:8080/admin/patientOverview.jsp");
 
+                break;
+
+            case "logout":
+                HttpSession session=request.getSession();
+                session.removeAttribute("userID");
+                response.sendRedirect("http://localhost:8080/index.jsp");
+                break;
+            case "edit":
+
+                String name2 = request.getParameter("user_name");
+                String NRIC2 = request.getParameter("user_NRIC");
+                String email2 = request.getParameter("user_email");
+                String contact2  = request.getParameter("user_contact");
+                String dob2 = request.getParameter("user_dob");
+                String address2 = request.getParameter("user_address");
+                String role2 = request.getParameter("roleA");
+
+               User editUser = new User(NRIC2,name2,dob2,Integer.parseInt(contact2),email2,address2,role2,"");
+               usersDao.updateUser(editUser);
+
+
+                break;
                 default:
                     System.out.println("Error in adding (Via Admin Add Account)");
                     break;
@@ -430,6 +463,22 @@ public class UserServlet extends HttpServlet {
                     ex.printStackTrace();
 
                 }
+                break;
+
+            case "validate":
+
+                System.out.println("validating the role of User");
+                String role = request.getParameter("role");
+                String NRIC = request.getParameter("NRIC");
+                UsersDao user = new UsersDaoImpl();
+                boolean valid = user.validateRole(NRIC,role);
+                System.out.println(valid);
+                String json = new Gson().toJson(valid);
+
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(json);
+
                 break;
 
 

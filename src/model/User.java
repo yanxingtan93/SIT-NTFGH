@@ -52,6 +52,20 @@ public class User {
 
     }
 
+    public User(String NRIC,String name, String dob, int contact, String email, String address,String role,String condition){
+        this.NRIC = NRIC;
+        this.name = name;
+        this.password = password;
+        this.dob = dob;
+        this.contact = contact;
+        this.email = email;
+        this.address = address;
+        this.role = role;
+        this.specialCondition = condition;
+
+    }
+
+
     public String getNRIC() {
         return NRIC;
     }

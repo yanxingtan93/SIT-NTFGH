@@ -45,23 +45,27 @@ public class UsersDaoImpl implements UsersDao {
             ps.executeUpdate();
             System.out.println("ADJW3");
 
-            PreparedStatement ps1 = connection.prepareStatement(roleSQL);
 
+            PreparedStatement ps1 = null;
             if(myRole.equals("patient")){
                 roleSQL = "INSERT INTO PATIENTS(allergies_patient,user_NRIC) VALUES(?,?)";
+                 ps1 = connection.prepareStatement(roleSQL);
                 ps1.setString(1,user.getNRIC());
                 ps1.setString(2,user.getSpecialCondition());
             }
             else if(myRole.equals("caregiver")){
                 roleSQL = "INSERT INTO CAREGIVERS(user_NRIC) VALUES(?)";
+                 ps1 = connection.prepareStatement(roleSQL);
                 ps1.setString(1,user.getNRIC());
             }
             else if(myRole.equals("admin")){
                 roleSQL = "INSERT INTO ADMINS(user_NRIC) VALUES(?)";
+                 ps1 = connection.prepareStatement(roleSQL);
                 ps1.setString(1,user.getNRIC());
             }
             else if(myRole.equals("pharmacist")){
                 roleSQL = "INSERT INTO PHARMACISTS(user_NRIC) VALUES(?)";
+                 ps1 = connection.prepareStatement(roleSQL);
                 ps1.setString(1,user.getNRIC());
             }
             System.out.println("ADJW4");
@@ -82,12 +86,45 @@ public class UsersDaoImpl implements UsersDao {
 
     @Override
     public void updateUser(User user) {
+        String sql = "UPDATE USERS SET user_NRIC = ?,user_name = ?,user_contact = ?,user_address = ?," +
+                "user_dob = ?,user_email = ? WHERE user_NRIC = ?";
 
+
+        try {
+            Connection conn = db.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1,user.getNRIC());
+            ps.setString(2,user.getName());
+            ps.setInt(3,user.getContact());
+            ps.setString(4,user.getAddress());
+            ps.setString(5,user.getDob());
+            ps.setString(6,user.getEmail());
+            ps.setString(7,user.getNRIC());
+            ps.executeUpdate();
+            conn.commit();
+            conn.close();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void deleteUser(String NRIC) {
 
+        String removeSQL = "DELETE FROM USERS WHERE user_NRIC = '"+NRIC+"'";
+        System.out.println("UserDaoImpl: Error in removing user1 "+NRIC);
+        try {
+            Connection connection = db.getConnection();
+            PreparedStatement ps = connection.prepareStatement(removeSQL);
+            ps.executeUpdate();
+            connection.commit();
+            connection.close();
+        }
+        catch (SQLException e){
+            System.out.println("UserDaoImpl: Error in removing user \n"+e);
+        }
     }
 
     @Override
@@ -129,4 +166,46 @@ public class UsersDaoImpl implements UsersDao {
 
         return valid;
     }
+
+
+    @Override
+    public boolean validateRole(String NRIC,String role) {
+
+        String SQLTable = "";
+        String myRole = role.toLowerCase().trim();
+
+
+        if(myRole.equals("patient")){
+            SQLTable = "PATIENTS";
+        }
+        else if(myRole.equals("caregiver")){
+            SQLTable = "CAREGIVERS";
+        }
+        else if(myRole.equals("admin")){
+            SQLTable = "ADMINS";
+        }
+        else if(myRole.equals("pharmacist")){
+            SQLTable = "PHARMACISTS";
+        }
+
+        boolean valid = false;
+
+        String sql = "SELECT u.user_NRIC,u.user_password,p.user_NRIC FROM USERS u,"+SQLTable+" p WHERE p.user_NRIC = '"+ NRIC+"' " +
+                "AND  p.user_NRIC = u.user_NRIC";
+        try{
+            Connection conn = db.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                valid = true;
+            }
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+
+        return valid;
+    }
+
 }
