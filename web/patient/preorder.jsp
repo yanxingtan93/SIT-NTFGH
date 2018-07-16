@@ -1,6 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="../JS/preorderForm.js"></script>
 
 <%--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>--%>
@@ -59,8 +58,8 @@
         <div id="collectionMode" class="form-group row">
             <label class="col-sm-2 col-form-label">Preferred Collection Method</label>
             <div class="col-sm-3" id="radiobtn">
-                <label class="radio-inline"><input type="radio" name="method" id="collection" value="Self-Collection"> Self-Collection</label><br>
-                <label class="radio-inline"><input type="radio" name="method" id="delivery" value="Home/ Office Delivery"> Home/ Office Delivery</label><br>
+                <label class="radio-inline"><input type="radio" name="method" id="collection" value="Self-Collection" > Self-Collection</label><br>
+                <label class="radio-inline"><input type="radio" name="method" id="delivery" value="Home/ Office Delivery" checked="checked"> Home/ Office Delivery</label><br>
             </div>
             <%--<div id="toshow" class="col-sm-6" style="display:none">--%>
                 <%--<label class="col-sm-4 col-form-label">Collection Date</label>--%>

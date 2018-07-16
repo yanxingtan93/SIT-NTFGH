@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -99,7 +100,8 @@ public class preorderServlet extends HttpServlet {
         //String page = request.getParameter("action");
 
         if(request.getParameter("action").equals("Form")) {
-            String NRIC = "S1234567A";
+            HttpSession sessions = request.getSession();
+            String NRIC = sessions.getAttribute("userID").toString();
             String[] meds = request.getParameterValues("medicationPreorder");
             String quantity = request.getParameter("quantity");
             String mode = request.getParameter("method");
@@ -148,7 +150,9 @@ public class preorderServlet extends HttpServlet {
 
         switch (mode) {
             case "get":
-                String NRIC = "S1234567A";
+                HttpSession sessions = request.getSession();
+                String myNRIC = sessions.getAttribute("userID").toString();
+                String NRIC = myNRIC;
 //                String sql = "SELECT p.preorder_mode, d.drug_name, pd.quantity FROM PREORDER p, PREORDERDRUGS pd, DRUGS d " +
 //                        "WHERE p.user_NRIC = '"+NRIC+"' AND p.preorder_ID = pd.preorder_ID AND pd.drug_ID = d.drug_id ";
 

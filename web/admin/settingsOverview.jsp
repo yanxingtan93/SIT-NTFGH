@@ -128,9 +128,9 @@
             $.each(responseJson, function(key,value) {
 
                 var button = "\n" +
-                    "                    <form method=\"post\" action=\"/drugCatalogueServlet\">\n" +
-                    "                        <input type=\"hidden\" class=\"form-control\" name=\"mode\"  value=\"Delete\">\n" +
-                    "                        <input type=\"hidden\" class=\"form-control\" name=\"drugid\"  value="+value.id+">\n" +
+                    "                    <form method=\"post\" action=\"/GeneralSettingsServlet\">\n" +
+                    "                        <input type=\"hidden\" class=\"form-control\" name=\"route\"  value=\"DeleteForm\">\n" +
+                    "                        <input type=\"hidden\" class=\"form-control\" name=\"settingID\"  value="+value.id+">\n" +
                     "                    <button type=\"submit\" class=\"btn btn-danger\">Delete</button>\n" +
                     "                    </form>";
 
@@ -149,9 +149,9 @@
             $.each(responseJson1, function(key,value) {
 
                 var button = "\n" +
-                    "                    <form method=\"post\" action=\"/drugCatalogueServlet\">\n" +
-                    "                        <input type=\"hidden\" class=\"form-control\" name=\"mode\"  value=\"Delete\">\n" +
-                    "                        <input type=\"hidden\" class=\"form-control\" name=\"drugid\"  value="+value.id+">\n" +
+                    "                    <form method=\"post\" action=\"/GeneralSettingsServlet\">\n" +
+                    "                        <input type=\"hidden\" class=\"form-control\" name=\"route\"  value=\"DeletePhase\">\n" +
+                    "                        <input type=\"hidden\" class=\"form-control\" name=\"settingID\"  value="+value.id+">\n" +
                     "                    <button type=\"submit\" class=\"btn btn-danger\">Delete</button>\n" +
                     "                    </form>";
 
@@ -169,9 +169,9 @@
             $.each(responseJson2, function(key,value) {
 
                 var button = "\n" +
-                    "                    <form method=\"post\" action=\"/drugCatalogueServlet\">\n" +
-                    "                        <input type=\"hidden\" class=\"form-control\" name=\"mode\"  value=\"Delete\">\n" +
-                    "                        <input type=\"hidden\" class=\"form-control\" name=\"drugid\"  value="+value.id+">\n" +
+                    "                    <form method=\"post\" action=\"/GeneralSettingsServlet\">\n" +
+                    "                        <input type=\"hidden\" class=\"form-control\" name=\"route\"  value=\"DeleteIntake\">\n" +
+                    "                        <input type=\"hidden\" class=\"form-control\" name=\"settingID\"  value="+value.id+">\n" +
                     "                    <button type=\"submit\" class=\"btn btn-danger\">Delete</button>\n" +
                     "                    </form>";
 

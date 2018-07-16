@@ -96,8 +96,18 @@ public class MedicineFormDaoImpl implements MedicineFormDao {
     }
 
     @Override
-    public void deleteForm(int id) {
-        String sql = "DELETE FROM MEDICINEFORM WHERE medicineform_ID = ?";
+    public void deleteForm(int id,int type) {
+        String sql = "";
+
+        if(type==1) {
+            sql = "DELETE FROM MEDICINEFORM WHERE medicineform_ID = ?";
+        }
+        else if(type==2) {
+            sql = "DELETE FROM DRUGPHASE WHERE drugphase_ID = ?";
+        }
+        else if(type==3) {
+            sql = "DELETE FROM DRUGINTAKE WHERE drugintake_ID = ?";
+        }
         try {
             Connection con = db.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);

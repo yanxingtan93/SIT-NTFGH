@@ -37,6 +37,12 @@ public class UserServlet extends HttpServlet {
             case "listPatients":
                 response.getWriter().write(listPatients(request.getParameter("caregiverID")));
                 break;
+            case "selectPatient":
+                String patientID = request.getParameter("patientID");
+                System.out.println(patientID+" -> In selectPatient of Post in UserServlet");
+                HttpSession mysession = request.getSession();
+                mysession.setAttribute("patientID",patientID);
+                break;
             case "adminAdd":
                 String name = request.getParameter("user_name");
                 String NRIC = request.getParameter("user_NRIC");

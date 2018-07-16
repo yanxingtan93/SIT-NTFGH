@@ -1,6 +1,7 @@
 package Servlets;
 
 import DatabaseConnector.DBConn;
+import DatabaseConnector.MedicineFormDao;
 import DatabaseConnector.MedicineFormDaoImpl;
 import com.google.gson.Gson;
 import model.DrugIntake;
@@ -23,7 +24,7 @@ public class GeneralSettingsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String route = request.getParameter("route");
-
+        int settingID = 0;
         switch (route){
             case "medForm":
                 String name = request.getParameter("name");
@@ -31,17 +32,44 @@ public class GeneralSettingsServlet extends HttpServlet {
                 medicineForm.setFormName(name);
                 MedicineFormDaoImpl medicineFormDao= new MedicineFormDaoImpl();
                 medicineFormDao.addNewMedicineForm(medicineForm);
+                response.sendRedirect("/admin/settingsOverview.jsp");
                 break;
             case "phase":
                 String phase = request.getParameter("name");
                 DrugPhase.addPhase(phase);
+                response.sendRedirect("/admin/settingsOverview.jsp");
                 break;
             case "intake":
                 String intake = request.getParameter("name");
                 DrugIntake.addIntake(intake);
+                response.sendRedirect("/admin/settingsOverview.jsp");
                 break;
+
+            case "DeleteForm":
+                settingID = Integer.parseInt(request.getParameter("settingID"));
+                MedicineFormDao mfd1 = new MedicineFormDaoImpl();
+                ((MedicineFormDaoImpl) mfd1).deleteForm(settingID,1);
+                response.sendRedirect("/admin/settingsOverview.jsp");
+                break;
+
+            case "DeletePhase":
+                settingID = Integer.parseInt(request.getParameter("settingID"));
+                MedicineFormDao mfd2 = new MedicineFormDaoImpl();
+                ((MedicineFormDaoImpl) mfd2).deleteForm(settingID,2);
+                response.sendRedirect("/admin/settingsOverview.jsp");
+                break;
+
+            case "DeleteIntake":
+                settingID = Integer.parseInt(request.getParameter("settingID"));
+                MedicineFormDao mfd3 = new MedicineFormDaoImpl();
+                ((MedicineFormDaoImpl) mfd3).deleteForm(settingID,3);
+                response.sendRedirect("/admin/settingsOverview.jsp");
+                break;
+
+
+
             default:
-                System.out.println("DEFAULT");
+                System.out.println("DEFAULT in generalsettings");
                 break;
 
 

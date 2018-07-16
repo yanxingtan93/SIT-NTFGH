@@ -29,12 +29,9 @@ public class medicineFormServlet extends HttpServlet {
             while(resultSet.next()){
                 options.put(resultSet.getString(1),resultSet.getString(2));
 
-
             }
 
-
             String json = new Gson().toJson(options);
-            //System.out.print(json);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);

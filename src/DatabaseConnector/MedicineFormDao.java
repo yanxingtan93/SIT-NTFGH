@@ -9,7 +9,7 @@ public interface MedicineFormDao {
     public void addNewMedicineForm(MedicineForm medicineForm);
     public MedicineForm getMedicineForm(int id);
     public void updateMedicineForm(MedicineForm medicineForm);
-    public void deleteForm(int id);
+    public void deleteForm(int id,int type);
     public void deleteAllForm();
 
 }

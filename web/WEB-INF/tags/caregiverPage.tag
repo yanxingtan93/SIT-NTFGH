@@ -85,11 +85,17 @@
         userWelcome.html("<b>CareGiver</b><br>Hello, " + validAcc);
 
         var currentPatient = $('#patient');
-        var validPatientName = "${sessionScope.patientName}";
-        currentPatient.html("<b> My Current Patient: </b>" + validPatientName)
 
-        //================= UMAR TAKE NOTE =================
-        getPatients("S1234567C");//change to session variables
+
+
+
+
+        $('#caregiverPatientSelect').on('change', function() {
+            alert( this.value );
+            $.post( "http://localhost:8080/UserServlet?route=selectPatient", {patientID: this.value})
+        });
+
+        getPatients(validAcc);//change to session variables
 
 
     });
@@ -106,7 +112,11 @@
                             value: item.user_NRIC,
                             text : item.user_name
                         }));
+
+
                     });
+                    var validPatientID = "${sessionScope.patientID}";
+                    $('#caregiverPatientSelect').val(validPatientID);
                 }
             );
     }

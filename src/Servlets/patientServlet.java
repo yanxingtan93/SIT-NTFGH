@@ -153,31 +153,32 @@ public class patientServlet extends HttpServlet {
 
         }
 
-        sql = "SELECT * FROM INVENTORY INNER JOIN DRUGS on INVENTORY.drug_ID = DRUGS.drug_ID INNER JOIN DRUGINTAKE on INVENTORY.drugintake_ID = DRUGINTAKE.drugintake_ID INNER JOIN DRUGPHASE on INVENTORY.drugphase_ID = DRUGPHASE.drugphase_ID INNER JOIN MEDICINEFORM on INVENTORY.medicineform_ID = MEDICINEFORM.medicineform_ID";
+        sql = "SELECT * FROM INVENTORY INNER JOIN DRUGS on INVENTORY.drug_ID = DRUGS.drug_ID INNER JOIN DRUGINTAKE on INVENTORY.drugintake_ID = DRUGINTAKE.drugintake_ID INNER JOIN DRUGPHASE on INVENTORY.drugphase_ID = DRUGPHASE.drugphase_ID INNER JOIN MEDICINEFORM on INVENTORY.medicineform_ID = MEDICINEFORM.medicineform_ID WHERE user_NRIC=?";
         try {
             PreparedStatement ps = DBConn.getPreparedStatement(sql);
+            ps.setString(1, userID);
             ResultSet resultSet = ps.executeQuery();
 
             while (resultSet.next()) {
                 Map<String, String> map = new HashMap<String, String>();
-                    map.put("inventory_ID", resultSet.getString("inventory_ID"));
-                    map.put("drug_brand", resultSet.getString("drug_brand"));
-                    map.put("drugintake_term", resultSet.getString("drugintake_term"));
-                    map.put("drugphase_term", resultSet.getString("drugphase_term"));
-                    map.put("drug_description", resultSet.getString("drug_description"));
-                    map.put("drug_side_effect", resultSet.getString("drug_side_effect"));
+                map.put("inventory_ID", resultSet.getString("inventory_ID"));
+                map.put("drug_brand", resultSet.getString("drug_brand"));
+                map.put("drugintake_term", resultSet.getString("drugintake_term"));
+                map.put("drugphase_term", resultSet.getString("drugphase_term"));
+                map.put("drug_description", resultSet.getString("drug_description"));
+                map.put("drug_side_effect", resultSet.getString("drug_side_effect"));
 
-                    map.put("drug_name", resultSet.getString("drug_name"));
-                    map.put("inventory_balance", resultSet.getString("inventory_balance"));
-                    map.put("dose", resultSet.getString("dose"));
-                    map.put("drugintake_ID", resultSet.getString("drugintake_ID"));
-                    map.put("frequency", resultSet.getString("frequency"));
-                    map.put("drugphase_ID", resultSet.getString("drugphase_ID"));
-                    map.put("instructions", resultSet.getString("instructions"));
-                    map.put("strictness", resultSet.getString("strictness"));
-                    map.put("inventory_startdate", resultSet.getString("inventory_startdate"));
-                    map.put("medicineform_name", resultSet.getString("medicineform_name"));
-                    pillboxList.add(map);
+                map.put("drug_name", resultSet.getString("drug_name"));
+                map.put("inventory_balance", resultSet.getString("inventory_balance"));
+                map.put("dose", resultSet.getString("dose"));
+                map.put("drugintake_ID", resultSet.getString("drugintake_ID"));
+                map.put("frequency", resultSet.getString("frequency"));
+                map.put("drugphase_ID", resultSet.getString("drugphase_ID"));
+                map.put("instructions", resultSet.getString("instructions"));
+                map.put("strictness", resultSet.getString("strictness"));
+                map.put("inventory_startdate", resultSet.getString("inventory_startdate"));
+                map.put("medicineform_name", resultSet.getString("medicineform_name"));
+                pillboxList.add(map);
 
             }
         } catch (SQLException ex) {
@@ -188,7 +189,6 @@ public class patientServlet extends HttpServlet {
         dataMap.put("pillbox", pillboxList);
         return gson.toJson(dataMap);
     }
-
     //Function to translate form inputs into an array of intake datetimes
     private List<String> getIntakeTimes(HttpServletRequest request){
         List<String> intakeDateTimes = new ArrayList<String>();

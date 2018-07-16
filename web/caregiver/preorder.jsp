@@ -59,7 +59,7 @@
         <div id="collectionMode" class="form-group row">
             <label class="col-sm-2 col-form-label">Preferred Collection Method</label>
             <div class="col-sm-3" id="radiobtn">
-                <label class="radio-inline"><input type="radio" name="method" id="collection" value="Self-Collection"> Self-Collection</label><br>
+                <label class="radio-inline"><input type="radio" name="method" id="collection" value="Self-Collection" checked="checked"> Self-Collection</label><br>
                 <label class="radio-inline"><input type="radio" name="method" id="delivery" value="Home/ Office Delivery"> Home/ Office Delivery</label><br>
             </div>
             <%--<div id="toshow" class="col-sm-6" style="display:none">--%>

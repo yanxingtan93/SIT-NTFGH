@@ -43,7 +43,7 @@ public class pharmacistPreorderServlet extends HttpServlet {
                     e.printStackTrace();
                 }
 
-                response.sendRedirect("http://localhost:8080/pharmacist/preorder.jsp");
+                response.sendRedirect("/pharmacist/preorder.jsp");
                 break;
         }
     }
