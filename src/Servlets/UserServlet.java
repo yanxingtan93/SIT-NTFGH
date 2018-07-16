@@ -122,7 +122,7 @@ public class UserServlet extends HttpServlet {
                 User removeUser = new User();
                 usersDao.deleteUser(delNRIC);
                 response.sendRedirect("http://localhost:8080/admin/patientOverview.jsp");
-
+             //   response.sendRedirect("/admin/patientOverview.jsp");
                 break;
 
             case "logout":

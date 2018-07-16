@@ -1,3 +1,17 @@
+#navbarAdmin {
+    background-color: #000000;
+    border-bottom: 3px solid #525252;
+    margin-left: 25%;
+    margin-bottom: 0px;
+}
+#navbarAdmin .navbar-nav > li > a:hover,
+ul.sub-menu li:hover a {
+    background-color:#525252;
+}
+#navbarAdmin .navbar-nav > a:hover {
+    background-color:#525252;
+}
+
 .navbar {
     background-color: #55C5C3;
     border-bottom: 3px solid #549895;

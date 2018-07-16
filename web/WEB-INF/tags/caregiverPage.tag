@@ -5,7 +5,7 @@
 
 <t:pageTemplate>
     <jsp:attribute name="header">
-
+<!--
 <div class="row" style="position: absolute;padding-top:0px; text-align:center;background-color: black" >
 
     <div class="form-group" style="margin: 0px 0px 10px 8%;">
@@ -13,6 +13,7 @@
     </div>
 
 </div>
+        -->
          <div class="row" style="margin: 10px 0px 0px 92%;">
              <div class="pull-right" name="logout" id="logout">
                  <form method="post" action="/UserServlet">
@@ -23,11 +24,36 @@
                  </form>
              </div>
          </div>
+
+
+
         <div class="float-right" style="margin: -60px 130px 0px 0px;">
             <img style="border-radius: 50%; margin: 0 10px 0 0" width="50" src="https://d30y9cdsu7xlg0.cloudfront.net/png/5832-200.png">
             <span class="float-right" name="welcome" id="welcome"></span>
         </div>
 
+
+
+<nav class="navbar navbar-expand-lg navbar-dark" id="navbarAdmin">
+    <a class="navbar-brand" href="#"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" >
+        <div class="navbar-nav">
+
+            <div class="nav-item nav-link" style="width:100%;">
+                Patient
+                <select name="caregiverPatientSelect" id="addDrugFrequency" style="    color: black;">
+                    <option value="1">Kok Leong</option>
+                    <option value="2">Denise</option>
+                </select>
+            </div>
+            <a class="nav-item nav-link" href="#">Manage Patients</a>
+            <a class="nav-item nav-link" href="#">Settings</a>
+        </div>
+    </div>
+</nav>
 
       <nav class="navbar navbar-expand-lg navbar-light">
           <a class="navbar-brand" href="#"></a>
