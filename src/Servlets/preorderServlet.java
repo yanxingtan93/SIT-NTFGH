@@ -104,14 +104,15 @@ public class preorderServlet extends HttpServlet {
             String quantity = request.getParameter("quantity");
             String mode = request.getParameter("method");
             String date = request.getParameter("date");
+            String status = "Order Submitted";
 
             Preorder preorder = new Preorder();
             int amount = Integer.valueOf(quantity);
             if (date == null) {
-                preorder = new Preorder(NRIC, mode, amount);
+                preorder = new Preorder(NRIC, mode, amount, status);
                 preorder.addDeliveryPreorder();
             } else if (date != null) {
-                preorder = new Preorder(NRIC, mode, amount, date);
+                preorder = new Preorder(NRIC, mode, amount, date, status);
                 preorder.addCollectionPreorder();
             }
 

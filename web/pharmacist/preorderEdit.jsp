@@ -12,21 +12,48 @@
     </head>
     <br>
     <body>
+    <form method="post" action="/pharmacistPreorderServlet">
+        <input type="hidden" class="form-control" name="mode" id="mode" value="save" >
 
-    <label class="col-sm-2 col-form-label">Preorder ID:</label>
-    <input type="text" id="preorder_ID" name="preorderID"  readonly >
+    <div class="row">
+        <label class="col-sm-2 col-form-label">Preorder ID:</label>
+        <input type="text" id="preorder_ID" name="preorderID"  readonly >
+    </div>
     <br>
-    <label class="col-sm-2 col-form-label">User NRIC:</label>
-    <input type="text" id="NRIC" name="preorderNRIC" readonly >
+    <div class="row">
+        <label class="col-sm-2 col-form-label">User NRIC:</label>
+        <input type="text" id="NRIC" name="preorderNRIC" readonly >
+    </div>
+
     <br>
-    <label class="col-sm-2 col-form-label">Preorder Mode:</label>
-    <input type="text" id="Mode" name="preorderMode" readonly >
+    <div class="row">
+        <label class="col-sm-2 col-form-label">Preorder Mode:</label>
+        <input type="text" id="preorder_Mode" name="preorderMode" readonly >
+    </div>
+
     <br>
-    <label class="col-sm-2 col-form-label">Preorder Date:</label>
-    <input type="text" id="Date" name="preorderDate" readonly >
+    <div class="row">
+        <label class="col-sm-2 col-form-label">Preorder Date:</label>
+        <input type="text" id="Date" name="preorderDate" readonly >
+    </div>
+
     <br>
-    <label class="col-sm-2 col-form-label">Preorder Status:</label>
-    <input type="text" id="Status" name="preorderStatus" readonly >
+    <div class="row">
+        <label class="col-sm-2 col-form-label">Preorder Status:</label>
+        <select class="col-sm-3 form-control" id="select" name="preorderStatus">
+            <option value="Order Submitted">Order Submitted</option>
+            <option value="Ready for Collection">Ready for Collection</option>
+            <option>Order Delivered</option>
+            <option>Order in Progress</option>
+        </select>
+
+    </div><br>
+
+        <div class="pull-right">
+            <button type="submit" class="btn btn-info">Save</button>
+        </div>
+    </form>
+
     <br><br>
 
     <table id="myMainTable" class="dailyMedTable table table-striped table-bordered">
@@ -42,6 +69,7 @@
 </t:pharmacistPage>
 
 <script>
+
     $(document).ready(function() {
         var id = getParameterByName("preorderID");
         $.get("/pharmacistPreorderServlet?mode=viewByID&id="+id, function(responseJson) {
@@ -59,7 +87,7 @@
     $(document).ready(function() {
         var preorderid = $('#preorder_ID');
         var nric = $('#NRIC');
-        var mode = $('#Mode');
+        var mode = $('#preorder_Mode');
         var date = $('#Date');
         var status = $('#Status');
 
@@ -68,18 +96,21 @@
 
         $.get("/pharmacistPreorderServlet?mode=Edit&id="+id, function(responseJson) {
             $.each(responseJson, function(key,value) {
-
                 preorderid.val(value.preorder_ID);
                 nric.val(value.user_NRIC);
                 mode.val(value.preorder_mode);
                 date.val(value.collection_date);
                 status.val(value.status);
-
             });
-
         });
-
     });
+
+    // $(document).ready(function() {
+    //     $('select[name="preorderStatus"]').val(status);
+    //     // $("div#select").val(status).change();
+    //
+    //     // $("#select.option[value="+status+"]").prop("selected", true);
+    // });
 
 
     function getParameterByName(name, url) {
