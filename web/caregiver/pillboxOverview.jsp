@@ -137,7 +137,7 @@
                 <br>
                 <div class="form-group row">
                     <div class="col-sm-6">
-                        <input type="hidden" id="userID" name="userID" value="">
+                        <input type="hidden" id="userID" name="userID" value="${sessionScope.userID}">
                         <button type="submit" class="btn btn-success btn-block btn-lg" onclick="">Submit</button>
                     </div>
                     <div class="col-sm-6">

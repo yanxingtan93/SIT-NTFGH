@@ -16,10 +16,14 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet(name = "UserServlet")
 public class UserServlet extends HttpServlet {
+    private Gson gson = new Gson();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         final String ENC_ALGORITHM = "PBEWithMD5AndDES";
@@ -30,6 +34,9 @@ public class UserServlet extends HttpServlet {
         System.out.println("route in UserServlet = "+route);
 
         switch(route){
+            case "listPatients":
+                response.getWriter().write(listPatients(request.getParameter("caregiverID")));
+                break;
             case "adminAdd":
                 String name = request.getParameter("user_name");
                 String NRIC = request.getParameter("user_NRIC");
@@ -510,5 +517,31 @@ public class UserServlet extends HttpServlet {
                 break;
 
         }
+    }
+
+    private String listPatients(String caregiverID){
+        System.out.println("LISTPATIENTS");
+        System.out.println(caregiverID);
+        String sql = "SELECT * FROM PATIENTCAREGIVER INNER JOIN USERS on PATIENTCAREGIVER.patient_NRIC = USERS.user_NRIC WHERE caregiver_NRIC=?";
+        LocalDateTime today = LocalDateTime.now();
+        LocalDateTime test;
+        ArrayList<Map> userList = new ArrayList<>();
+        try {
+            PreparedStatement ps = DBConn.getPreparedStatement(sql);
+            ps.setString(1, caregiverID);
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                Map<String, String> userMap = new HashMap<String, String>();
+                userMap.put("user_NRIC", resultSet.getString("user_NRIC"));
+                userMap.put("user_name", resultSet.getString("user_name"));
+                userList.add(userMap);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+
+        }
+
+        return gson.toJson(userList);
     }
 }
