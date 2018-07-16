@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <t:caregiverPage>
     <h1>Account Creation</h1>
-    <form action="/UserServlet?route=adminAdd" method="post">
+    <form action="/UserServlet?route=caregiverAdd" method="post">
     <br>
     <div class="container">
         <div class="row">
@@ -66,6 +66,15 @@
                                         <td>Date of Birth</td>
                                         <td><input type="text" class="form-control" name="user_dob" value="" placeholder="Enter DOB"></td>
                                     </tr>
+                                    <tr>
+                                        <td >
+                                            <label for="userCondition">&nbsp;Patient Conditions: &nbsp </label>
+                                        </td>
+                                        <td>
+                                            <textarea class="form-control" name="user_condition" id="userCondition" rows="4"></textarea> <br>
+                                        </td>
+                                    </tr>
+
                                     <tr>
 
                                         <input type="text" style="text-align: center;font-weight: bolder;" class="form-control" name="role" value="My Patient" placeholder="PATIENT" disabled>

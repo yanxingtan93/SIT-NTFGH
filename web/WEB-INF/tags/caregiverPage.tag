@@ -47,8 +47,8 @@
                 <select name="caregiverPatientSelect" id="caregiverPatientSelect" style="    color: black;">
                 </select>
             </div>
-            <a class="nav-item nav-link" href="#">Manage Patients</a>
-            <a class="nav-item nav-link" href="#">Settings</a>
+            <a class="nav-item nav-link" href="/caregiver/patientOverview.jsp"><b> <i class="fas fa-wheelchair"></i> Manage Patients</b></a>
+            <a class="nav-item nav-link" href="/caregiver/profile.jsp"><b><i class="fa fa-User"></i> My Profile</b></a>
         </div>
     </div>
 </nav>
@@ -60,12 +60,11 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div class="navbar-nav">
-                  <a class="nav-item nav-link" href="/caregiver/patientOverview.jsp"><b><i class="fas fa-wheelchair"></i> My Patients</b></a>
                   <a class="nav-item nav-link" href="/caregiver/pillboxOverview.jsp"><b><i class="fas fa-medkit"></i> Pillbox</b></a>
                   <a class="nav-item nav-link" href="/caregiver/history.jsp"><b><i class="fa fa-history"></i> History</b></a>
                   <a class="nav-item nav-link" href="/caregiver/preorder.jsp"><b><i class="fa fa-money"></i> Preorder</b></a>
                 <!--  <a class="nav-item nav-link" href="/patient/profile.jsp"><b><i class="fas fa-heartbeat"></i> Patient-Profile</b></a>-->
-                  <a class="nav-item nav-link" href="/caregiver/patientProfile.jsp"><b><i class="fa fa-user"></i> My Profile</b></a>
+                  <a class="nav-item nav-link" href="/caregiver/patientProfile.jsp"><b><i class="fa fa-heartbeat"></i> Profile</b></a>
                   <a class="nav-item nav-link" href="/caregiver/help.jsp"><b><i class="fa fa-question-circle"></i> Help</b></a>
               </div>
           </div>
@@ -91,8 +90,9 @@
 
 
         $('#caregiverPatientSelect').on('change', function() {
-            alert( this.value );
+
             $.post( "http://localhost:8080/UserServlet?route=selectPatient", {patientID: this.value})
+            location.reload();
         });
 
         getPatients(validAcc);//change to session variables
@@ -101,24 +101,37 @@
     });
 
     function getPatients(caregiverID){
+
+        var x = 0;
+        var firstPatientID = "";
         console.log(caregiverID);
         $.post( "http://localhost:8080/UserServlet?route=listPatients", {caregiverID: caregiverID})
             .then(
                 function(data,status) {
+
+
                     //================= UMAR TAKE NOTE =================
                     //SET session value to item.user_NRIC
                     $.each(JSON.parse(data), function (i, item) {
                         $('#caregiverPatientSelect').append($('<option>', {
                             value: item.user_NRIC,
-                            text : item.user_name
+                            text : item.user_name.toUpperCase()
                         }));
-
-
+                        if(x==0){
+                            firstPatientID = item.user_NRIC;
+                        }
+                        x++;
                     });
+
                     var validPatientID = "${sessionScope.patientID}";
                     $('#caregiverPatientSelect').val(validPatientID);
                 }
             );
+
+
+
+
+
     }
 
 

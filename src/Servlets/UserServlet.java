@@ -70,24 +70,24 @@ public class UserServlet extends HttpServlet {
                         System.out.println(myRole+" Accessing");
                         HttpSession session=request.getSession();
                         session.setAttribute("userID",userNRIC);
-                        session.setAttribute("role",userRole);
+                        session.setAttribute("role",myRole);
 
                         if(myRole.equals("patient")){
-                            response.sendRedirect("http://localhost:8080/patient/pillboxOverview.jsp");
+                            response.sendRedirect("/patient/pillboxOverview.jsp");
                         }
                         else if(myRole.equals("caregiver")){
-                            response.sendRedirect("http://localhost:8080/caregiver/patientOverview.jsp");
+                            response.sendRedirect("/caregiver/patientOverview.jsp");
                         }
                         else if(myRole.equals("admin")){
-                            response.sendRedirect("http://localhost:8080/admin/patientOverview.jsp");
+                            response.sendRedirect("/admin/patientOverview.jsp");
                         }
                         else if(myRole.equals("pharmacist")){
-                            response.sendRedirect("http://localhost:8080/pharmacist/patientOverview.jsp");
+                            response.sendRedirect("/pharmacist/patientOverview.jsp");
                         }
 
                     }
                     else {
-                        response.sendRedirect("http://localhost:8080/registration.jsp");
+                        response.sendRedirect("/registration.jsp");
                     }
                     break;
 
@@ -114,6 +114,36 @@ public class UserServlet extends HttpServlet {
                 response.sendRedirect("http://localhost:8080/index.jsp");
                 break;
 
+            case "caregiverAdd":
+                String pcname2 = request.getParameter("user_name");
+                String pcNRIC2 = request.getParameter("user_NRIC");
+                String pcemail2 = request.getParameter("user_email");
+                String pccontact2 = request.getParameter("user_contact");
+                String pcdob2 = request.getParameter("user_dob");
+                String pcaddress2 = request.getParameter("user_address");
+                String pcpassword2 = request.getParameter("user_password");
+                String pccondition2 = "";
+                String pcrole2 = "Patient";
+                pccondition2 = request.getParameter("user_condition");
+
+                User user2 =  new User(pcNRIC2,pcname2,pcpassword2,pcdob2,Integer.parseInt(pccontact2),pcemail2,pcaddress2,pcrole2,pccondition2);
+                HttpSession pcsession = request.getSession();
+                String caregiverNRIC = pcsession.getAttribute("userID").toString();
+
+                usersDao.addNewPatientCaregiver(user2,caregiverNRIC);
+                response.sendRedirect("/caregiver/patientOverview.jsp");
+                break;
+
+            case "caregiverRemove":
+                String caregiverNRIC2 = request.getParameter("caregiver_NRIC");
+                HttpSession patientSession = request.getSession();
+                String patientNRIC2 = patientSession.getAttribute("userID").toString();
+                UsersDao careRemoveDao = new UsersDaoImpl();
+                careRemoveDao.removeCaregiver(patientNRIC2,caregiverNRIC2);
+                response.sendRedirect("/patient/profile.jsp");
+
+                break;
+
             case "Access":
 
                 String patientNRIC = request.getParameter("userAID");
@@ -126,7 +156,7 @@ public class UserServlet extends HttpServlet {
 
                 sessions.setAttribute("patientID",patientNRIC);
                 sessions.setAttribute("patientName",patientName);
-                response.sendRedirect("http://localhost:8080/caregiver/patientOverview.jsp");
+                response.sendRedirect("/caregiver/patientOverview.jsp");
                 break;
 
             // FOR ADMINS REMOVING USERS
@@ -134,7 +164,7 @@ public class UserServlet extends HttpServlet {
                 String delNRIC = request.getParameter("user_NRIC");
                 User removeUser = new User();
                 usersDao.deleteUser(delNRIC);
-                response.sendRedirect("http://localhost:8080/admin/patientOverview.jsp");
+                response.sendRedirect("/admin/patientOverview.jsp");
              //   response.sendRedirect("/admin/patientOverview.jsp");
                 break;
 
@@ -143,7 +173,9 @@ public class UserServlet extends HttpServlet {
                 session.removeAttribute("userID");
                 session.removeAttribute("patientID");
                 session.removeAttribute("patientName");
-                response.sendRedirect("http://localhost:8080/index.jsp");
+                session.removeAttribute("role");
+
+                response.sendRedirect("/index.jsp");
                 break;
             case "edit":
 
@@ -157,6 +189,22 @@ public class UserServlet extends HttpServlet {
 
                User editUser = new User(NRIC2,name2,dob2,Integer.parseInt(contact2),email2,address2,role2,"");
                usersDao.updateUser(editUser);
+
+               HttpSession roleSession = request.getSession();
+               String myRole = roleSession.getAttribute("role").toString();
+
+               if(myRole.equals("patient")){
+                   response.sendRedirect("/patient/profile.jsp");
+               }
+                else if(myRole.equals("pharmacist")){
+                    response.sendRedirect("/pharmacist/profile.jsp");
+                }
+                else if(myRole.equals("caregiver")){
+                    response.sendRedirect("/caregiver/profile.jsp");
+                }
+                else if(myRole.equals("admin")){
+                    response.sendRedirect("/admin/profile.jsp");
+                }
 
 
                 break;
@@ -496,12 +544,11 @@ public class UserServlet extends HttpServlet {
 
             case "validate":
 
-                System.out.println("validating the role of User");
                 String role = request.getParameter("role");
                 String NRIC = request.getParameter("NRIC");
                 UsersDao user = new UsersDaoImpl();
                 boolean valid = user.validateRole(NRIC,role);
-                System.out.println(valid);
+                System.out.println("validating the role of User : "+valid);
                 String json = new Gson().toJson(valid);
 
                 response.setContentType("application/json");

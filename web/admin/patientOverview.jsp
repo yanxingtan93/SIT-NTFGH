@@ -33,8 +33,8 @@
 
 
     var mytable = $('#myMainTable').DataTable({
-        "aLengthMenu": [[5, 50, 75, -1], [5, 50, 75, "All"]],
-        "iDisplayLength": 5,
+        "aLengthMenu": [[20, 50, 75, -1], [20, 50, 75, "All"]],
+        "iDisplayLength": 20,
         "paging": true,
         "lengthChange": false,
         "searching": true,

@@ -110,6 +110,64 @@ public class UsersDaoImpl implements UsersDao {
         }
     }
 
+
+    @Override
+    public void addNewPatientCaregiver(User user,String caregiverNRIC) {
+        System.out.println("ADJW");
+        String sql = "INSERT INTO USERS(user_NRIC,user_name,user_password,user_email,user_contact,user_address,user_dob) VALUES(?,?,?,?,?,?,?)";
+
+        String myRole = user.getRole().toLowerCase().trim();
+
+        String roleSQL = "";
+        user.setPassword(User.hashPassword(user.getPassword()));
+
+        try{
+            Connection connection = db.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1,user.getNRIC());
+            ps.setString(2,user.getName());
+            ps.setString(3,user.getPassword());
+            ps.setString(4,user.getEmail());
+            ps.setInt(5,user.getContact());
+            ps.setString(6,user.getAddress());
+            ps.setString(7,user.getDob());
+            ps.executeUpdate();
+
+            System.out.println("ADJW pc3");
+
+
+            PreparedStatement ps1 = null;
+
+                roleSQL = "INSERT INTO PATIENTS(user_NRIC,allergies_patient) VALUES(?,?)";
+                ps1 = connection.prepareStatement(roleSQL);
+                ps1.setString(1,user.getNRIC());
+                ps1.setString(2,user.getSpecialCondition());
+
+
+            ps1.executeUpdate();
+
+            System.out.println("ADJW pc4");
+            PreparedStatement ps2 = null;
+
+            roleSQL = "INSERT INTO PATIENTCAREGIVER(patient_NRIC,caregiver_NRIC) VALUES(?,?)";
+            ps2 = connection.prepareStatement(roleSQL);
+            ps2.setString(1,user.getNRIC());
+            ps2.setString(2,caregiverNRIC);
+
+
+            ps2.executeUpdate();
+
+
+            System.out.println("ADJW pc5");
+            connection.commit();
+            connection.close();
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     @Override
     public User getUser(String NRIC) {
         return null;
@@ -175,8 +233,10 @@ public class UsersDaoImpl implements UsersDao {
     @Override
     public void deleteUser(String NRIC) {
 
-        String removeSQL = "DELETE FROM USERS WHERE user_NRIC = '"+NRIC+"'";
+        String removeSQL = "DELETE FROM USERS WHERE user_NRIC = ?";
+
         System.out.println("UserDaoImpl: Error in removing user1 "+NRIC);
+
         try {
             Connection connection = db.getConnection();
             PreparedStatement ps = connection.prepareStatement(removeSQL);
@@ -187,6 +247,24 @@ public class UsersDaoImpl implements UsersDao {
         }
         catch (SQLException e){
             System.out.println("UserDaoImpl: Error in removing user \n"+e);
+        }
+    }
+
+    @Override
+    public void removeCaregiver(String patientNRIC, String caregiverNRIC) {
+        String removeSQL = "DELETE FROM PATIENTCAREGIVER WHERE patient_NRIC = ? and caregiver_NRIC = ?";
+
+        try {
+            Connection connection = db.getConnection();
+            PreparedStatement ps = connection.prepareStatement(removeSQL);
+            ps.setString(1,patientNRIC);
+            ps.setString(2,caregiverNRIC);
+            ps.executeUpdate();
+            connection.commit();
+            connection.close();
+        }
+        catch (SQLException e){
+            System.out.println("UserDaoImpl: Error in removing caregiver from patient \n"+e);
         }
     }
 

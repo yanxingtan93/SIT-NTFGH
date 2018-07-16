@@ -3,7 +3,7 @@
 
 
 <t:patientPage>
-    <h1>Reminders</h1>
+    <h1><i class="fa fa-calendar-check"></i>&nbsp Reminders</h1>
     <div class="row">
 
         <table id="todayTable" class="table table-striped table-bordered">
@@ -15,7 +15,7 @@
         </table>
     </div>
 
-    <h1>Pillbox</h1>
+    <h1><i class="fas fa-medkit"></i>&nbsp Pillbox</h1>
     <div class="row">
         <button type="button" class="btn btn-success btn-block btn-lg" onclick="openAddModal()">Add new medication</button>
     </div>
