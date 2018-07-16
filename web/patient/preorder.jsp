@@ -133,6 +133,7 @@
 
             var x = 1; //initlal text box count
             $(add_button).click(function(e){ //on add input button click
+
                 e.preventDefault();
                 if(x < max_fields){ //max input box allowed
                     x++; //text box increment
@@ -146,9 +147,20 @@
                 }
             });
 
+            $(add_button).click(function(e){
+                $.get("/preorderFormServlet", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+                    var $select = $("#medication-Preorder");                           // Locate HTML DOM element with ID "someselect"
+                    $.each(responseJson, function(key, value) {               // Iterate over the JSON object.
+                        $("<option>").val(key).text(value).appendTo($select); // Create HTML <option> element, set its value with currently iterated key and its text content with currently iterated item and finally append it to the <select>.
+                    });
+                });
+
+            });
+
             $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
                 e.preventDefault(); $(this).parent('div').remove(); x--;
             })
+
         });
 
         $("#addRow").click(function () {

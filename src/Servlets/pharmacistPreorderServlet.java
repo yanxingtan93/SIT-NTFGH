@@ -21,12 +21,35 @@ import java.util.Map;
 public class pharmacistPreorderServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        String mode = request.getParameter("mode");
+
+        switch (mode) {
+            case "save":
+                String status = request.getParameter("preorderStatus");
+                String pid = request.getParameter("preorderID");
+
+                System.out.println("\npreorder status:" + status);
+                System.out.println("preorder id:" + pid);
+
+
+                String sql = "UPDATE PREORDER SET status = '"+status+"' WHERE preorder_ID ='"+pid+"'";
+
+                PreparedStatement ps = null;
+                try {
+                    ps = DBConn.getPreparedStatement(sql);
+                    ResultSet resultSet = ps.executeQuery();
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                response.sendRedirect("http://localhost:8080/pharmacist/preorder.jsp");
+                break;
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String mode = request.getParameter("mode");
-        String route = request.getParameter("route");
-
 
         switch (mode) {
             case "get":
@@ -125,6 +148,10 @@ public class pharmacistPreorderServlet extends HttpServlet {
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write(json3);
+
+                break;
+
+            case "Save":
 
                 break;
         }
