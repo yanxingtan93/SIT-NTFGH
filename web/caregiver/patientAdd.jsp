@@ -54,7 +54,7 @@
                                     </tr>
                                     <tr>
                                         <td>Contact Number</td>
-                                        <td><input type="text" class="form-control" name="user_contact" value="" placeholder="Enter Contact Number"></td>
+                                        <td><input type="number" class="form-control" name="user_contact" value="" placeholder="Enter Contact Number"></td>
                                     </tr>
                                     <tr>
                                         <td>Address</td>
@@ -68,7 +68,7 @@
                                     </tr>
                                     <tr>
 
-                                        <input type="text" style="text-align: center" class="form-control" name="role" value="Patient" placeholder="PATIENT" disabled>
+                                        <input type="text" style="text-align: center;font-weight: bolder;" class="form-control" name="role" value="My Patient" placeholder="PATIENT" disabled>
 
                                     </tr>
 

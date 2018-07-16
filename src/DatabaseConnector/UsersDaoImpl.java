@@ -21,6 +21,38 @@ public class UsersDaoImpl implements UsersDao {
     }
 
     @Override
+    public ArrayList<User> getAllPatients(String caregiverNRIC) {
+
+        String SQL = "SELECT pc.patient_NRIC,pc.caregiver_NRIC,u.user_name,u.user_NRIC FROM USERS u,PATIENTCAREGIVER pc " +
+                "WHERE pc.caregiver_NRIC = ? AND pc.patient_NRIC = u.user_NRIC";
+
+        ArrayList<User> users = new ArrayList<>();
+
+        try {
+            Connection connection = db.getConnection();
+            PreparedStatement ps = connection.prepareStatement(SQL);
+            ps.setString(1, caregiverNRIC);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                User user = new User();
+                user.setNRIC(rs.getString("patient_NRIC"));
+                user.setName(rs.getString("user_name"));
+                users.add(user);
+            }
+
+            return users;
+
+        }
+        catch(SQLException e){
+            System.err.println("Error in getting caregiver's patients "+e);
+        }
+
+
+        return null;
+    }
+
+    @Override
     public void addNewUser(User user) {
         System.out.println("ADJW");
         String sql = "INSERT INTO USERS(user_NRIC,user_name,user_password,user_email,user_contact,user_address,user_dob) VALUES(?,?,?,?,?,?,?)";
@@ -28,7 +60,7 @@ public class UsersDaoImpl implements UsersDao {
         String myRole = user.getRole().toLowerCase().trim();
 
         String roleSQL = "";
-      user.setPassword(User.hashPassword(user.getPassword()));
+        user.setPassword(User.hashPassword(user.getPassword()));
 
         try{
             Connection connection = db.getConnection();
@@ -81,6 +113,29 @@ public class UsersDaoImpl implements UsersDao {
     @Override
     public User getUser(String NRIC) {
         return null;
+    }
+
+    @Override
+    public String getName(String NRIC) {
+
+        String SQL = "SELECT user_name from USERS WHERE user_NRIC = ?";
+        String name = "";
+        try {
+            Connection connection = db.getConnection();
+            PreparedStatement ps = connection.prepareStatement(SQL);
+            ps.setString(1, NRIC);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()){
+                name = rs.getString("user_name");
+            }
+
+        }
+        catch (SQLException e){
+            System.err.println("Error getting name of user in UserDaoImpl " + e);
+        }
+        return name;
     }
 
     @Override

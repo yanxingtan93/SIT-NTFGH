@@ -6,8 +6,10 @@ import java.util.ArrayList;
 
 public interface UsersDao {
     public ArrayList<User> getAllUsers();
+    public ArrayList<User> getAllPatients(String caregiverNRIC);
     public void addNewUser(User user);
     public User getUser(String NRIC);
+    public String getName(String NRIC);
     public void updateUser(User user);
     public String getMyRole(String NRIC);
     public void deleteUser(String NRIC);

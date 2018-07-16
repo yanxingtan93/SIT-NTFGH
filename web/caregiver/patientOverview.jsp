@@ -50,12 +50,21 @@
 
             $.each(responseJson, function(key,value) {
 
+
+
+
                 var button = "\n" +
-                    "                    <form method=\"post\" action=\"/drugCatalogueServlet\">\n" +
-                    "                        <input type=\"hidden\" class=\"form-control\" name=\"mode\"  value=\"Delete\">\n" +
-                    "                        <input type=\"hidden\" class=\"form-control\" name=\"drugid\"  value="+value.id+">\n" +
+                    "                    <form method=\"post\" action=\"/UserServlet\">\n" +
+                    "                        <input type=\"hidden\" class=\"form-control\" name=\"route\"  value=\"Access\">\n" +
+                    "                        <input type=\"hidden\" class=\"form-control\" name=\"userAID\"  id=\"userAID\" value="+value.NRIC+">\n" +
+                    "                    <button type=\"submit\" class=\"btn btn-warning  \">Access</button>\n" +
+                    "                    </form>&nbsp" +
+                    "" +
+                    "                    <form method=\"post\" action=\"/UserServlet\">\n" +
+                    "                        <input type=\"hidden\" class=\"form-control\" name=\"route\"  value=\"DeletePatient\">\n" +
+                    "                        <input type=\"hidden\" class=\"form-control\" name=\"userID\"  value="+value.NRIC+">\n" +
                     "                    <button type=\"submit\" class=\"btn btn-danger\">Remove</button>\n" +
-                    "                    </form>";
+                    "                    </form>&nbsp";
 
 
                 mytable.row.add([value.NRIC, value.name, value.dob, value.contact, value.email, value.address, button]);

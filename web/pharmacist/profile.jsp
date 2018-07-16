@@ -10,7 +10,7 @@
     <div class="container">
         <div class="row">
 
-            <div class="col-xs-12 col-sm-12 col-md-11 col-lg-11 toppad" >
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
 
 
                 <div class="panel panel-info">
@@ -27,11 +27,12 @@
 
                             <form method="post" action="/UserServlet">
                             <div class=" col-md-12 col-lg-12 ">
+                                <input type="hidden" style="font-weight: bolder" class="form-control" name="route" id="route"placeholder="" value="edit">
+                                <input type="hidden" style="font-weight: bolder" class="form-control" name="roleA" id="roleA"placeholder="" value="pharmacist">
+
                                 <table class="table table-user-information">
                                     <tbody>
                                     <tr>
-                                        <td><input type="hidden" style="font-weight: bolder" class="form-control" name="route" id="route"placeholder="" value="edit"></td>
-                                        <td><input type="hidden" style="font-weight: bolder" class="form-control" name="roleA" id="roleA"placeholder="" value="pharmacist"></td>
                                         <td>Name:</td>
                                         <td><input type="text" style="font-weight: bolder" class="form-control" name="user_name" id="user_name"placeholder="Enter Name"></td>
                                     </tr>

@@ -175,7 +175,9 @@
                 <div class="wrapper">
                     <br><br>
             <span class="group-btn">
-                 <button type="submit" class="btn btn-primary">Register <i class="fa fa-user-plus"></i></button>
+                 <a href="index.jsp" style="background-color: black" class="btn btn-primary btn-md"><b>Back</b> <i class="fa fa-close"></i></a>
+                 <button type="submit" style="background-color: black" class="btn btn-primary"><b>Register</b> <i class="fa fa-group"></i></button>
+
             </span>
                 </div>
             </div>

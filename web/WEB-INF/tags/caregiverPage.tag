@@ -5,7 +5,15 @@
 
 <t:pageTemplate>
     <jsp:attribute name="header">
-         <div class="row" style="margin: 0px 0px 0px 92%;">
+
+<div class="row" style="position: absolute;padding-top:0px; text-align:center;background-color: black" >
+
+    <div class="form-group" style="margin: 0px 0px 10px 8%;">
+       <span name="patient" id="patient" style="color:white;"></span>
+    </div>
+
+</div>
+         <div class="row" style="margin: 10px 0px 0px 92%;">
              <div class="pull-right" name="logout" id="logout">
                  <form method="post" action="/UserServlet">
                      <input type="hidden" class="form-control" name="route" id="route"  placeholder="" value="logout" >
@@ -16,7 +24,7 @@
              </div>
          </div>
         <div class="float-right" style="margin: -60px 130px 0px 0px;">
-            <img style="border-radius: 50%; margin: 0 10px 0 0" width="50" src="https://pbs.twimg.com/profile_images/997074101620559872/AHWWdl5J_200x200.jpg">
+            <img style="border-radius: 50%; margin: 0 10px 0 0" width="50" src="https://d30y9cdsu7xlg0.cloudfront.net/png/5832-200.png">
             <span class="float-right" name="welcome" id="welcome"></span>
         </div>
 
@@ -29,10 +37,10 @@
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div class="navbar-nav">
                   <a class="nav-item nav-link" href="/caregiver/patientOverview.jsp"><b><i class="fas fa-wheelchair"></i> My Patients</b></a>
-                  <a class="nav-item nav-link" href="/patient/pillboxOverview.jsp"><b><i class="fas fa-medkit"></i> Patient Pillbox</b></a>
-                  <a class="nav-item nav-link" href="/patient/history.jsp"><b><i class="fa fa-history"></i> History</b></a>
+                  <a class="nav-item nav-link" href="/caregiver/pillboxOverview.jsp"><b><i class="fas fa-medkit"></i> Pillbox</b></a>
+                  <a class="nav-item nav-link" href="/caregiver/history.jsp"><b><i class="fa fa-history"></i> History</b></a>
                   <a class="nav-item nav-link" href="/patient/preorder.jsp"><b><i class="fa fa-money"></i> Preorder</b></a>
-                  <a class="nav-item nav-link" href="/patient/profile.jsp"><b><i class="fas fa-heartbeat"></i> Patient Profile</b></a>
+                <!--  <a class="nav-item nav-link" href="/patient/profile.jsp"><b><i class="fas fa-heartbeat"></i> Patient-Profile</b></a>-->
                   <a class="nav-item nav-link" href="/caregiver/profile.jsp"><b><i class="fa fa-user"></i> My Profile</b></a>
                   <a class="nav-item nav-link" href="/caregiver/help.jsp"><b><i class="fa fa-question-circle"></i> Help</b></a>
               </div>
@@ -51,6 +59,13 @@
         var userWelcome = $('#welcome');
         var validAcc = "${sessionScope.userID}";
         userWelcome.html("<b>CareGiver</b><br>Hello, " + validAcc);
+
+        var currentPatient = $('#patient');
+        var validPatientName = "${sessionScope.patientName}";
+        currentPatient.html("<b> My Current Patient: </b>" + validPatientName)
+
+
+
 
     });
 

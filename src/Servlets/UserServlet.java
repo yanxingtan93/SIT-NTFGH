@@ -101,8 +101,19 @@ public class UserServlet extends HttpServlet {
                 response.sendRedirect("http://localhost:8080/index.jsp");
                 break;
 
-            case "View":
+            case "Access":
 
+                String patientNRIC = request.getParameter("userAID");
+                UsersDao patientDao = new UsersDaoImpl();
+
+                HttpSession sessions = request.getSession();
+
+                String patientName = patientDao.getName(patientNRIC);
+                System.out.println("Accesing the post:Access " + patientNRIC+" accessed");
+
+                sessions.setAttribute("patientID",patientNRIC);
+                sessions.setAttribute("patientName",patientName);
+                response.sendRedirect("http://localhost:8080/caregiver/patientOverview.jsp");
                 break;
 
             // FOR ADMINS REMOVING USERS
@@ -115,8 +126,10 @@ public class UserServlet extends HttpServlet {
                 break;
 
             case "logout":
-                HttpSession session=request.getSession();
+                HttpSession session = request.getSession();
                 session.removeAttribute("userID");
+                session.removeAttribute("patientID");
+                session.removeAttribute("patientName");
                 response.sendRedirect("http://localhost:8080/index.jsp");
                 break;
             case "edit":
@@ -143,7 +156,7 @@ public class UserServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String mode = request.getParameter("mode");
-
+        System.out.println("UserServlet doGet mode: "+mode);
 
         switch (mode) {
 
@@ -484,6 +497,17 @@ public class UserServlet extends HttpServlet {
 
                 break;
 
+                //FOR BLACK NAVBAR for CAREGIVERS
+            case "caregiverPatients":
+                HttpSession session=request.getSession();
+                String caregiverNRIC =  session.getAttribute("userID").toString();
+                System.out.println("CareGiver: "+caregiverNRIC);
+
+                UsersDao usersDao = new UsersDaoImpl();
+                ArrayList<User> userlist = usersDao.getAllPatients(caregiverNRIC);
+
+
+                break;
 
         }
     }

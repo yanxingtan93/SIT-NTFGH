@@ -231,8 +231,6 @@ public class User {
         return hashedPassword;
     }
 
-
-
     public static String generateHash(String input) {
         StringBuilder hash = new StringBuilder();
 

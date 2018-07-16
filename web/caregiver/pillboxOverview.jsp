@@ -2,7 +2,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 
-<t:patientPage>
+<t:caregiverPage>
     <h1>Reminders</h1>
     <div class="row">
 
@@ -262,4 +262,4 @@
         $('#userID').val(userID);
     </script>
     <script src ="../JS/pillboxOverview.js"></script>
-</t:patientPage>
+</t:caregiverPage>

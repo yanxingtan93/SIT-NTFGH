@@ -17,7 +17,7 @@
         </div>
 
         <div class="float-right" style="margin: -60px 130px 0px 0px;">
-            <img style="border-radius: 50%; margin: 0 10px 0 0" width="50" src="https://pbs.twimg.com/profile_images/997074101620559872/AHWWdl5J_200x200.jpg">
+            <img style="border-radius: 50%; margin: 0 10px 0 0" width="50" src="https://cdn.iconscout.com/public/images/icon/premium/png-512/pharmacist-consultation-medical-doctor-pill-37584c4c69a5525b-512x512.png">
 
 
             <span class="float-right" name="welcome" id="welcome"></span>
