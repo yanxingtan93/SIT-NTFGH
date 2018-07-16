@@ -22,6 +22,8 @@ import java.util.ArrayList;
 public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        final String ENC_ALGORITHM = "PBEWithMD5AndDES";
+
         String route = request.getParameter("route");
         UsersDao usersDao = new UsersDaoImpl();
 
@@ -47,7 +49,7 @@ public class UserServlet extends HttpServlet {
                     String userNRIC = request.getParameter("userName");
                     String userPass = request.getParameter("userPassword");
                     String userRole = request.getParameter("optradio");
-                    System.out.println(userNRIC+" "+userPass+" "+userRole);
+
                     UsersDao userDao = new UsersDaoImpl();
                     boolean valid = userDao.validateUser(userNRIC,userPass,userRole);
                     if(valid){
@@ -55,12 +57,13 @@ public class UserServlet extends HttpServlet {
                         System.out.println(myRole+" Accessing");
                         HttpSession session=request.getSession();
                         session.setAttribute("userID",userNRIC);
+                        session.setAttribute("role",userRole);
 
                         if(myRole.equals("patient")){
                             response.sendRedirect("http://localhost:8080/patient/pillboxOverview.jsp");
                         }
                         else if(myRole.equals("caregiver")){
-                            response.sendRedirect("http://localhost:8080/caregiver/pillboxOverview.jsp");
+                            response.sendRedirect("http://localhost:8080/caregiver/patientOverview.jsp");
                         }
                         else if(myRole.equals("admin")){
                             response.sendRedirect("http://localhost:8080/admin/patientOverview.jsp");

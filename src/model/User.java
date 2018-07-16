@@ -2,16 +2,16 @@ package model;
 
 import DatabaseConnector.DBConn;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class User {
 
-    /*
-    CREATE TABLE USERS (user_NRIC varchar(20) NOT NULL PRIMARY KEY, user_DOB varchar(20), user_password varchar(100), user_contact int(10),
- user_name varchar(100), user_email varchar(100), user_address varchar(200), user_special_condition varchar(500));
-     */
+
+    public static final String SALT = "my-salt-text";
 
 
     private String NRIC;
@@ -223,6 +223,36 @@ public class User {
         }
 
     }
+
+
+    public static String hashPassword(String password){
+        String saltedPassword = SALT + password;
+        String hashedPassword = generateHash(saltedPassword);
+        return hashedPassword;
+    }
+
+
+
+    public static String generateHash(String input) {
+        StringBuilder hash = new StringBuilder();
+
+        try {
+            MessageDigest sha = MessageDigest.getInstance("SHA-1");
+            byte[] hashedBytes = sha.digest(input.getBytes());
+            char[] digits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                    'a', 'b', 'c', 'd', 'e', 'f' };
+            for (int idx = 0; idx < hashedBytes.length; ++idx) {
+                byte b = hashedBytes[idx];
+                hash.append(digits[(b & 0xf0) >> 4]);
+                hash.append(digits[b & 0x0f]);
+            }
+        } catch (NoSuchAlgorithmException e) {
+            // handle error here.
+        }
+
+        return hash.toString();
+    }
+
 
 
 }

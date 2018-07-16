@@ -24,17 +24,15 @@ public class UsersDaoImpl implements UsersDao {
     public void addNewUser(User user) {
         System.out.println("ADJW");
         String sql = "INSERT INTO USERS(user_NRIC,user_name,user_password,user_email,user_contact,user_address,user_dob) VALUES(?,?,?,?,?,?,?)";
-        System.out.println("A"+" ad "+user.getSpecialCondition()+" ad "+user.getName()+" ad "+user.getNRIC()+" ad "+user.getDob()+" ad "
-                +user.getAddress()+" ad "+user.getEmail()+" ad "+user.getName()+" ad "+user.getPassword()+" ad "+user.getRole());
+
         String myRole = user.getRole().toLowerCase().trim();
 
         String roleSQL = "";
-        System.out.println("ADJW2");
+      user.setPassword(User.hashPassword(user.getPassword()));
 
         try{
             Connection connection = db.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
-            System.out.println("ADJW23");
             ps.setString(1,user.getNRIC());
             ps.setString(2,user.getName());
             ps.setString(3,user.getPassword());
@@ -43,12 +41,13 @@ public class UsersDaoImpl implements UsersDao {
             ps.setString(6,user.getAddress());
             ps.setString(7,user.getDob());
             ps.executeUpdate();
+
             System.out.println("ADJW3");
 
 
             PreparedStatement ps1 = null;
             if(myRole.equals("patient")){
-                roleSQL = "INSERT INTO PATIENTS(allergies_patient,user_NRIC) VALUES(?,?)";
+                roleSQL = "INSERT INTO PATIENTS(user_NRIC,allergies_patient) VALUES(?,?)";
                  ps1 = connection.prepareStatement(roleSQL);
                 ps1.setString(1,user.getNRIC());
                 ps1.setString(2,user.getSpecialCondition());
@@ -111,6 +110,14 @@ public class UsersDaoImpl implements UsersDao {
     }
 
     @Override
+    public String getMyRole(String NRIC) {
+
+
+
+        return "";
+    }
+
+    @Override
     public void deleteUser(String NRIC) {
 
         String removeSQL = "DELETE FROM USERS WHERE user_NRIC = '"+NRIC+"'";
@@ -118,6 +125,7 @@ public class UsersDaoImpl implements UsersDao {
         try {
             Connection connection = db.getConnection();
             PreparedStatement ps = connection.prepareStatement(removeSQL);
+            ps.setString(1,NRIC);
             ps.executeUpdate();
             connection.commit();
             connection.close();
@@ -132,8 +140,9 @@ public class UsersDaoImpl implements UsersDao {
 
         String SQLTable = "";
         String myRole = role.toLowerCase().trim();
+        String saltedPassword = User.hashPassword(password);
 
-
+System.out.println(saltedPassword + " PASSWorD:");
         if(myRole.equals("patient")){
             SQLTable = "PATIENTS";
         }
@@ -150,7 +159,7 @@ public class UsersDaoImpl implements UsersDao {
         boolean valid = false;
 
         String sql = "SELECT u.user_NRIC,u.user_password,p.user_NRIC FROM USERS u,"+SQLTable+" p WHERE p.user_NRIC = '"+ NRIC+"' " +
-                "AND u.user_password = '"+password+"' and p.user_NRIC = u.user_NRIC";
+                "AND u.user_password = '"+saltedPassword+"' and p.user_NRIC = u.user_NRIC";
         try{
             Connection conn = db.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
