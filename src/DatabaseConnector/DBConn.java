@@ -62,9 +62,13 @@ public class DBConn {
         String NRIC = "S1234567A";
         String preorderID = "20";
 
-        String sql = "DELETE FROM PREORDER WHERE preorder_ID IN (50,51,52,53) ";
-        PreparedStatement ps = getPreparedStatement(sql);
+        String sql1 = "SELECT d.drug_id, d.drug_name FROM DRUGS d, INVENTORY i WHERE i.user_NRIC = 'S1234567A' and i.drug_id = d.drug_id";
+        //String sql = "DELETE FROM PREORDER WHERE preorder_ID IN (50,51,52,53) ";
+        PreparedStatement ps = getPreparedStatement(sql1);
         ResultSet resultSet= ps.executeQuery();
+         while (resultSet.next()) {
+             System.out.println(resultSet.getString(1) + "" + resultSet.getString(2));
+         }
     }
 
 

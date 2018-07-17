@@ -92,8 +92,17 @@ public class preorderServlet extends HttpServlet {
         }
         //String page = request.getParameter("action");
 
+        HttpSession sessions = request.getSession();
+        String NRIC = null;
         if(request.getParameter("action").equals("Form")) {
-            HttpSession sessions = request.getSession();
+            if (request.getParameter("role").equals("Caregiver")) {
+                NRIC = sessions.getAttribute("patientID").toString();
+            }
+            else if (request.getParameter("role").equals("Patient")) {
+                NRIC = sessions.getAttribute("userID").toString();
+            }
+
+
             /*String patientNRIC = sessions.getAttribute("patientID").toString();
             System.out.println("preorder NRIC of user "+patientNRIC);
             if(patientNRIC.equals("")){
@@ -103,7 +112,7 @@ public class preorderServlet extends HttpServlet {
                 System.out.println("Null "+patientNRIC);
             }
 */
-            String NRIC = sessions.getAttribute("userID").toString();
+            //String NRIC = sessions.getAttribute("userID").toString();
             String[] meds = request.getParameterValues("medicationPreorder");
             String quantity = request.getParameter("quantity");
             String mode = request.getParameter("method");
@@ -138,24 +147,11 @@ public class preorderServlet extends HttpServlet {
         String mode = request.getParameter("mode");
 
         switch (mode) {
-            case "get":
-                // GET ID FROM URL
-                String userNRIC = request.getParameter("id");
-                System.out.println("\n the parse NRIC from url is: " + userNRIC);
-
+            case "getUser":
                 HttpSession sessions = request.getSession();
                 String myNRIC = sessions.getAttribute("userID").toString();
 
-                System.out.println("\n user's nric is:" + myNRIC);
-                System.out.println(myNRIC);
-
-                String patientNRIC = sessions.getAttribute("patientID").toString();
-                System.out.println("\n patient's nric is:");
-                System.out.println(patientNRIC);
-
-//                String NRIC = myNRIC;
-
-                String sql = "SELECT p.preorder_ID, p.preorder_mode, p.collection_date, p.status FROM PREORDER p WHERE p.user_NRIC ='"+userNRIC+"' " ;
+                String sql = "SELECT preorder_ID, preorder_mode, collection_date, status FROM PREORDER WHERE user_NRIC ='"+myNRIC+"'";
                 try {
                     PreparedStatement ps = DBConn.getPreparedStatement(sql);
                     ResultSet resultSet = ps.executeQuery();
@@ -168,6 +164,50 @@ public class preorderServlet extends HttpServlet {
                         map.put("preorder_mode",resultSet.getString("preorder_mode"));
                         map.put("collection_date",resultSet.getString("collection_date"));
                         map.put("status",resultSet.getString("status"));
+
+                        System.out.println("ID: " + resultSet.getString("preorder_ID") + " mode: " +
+                                resultSet.getString("preorder_mode") + " date: " +
+                                resultSet.getString("collection_date")+ " status: " +
+                                resultSet.getString("status"));
+
+                        list.add(map);
+                    }
+
+                    String json = new Gson().toJson(list);
+                    System.out.print("\n"+ "rows --> " + json);
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write(json);
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+
+            case "getPatient":
+
+                HttpSession session2 = request.getSession();
+                String patNRIC = session2.getAttribute("patientID").toString();
+
+                String sql2 = "SELECT preorder_ID, preorder_mode, collection_date, status FROM PREORDER WHERE user_NRIC ='"+patNRIC+"'";
+                try {
+                    PreparedStatement ps = DBConn.getPreparedStatement(sql2);
+                    ResultSet resultSet = ps.executeQuery();
+
+                    ArrayList<Map> list = new ArrayList<>();
+
+                    while (resultSet.next()) {
+                        Map<String, String> map = new HashMap<String, String>();
+                        map.put("preorder_ID", resultSet.getString("preorder_ID"));
+                        map.put("preorder_mode",resultSet.getString("preorder_mode"));
+                        map.put("collection_date",resultSet.getString("collection_date"));
+                        map.put("status",resultSet.getString("status"));
+
+                        System.out.println("ID: " + resultSet.getString("preorder_ID") + " mode: " +
+                                resultSet.getString("preorder_mode") + " date: " +
+                                resultSet.getString("collection_date")+ " status: " +
+                                resultSet.getString("status"));
 
                         list.add(map);
                     }

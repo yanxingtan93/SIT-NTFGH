@@ -73,6 +73,7 @@
                 <div class="input_fields_wrap">
                     <div>
                         <input type="hidden" class="form-control" name="action" value="Form">
+                        <input type="hidden" id="role" name="role" value="Patient">
                         <div class="row">
                             <label class="col-sm-2 col-form-label">Medication</label>
                             <select class="col-sm-4 form-control" id="medication-Preorder" name="medicationPreorder">
@@ -94,7 +95,6 @@
 
         <div class="form-group row">
             <div class="col-sm-12">
-                <input type="hidden" id="userID" name="userID" value="${sessionScope.userID}">
                 <button type="button" class="btn btn-success btn-block btn-lg" onclick="openConfirmModal(0)">Submit</button>
             </div>
         </div>
@@ -118,7 +118,7 @@
 
     <script>
         $(document).ready(function() {               // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
-            $.get("/preorderFormServlet", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+            $.get("/preorderFormServlet?mode=getUserSelect", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
                 var $select = $("#medication-Preorder");                           // Locate HTML DOM element with ID "someselect"
                 $.each(responseJson, function(key, value) {               // Iterate over the JSON object.
                     $("<option>").val(key).text(value).appendTo($select); // Create HTML <option> element, set its value with currently iterated key and its text content with currently iterated item and finally append it to the <select>.
@@ -150,7 +150,7 @@
             });
 
             $(add_button).click(function(e){
-                $.get("/preorderFormServlet", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+                $.get("/preorderFormServlet?mode=getUserSelect", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
                     var $select = $("#medication-Preorder");                           // Locate HTML DOM element with ID "someselect"
                     $.each(responseJson, function(key, value) {               // Iterate over the JSON object.
                         $("<option>").val(key).text(value).appendTo($select); // Create HTML <option> element, set its value with currently iterated key and its text content with currently iterated item and finally append it to the <select>.
@@ -199,10 +199,10 @@
             });
         });
 
-
+        var acc = "${sessionScope.userID}";
         $(document).ready(function() {
-            var acc = "${sessionScope.userID}";
-            $.get("/preorderServlet?mode=get&id="+acc, function(responseJson) {
+
+            $.get("/preorderServlet?mode=getUser", function(responseJson) {
                 var $table = $('<tbody>').appendTo($('#myMainTable'));
                 $.each(responseJson, function(key,value) {
                         console.log(key);

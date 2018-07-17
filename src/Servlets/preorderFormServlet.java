@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
@@ -37,8 +38,25 @@ public class preorderFormServlet extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String mode = request.getParameter("mode");
+        String NRIC = null;
+        HttpSession sessions = request.getSession();
+
+        switch (mode) {
+            case "getUserSelect":
+                NRIC = sessions.getAttribute("userID").toString();
+                break;
+
+            case "getPatientSelect":
+                NRIC = sessions.getAttribute("patientID").toString();
+                break;
+        }
+
+
         Map<String, String> map = new LinkedHashMap<>();
-        String sql = "SELECT * FROM DRUGS";
+
+        String sql = "SELECT d.drug_id, d.drug_name FROM DRUGS d, INVENTORY i WHERE i.user_NRIC = '"+NRIC+"' and i.drug_id = d.drug_id";
+
 
         try {
             PreparedStatement ps = DBConn.getPreparedStatement(sql);

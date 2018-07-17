@@ -59,8 +59,8 @@
         <div id="collectionMode" class="form-group row">
             <label class="col-sm-2 col-form-label">Preferred Collection Method</label>
             <div class="col-sm-3" id="radiobtn">
-                <label class="radio-inline"><input type="radio" name="method" id="collection" value="Self-Collection" checked="checked"> Self-Collection</label><br>
-                <label class="radio-inline"><input type="radio" name="method" id="delivery" value="Home/ Office Delivery"> Home/ Office Delivery</label><br>
+                <label class="radio-inline"><input type="radio" name="method" id="collection" value="Self-Collection"> Self-Collection</label><br>
+                <label class="radio-inline"><input type="radio" name="method" id="delivery" value="Home/ Office Delivery" checked="checked"> Home/ Office Delivery</label><br>
             </div>
             <%--<div id="toshow" class="col-sm-6" style="display:none">--%>
                 <%--<label class="col-sm-4 col-form-label">Collection Date</label>--%>
@@ -73,6 +73,7 @@
                 <div class="input_fields_wrap">
                     <div>
                         <input type="hidden" class="form-control" name="action" value="Form">
+                        <input type="hidden" id="role" name="role" value="Caregiver">
                         <div class="row">
                             <label class="col-sm-2 col-form-label">Medication</label>
                             <select class="col-sm-4 form-control" id="medication-Preorder" name="medicationPreorder">
@@ -94,7 +95,6 @@
 
         <div class="form-group row">
             <div class="col-sm-12">
-                <input type="hidden" id="userID" name="userID" value="${sessionScope.patientID}">
                 <button type="button" class="btn btn-success btn-block btn-lg" onclick="openConfirmModal(0)">Submit</button>
             </div>
         </div>
@@ -117,7 +117,7 @@
 
     <script>
         $(document).ready(function() {               // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
-            $.get("/preorderFormServlet", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+            $.get("/preorderFormServlet?mode=getPatientSelect", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
                 var $select = $("#medication-Preorder");                           // Locate HTML DOM element with ID "someselect"
                 $.each(responseJson, function(key, value) {               // Iterate over the JSON object.
                     $("<option>").val(key).text(value).appendTo($select); // Create HTML <option> element, set its value with currently iterated key and its text content with currently iterated item and finally append it to the <select>.
@@ -131,6 +131,7 @@
             var max_fields      = 10; //maximum input boxes allowed
             var wrapper         = $(".input_fields_wrap"); //Fields wrapper
             var add_button      = $(".add_field_button"); //Add button ID
+            var count         =  1;
 
             var x = 1; //initlal text box count
             $(add_button).click(function(e){ //on add input button click
@@ -139,24 +140,31 @@
                 if(x < max_fields){ //max input box allowed
                     x++; //text box increment
                     $(wrapper).append('<div class ="row"><label class="col-sm-2 col-form-label">Medication</label>\n' +
-                        '                        <select class="col-sm-4 form-control" id="medication-Preorder" name="medicationPreorder">\n' +
+                        '                        <select class="col-sm-4 form-control" id=/"'+count+'/" name="medicationPreorder">\n' +
                         '\n' +
                         '</select>'+
                         '                        <label class="col-sm-4 col-form-label">Total Quantity</label>\n' +
                         '                        <input type="number" name="quantity" min="1" max="5">\n' +
                         '<a href="#" class="remove_field"> Remove</a></div>'); //add input box
                 }
-            });
-
-            $(add_button).click(function(e){
-                $.get("/preorderFormServlet", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
-                    var $select = $("#medication-Preorder");                           // Locate HTML DOM element with ID "someselect"
+                $.get("/preorderFormServlet?mode=getPatientSelect", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+                    var $select = $("select[id='"+count+"']");                           // Locate HTML DOM element with ID "someselect"
                     $.each(responseJson, function(key, value) {               // Iterate over the JSON object.
                         $("<option>").val(key).text(value).appendTo($select); // Create HTML <option> element, set its value with currently iterated key and its text content with currently iterated item and finally append it to the <select>.
                     });
                 });
-
+                count++;
             });
+
+            // $(add_button).click(function(e){
+            //     $.get("/preorderFormServlet?mode=getPatientSelect", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+            //         var $select = $(count);                           // Locate HTML DOM element with ID "someselect"
+            //         $.each(responseJson, function(key, value) {               // Iterate over the JSON object.
+            //             $("<option>").val(key).text(value).appendTo($select); // Create HTML <option> element, set its value with currently iterated key and its text content with currently iterated item and finally append it to the <select>.
+            //         });
+            //     });
+            //     count++;
+            // });
 
             $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
                 e.preventDefault(); $(this).parent('div').remove(); x--;
@@ -202,7 +210,7 @@
 
         $(document).ready(function() {
             var acc = "${sessionScope.patientID}";
-            $.get("/preorderServlet?mode=get&id="+acc, function(responseJson) {
+            $.get("/preorderServlet?mode=getPatient", function(responseJson) {
                 var $table = $('<tbody>').appendTo($('#myMainTable'));
                 $.each(responseJson, function(key,value) {
                         console.log(key);
