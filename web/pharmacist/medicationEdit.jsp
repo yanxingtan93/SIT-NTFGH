@@ -39,8 +39,8 @@
 
                             <div class=" col-md-9 col-lg-9 ">
                                 <form method="post" action="/drugCatalogueServlet">
-                                    <input type="text" class="form-control" name="route" id="route" value="Save" >
-                                    <input type="text" class="form-control" name="drugid" id="drugid" value="" >
+                                    <input type="hidden" class="form-control" name="route" id="route" value="Save" >
+                                    <input type="hidden" class="form-control" name="drugid" id="drugid" value="" >
                                 <table class="table table-user-information">
 
 
