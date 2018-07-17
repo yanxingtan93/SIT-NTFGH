@@ -101,6 +101,15 @@ public class preorderServlet extends HttpServlet {
 
         if(request.getParameter("action").equals("Form")) {
             HttpSession sessions = request.getSession();
+            /*String patientNRIC = sessions.getAttribute("patientID").toString();
+            System.out.println("preorder NRIC of user "+patientNRIC);
+            if(patientNRIC.equals("")){
+                System.out.println("Empty "+patientNRIC);
+            }
+            else if(patientNRIC==null){
+                System.out.println("Null "+patientNRIC);
+            }
+*/
             String NRIC = sessions.getAttribute("userID").toString();
             String[] meds = request.getParameterValues("medicationPreorder");
             String quantity = request.getParameter("quantity");

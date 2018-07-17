@@ -43,8 +43,9 @@
         <div class="navbar-nav">
 
             <div class="nav-item nav-link" style="width:100%;">
-                Patient
-                <select name="caregiverPatientSelect" id="caregiverPatientSelect" style="    color: black;">
+
+                <h5><i class="fa fa-child"></i> Patient</h5>
+                <select name="caregiverPatientSelect" class="form-control" id="caregiverPatientSelect" style="color: black;background-color: antiquewhite;font-weight: bold;height: 29px">
                 </select>
             </div>
             <a class="nav-item nav-link" href="/caregiver/patientOverview.jsp"><b> <i class="fas fa-wheelchair"></i> Manage Patients</b></a>
@@ -83,10 +84,11 @@
         var validAcc = "${sessionScope.userID}";
         userWelcome.html("<b>CareGiver</b><br>Hello, " + validAcc);
 
-        var currentPatient = $('#patient');
+        var currentPatient = "${sessionScope.patientID}";
 
-
-
+        if(currentPatient==""){
+            alert('dwa')
+        }
 
 
         $('#caregiverPatientSelect').on('change', function() {
@@ -109,8 +111,6 @@
             .then(
                 function(data,status) {
 
-
-                    //================= UMAR TAKE NOTE =================
                     //SET session value to item.user_NRIC
                     $.each(JSON.parse(data), function (i, item) {
                         $('#caregiverPatientSelect').append($('<option>', {

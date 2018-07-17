@@ -71,7 +71,10 @@
         </table>
     </div>
     <script>
-        var userID = "S1234567C";
+
+        $('#userID').val(userID);
+
+        var userID = "${sessionScope.userID}";
     </script>
     <script src ="../JS/patientHistory.js"></script>
 </t:patientPage>

@@ -72,7 +72,7 @@
     </div>
     <script>
         //================= UMAR TAKE NOTE =================
-        var validAcc1 = "${sessionScope.userID}";
+        var validAcc1 = "${sessionScope.patientID}";
         var userID = validAcc1;
         $('#userID').val(userID);
     </script>

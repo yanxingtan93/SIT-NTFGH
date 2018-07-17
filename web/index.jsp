@@ -77,8 +77,8 @@
         <input type="password" style="font-weight: bold" name="userPassword" id="userPassword" class="form-control input-sm chat-input" placeholder="Password" />
         </br>
         <span class="label label-success">&nbsp; My Role: &nbsp; &nbsp;</span>
-        &nbsp;&nbsp;<label class="radio-inline"><input type="radio" id="role" name="optradio" value="Patient" checked="checked">Patient</label>
-        <label class="radio-inline"><input type="radio" name="optradio" value="Caregiver">Caregiver</label>
+        &nbsp;&nbsp;<label class="radio-inline" style="font-weight: bolder"><input type="radio" id="role" name="optradio" value="Patient" checked="checked">Patient</label>
+        <label class="radio-inline" style="font-weight: bolder"><input type="radio" name="optradio" value="Caregiver">Caregiver</label>
         <div class="wrapper">
           <br><br>
           <span class="group-btn">
