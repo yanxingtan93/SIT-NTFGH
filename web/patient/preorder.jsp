@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="../JS/preorderForm.js"></script>
 
 <%--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>--%>
@@ -93,6 +94,7 @@
 
         <div class="form-group row">
             <div class="col-sm-12">
+                <input type="hidden" id="userID" name="userID" value="${sessionScope.userID}">
                 <button type="button" class="btn btn-success btn-block btn-lg" onclick="openConfirmModal(0)">Submit</button>
             </div>
         </div>
@@ -103,6 +105,7 @@
                 <h2>Please confirm.</h2><br>
                 <div class="row">
                     <div class="col-sm-6">
+
                         <button type="submit" class="btn btn-success btn-block btn-lg" onclick="">Confirm</button>
                     </div>
                     <div class="col-sm-6">
@@ -197,9 +200,9 @@
         });
 
 
-
         $(document).ready(function() {
-            $.get("/preorderServlet?mode=get", function(responseJson) {
+            var acc = "${sessionScope.userID}";
+            $.get("/preorderServlet?mode=get&id="+acc, function(responseJson) {
                 var $table = $('<tbody>').appendTo($('#myMainTable'));
                 $.each(responseJson, function(key,value) {
                         console.log(key);

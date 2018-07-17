@@ -94,6 +94,7 @@
 
         <div class="form-group row">
             <div class="col-sm-12">
+                <input type="hidden" id="userID" name="userID" value="${sessionScope.patientID}">
                 <button type="button" class="btn btn-success btn-block btn-lg" onclick="openConfirmModal(0)">Submit</button>
             </div>
         </div>
@@ -200,7 +201,8 @@
 
 
         $(document).ready(function() {
-            $.get("/preorderServlet?mode=get", function(responseJson) {
+            var acc = "${sessionScope.patientID}";
+            $.get("/preorderServlet?mode=get&id="+acc, function(responseJson) {
                 var $table = $('<tbody>').appendTo($('#myMainTable'));
                 $.each(responseJson, function(key,value) {
                         console.log(key);

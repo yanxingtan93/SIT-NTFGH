@@ -26,14 +26,6 @@ public class Preorder {
 //        this.collectiondate = collectiondate;
 //    }
 
-//    public Preorder(int preorderID, String mode, String collectiondate, String status) {
-//        this.preorderID = preorderID;
-//        this.mode = mode;
-//        this.collectiondate = collectiondate;
-//        this.status = status;
-//
-//    } //prev one
-
     public Preorder(String nric, String mode, int quantity, String collectiondate, String status) {
         this.nric = nric;
         this.mode = mode;
@@ -42,12 +34,12 @@ public class Preorder {
         this.status = status;
     }
 
-    public Preorder(String nric, String mode, int quantity, String status) {
-        this.nric = nric;
-        this.mode = mode;
-        this.quantity = quantity;
-        this.status = status;
-    }
+//    public Preorder(String nric, String mode, int quantity, String status) {
+//        this.nric = nric;
+//        this.mode = mode;
+//        this.quantity = quantity;
+//        this.status = status;
+//    }
 
     public Preorder() {
 
@@ -109,7 +101,7 @@ public class Preorder {
         this.drugID = drugID;
     }
 
-    public void addCollectionPreorder(){
+    public void addPreorder(){
         String sql = "INSERT INTO PREORDER (user_NRIC,preorder_mode, collection_date,status)" +
                 "VALUES ('"+nric+"','"+mode+"', '"+collectiondate+"','"+status+"');";
 
@@ -123,19 +115,19 @@ public class Preorder {
         }
     }
 
-    public void addDeliveryPreorder(){
-        String sql = "INSERT INTO PREORDER (user_NRIC,preorder_mode,status)" +
-                "VALUES ('"+nric+"','"+mode+"','"+status+"');";
-
-        try {
-            DBConn db = new DBConn();
-            Connection conn = db.getConnection();
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void addDeliveryPreorder(){
+//        String sql = "INSERT INTO PREORDER (user_NRIC,preorder_mode,status)" +
+//                "VALUES ('"+nric+"','"+mode+"','"+status+"');";
+//
+//        try {
+//            DBConn db = new DBConn();
+//            Connection conn = db.getConnection();
+//            Statement stmt = conn.createStatement();
+//            stmt.executeUpdate(sql);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public void addPreorderDrugs(int preorderID, String drugID) {
         System.out.println("ID: " + preorderID);

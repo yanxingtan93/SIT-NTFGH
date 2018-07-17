@@ -62,7 +62,7 @@ public class DBConn {
         String NRIC = "S1234567A";
         String preorderID = "20";
 
-        String sql = "DELETE FROM PREORDER WHERE preorder_ID IN (29,30,31,32,33,34,35,36,37,38,39) ";
+        String sql = "DELETE FROM PREORDER WHERE preorder_ID IN (50,51,52,53) ";
         PreparedStatement ps = getPreparedStatement(sql);
         ResultSet resultSet= ps.executeQuery();
     }

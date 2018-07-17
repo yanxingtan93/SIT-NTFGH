@@ -29,11 +29,8 @@ public class preorderServlet extends HttpServlet {
             String date = null;
             String status = null;
             String ID = request.getParameter("preorder_ID");
-            System.out.println("Servlet ID is: " + ID);
 
             ArrayList<Map> list = new ArrayList<>();
-
-            System.out.println("preorderView.jsp");
 
             String sql = "SELECT d.drug_name, pd.quantity FROM PREORDERDRUGS pd, DRUGS d" +
                     " WHERE pd.preorder_ID = '"+ID+"' and pd.drug_ID = d.drug_ID";
@@ -46,10 +43,6 @@ public class preorderServlet extends HttpServlet {
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("drug_name", resultSet.getString(1));
                     map.put("quantity", resultSet.getString(2));
-
-                    System.out.println(resultSet.getString(1));
-                    System.out.println(resultSet.getString(2));
-                    System.out.println("\n");
                     list.add(map);
                 }
             } catch (SQLException e) {
@@ -117,34 +110,21 @@ public class preorderServlet extends HttpServlet {
             String date = request.getParameter("date");
             String status = "Order Submitted";
 
+
             Preorder preorder = new Preorder();
             int amount = Integer.valueOf(quantity);
             if (date == null) {
-                preorder = new Preorder(NRIC, mode, amount, status);
-                preorder.addDeliveryPreorder();
+                String na = "n.a.";
+                preorder = new Preorder(NRIC, mode, amount, na, status);
+                preorder.addPreorder();
             } else if (date != null) {
                 preorder = new Preorder(NRIC, mode, amount, date, status);
-                preorder.addCollectionPreorder();
+                preorder.addPreorder();
             }
 
             for (int i = 0; i < meds.length; i++) {
                 String medID = meds[i];
-                //System.out.println("\n meds in list: " + medID);
-//                String sql = "SELECT drug_ID FROM DRUGS " +
-//                        "WHERE drug_name ='" + medName + "'";
-//                PreparedStatement ps = null;
-//                String medID = null;
-//                try {
-//                    ps = DBConn.getPreparedStatement(sql);
-//                    ResultSet resultSet = ps.executeQuery();
-//                    while (resultSet.next()) {
-//                        medID = resultSet.getString(1);
-//                        System.out.print("Result Set: " + resultSet.getString(1));
-//                        System.out.println("Med ID:" + medID);
-//                    }
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
-//                }
+
                 int preorderid = preorder.getPreorderID();
                 System.out.println(preorderid);
                 preorder.addPreorderDrugs(preorderid, medID);
@@ -159,15 +139,23 @@ public class preorderServlet extends HttpServlet {
 
         switch (mode) {
             case "get":
+                // GET ID FROM URL
+                String userNRIC = request.getParameter("id");
+                System.out.println("\n the parse NRIC from url is: " + userNRIC);
+
                 HttpSession sessions = request.getSession();
                 String myNRIC = sessions.getAttribute("userID").toString();
-                String NRIC = myNRIC;
-//                String sql = "SELECT p.preorder_mode, d.drug_name, pd.quantity FROM PREORDER p, PREORDERDRUGS pd, DRUGS d " +
-//                        "WHERE p.user_NRIC = '"+NRIC+"' AND p.preorder_ID = pd.preorder_ID AND pd.drug_ID = d.drug_id ";
 
-//                String sql = "SELECT p.preorder_ID, p.preorder_mode, p.collection_date, p.status, d.drug_name, pd.quantity FROM PREORDER p, PREORDERDRUGS pd, DRUGS d WHERE p.user_NRIC ='"+NRIC+"' and pd.preorder_ID = p.preorder_ID and pd.drug_ID = d.drug_ID" ;
+                System.out.println("\n user's nric is:" + myNRIC);
+                System.out.println(myNRIC);
 
-                String sql = "SELECT p.preorder_ID, p.preorder_mode, p.collection_date, p.status FROM PREORDER p WHERE p.user_NRIC ='"+NRIC+"' " ;
+                String patientNRIC = sessions.getAttribute("patientID").toString();
+                System.out.println("\n patient's nric is:");
+                System.out.println(patientNRIC);
+
+//                String NRIC = myNRIC;
+
+                String sql = "SELECT p.preorder_ID, p.preorder_mode, p.collection_date, p.status FROM PREORDER p WHERE p.user_NRIC ='"+userNRIC+"' " ;
                 try {
                     PreparedStatement ps = DBConn.getPreparedStatement(sql);
                     ResultSet resultSet = ps.executeQuery();
@@ -182,11 +170,6 @@ public class preorderServlet extends HttpServlet {
                         map.put("status",resultSet.getString("status"));
 
                         list.add(map);
-
-                        System.out.println("ID: " + resultSet.getString("preorder_ID") + " mode: " +
-                        resultSet.getString("preorder_mode") + " date: " +
-                        resultSet.getString("collection_date")+ " status: " +
-                        resultSet.getString("status")+ " drug_name: ");
                     }
 
                     String json = new Gson().toJson(list);
