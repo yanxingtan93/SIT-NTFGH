@@ -33,47 +33,47 @@
                                     <tbody>
                                     <tr>
                                         <td>Name:</td>
-                                        <td><input type="text" class="form-control" name="user_name" value="" placeholder="Enter Name"></td>
+                                        <td><input type="text" class="form-control" name="user_name" value="" placeholder="Enter Name" required></td>
                                     </tr>
                                     <tr>
                                         <td>NRIC:</td>
-                                        <td><input type="text" class="form-control" name="user_NRIC" value="" placeholder="Enter NRIC"></td>
+                                        <td><input type="text" class="form-control" name="user_NRIC" value="" placeholder="Enter NRIC" required></td>
                                     </tr>
                                     <tr>
                                     <td>Password:</td>
                                        <td>
 
 
-                                            <input type="password" id="password_input" name="user_password" class="form-control" placeholder="Enter Password" aria-label="Username" aria-describedby="password_visibility">
+                                            <input type="password" id="password_input" name="user_password" class="form-control" placeholder="Enter Password" aria-label="Username" aria-describedby="password_visibility" required>
 
                                     </td>
                                         <td>
 
-                                            <button type="button" class="input-group-addon fa fa-eye btn btn-primary btn-md bg-primary text-white" name="password_visibility" id="password_visibility"></button>
+                                            <button type="button" style="width:40px" class="input-group-addon fa fa-eye btn btn-primary btn-md bg-primary text-white" name="password_visibility" id="password_visibility"></button>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Email</td>
-                                        <td><input type="email" class="form-control" name="user_email" value="" placeholder="Enter Email"></td>
+                                        <td><input type="email" class="form-control" name="user_email" value="" placeholder="Enter Email" required></td>
                                     </tr>
                                     <tr>
                                         <td>Contact Number</td>
-                                        <td><input type="text" class="form-control" name="user_contact" value="" placeholder="Enter Contact Number"></td>
+                                        <td><input type="text" class="form-control" name="user_contact" value="" placeholder="Enter Contact Number" required></td>
                                     </tr>
                                     <tr>
                                         <td>Address</td>
-                                        <td><input type="text" class="form-control" name="user_address" value="" placeholder="Enter Address"></td>
+                                        <td><input type="text" class="form-control" name="user_address" value="" placeholder="Enter Address" required></td>
                                     </tr>
                                     <tr>
 
                                     <tr>
                                         <td>Date of Birth</td>
-                                        <td><input type="text" class="form-control" name="user_dob" value="" placeholder="Enter DOB"></td>
+                                        <td><input type="text" class="form-control" name="user_dob" value="" placeholder="Enter DOB" required></td>
                                     </tr>
                                     <tr>
                                     <div class="form-group">
                                         <label for="sel1"><b>Role In System:</b></label>
-                                        <select class="form-control btn-success" id="sel1" name="role">
+                                        <select class="form-control" style="height:50px;background-color: beige;font-weight: bolder" id="sel1" name="role" required>
                                             <option name="Admin">Admin</option>
                                             <option name="Caregiver">Caregiver</option>
                                             <option name="Patient">Patient</option>

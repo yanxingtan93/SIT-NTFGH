@@ -16,7 +16,7 @@
 
 <t:pharmacistPage>
     <div>
-        <h2>Add New Content
+        <h2><i class="fa fa-book"></i> Content Management
             <span class="pull-right"> <a href="/pharmacist/contentAdd.jsp" class="btn btn-primary">+ Add Content</a></span>
         </h2>
     </div>

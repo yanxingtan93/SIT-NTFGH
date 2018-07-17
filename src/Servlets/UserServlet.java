@@ -26,8 +26,6 @@ public class UserServlet extends HttpServlet {
     private Gson gson = new Gson();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        final String ENC_ALGORITHM = "PBEWithMD5AndDES";
-
         String route = request.getParameter("route");
         UsersDao usersDao = new UsersDaoImpl();
 
@@ -55,7 +53,7 @@ public class UserServlet extends HttpServlet {
 
                 User user =  new User(NRIC,name,password,dob,Integer.parseInt(contact),email,address,role);
                 usersDao.addNewUser(user);
-
+                response.sendRedirect("/admin/patientOverview.jsp");
                 break;
 
             case "login":
