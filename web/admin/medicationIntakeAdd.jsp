@@ -38,7 +38,7 @@
                                         <tr>
 
                                             <td>Medication Periodic Intake Term:</td>
-                                            <td><input type="text" class="form-control" name="name"  placeholder="Enter Intake Term"></td>
+                                            <td><input type="text" class="form-control" name="name"  placeholder="Enter Intake Term" required></td>
                                         </tr>
 
 

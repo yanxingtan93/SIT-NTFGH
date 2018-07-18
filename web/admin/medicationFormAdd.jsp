@@ -38,7 +38,7 @@
                                         <tr>
 
                                             <td>Medicine Form Name:</td>
-                                            <td><input type="text" class="form-control" name="name"  placeholder="Enter Form Name"></td>
+                                            <td><input type="text" class="form-control" name="name"  placeholder="Enter Form Name" required></td>
                                         </tr>
 
 
@@ -46,7 +46,7 @@
                                     </table>
 
                                     <div class="pull-right">
-                                        <button type="submit" class="btn btn-primary">Add To Database</button>
+                                        <button type="submit" class="btn btn-primary" >Add To Database</button>
                                     </div>
                                 </div>
                             </div>

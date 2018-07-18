@@ -33,29 +33,29 @@
                                     <tr>
 
                                         <td>Name:</td>
-                                        <td><input type="text" style="font-weight: bolder" class="form-control" name="user_name" id="user_name"placeholder="Enter Name"></td>
+                                        <td><input type="text" style="font-weight: bolder" class="form-control" name="user_name" id="user_name"placeholder="Enter Name" required></td>
                                     </tr>
                                     <tr>
                                         <td>NRIC:</td>
-                                        <td><input type="text" style="font-weight: bolder" class="form-control" name="user_NRIC" id="user_NRIC"  placeholder="Enter NRIC"></td>
+                                        <td><input type="text" style="font-weight: bolder" class="form-control" name="user_NRIC" id="user_NRIC"  placeholder="Enter NRIC" required></td>
                                     </tr>
                                     <tr>
                                         <td>Email: </td>
-                                        <td><input type="email" style="font-weight: bolder" class="form-control" name="user_email" id="user_email" placeholder="Enter Email"></td>
+                                        <td><input type="email" style="font-weight: bolder" class="form-control" name="user_email" id="user_email" placeholder="Enter Email" required></td>
                                     </tr>
                                     <tr>
                                         <td>Contact: </td>
-                                        <td><input type="text" style="font-weight: bolder" class="form-control" name="user_contact" id="user_contact"  placeholder="Enter Contact"></td>
+                                        <td><input type="text" style="font-weight: bolder" class="form-control" name="user_contact" id="user_contact"  placeholder="Enter Contact" required></td>
                                     </tr>
                                     <tr>
                                         <td>Address: </td>
-                                        <td><input type="text" style="font-weight: bolder" class="form-control" name="user_address" id="user_address"  placeholder="Enter Address"></td>
+                                        <td><input type="text" style="font-weight: bolder" class="form-control" name="user_address" id="user_address"  placeholder="Enter Address" required></td>
                                     </tr>
                                     <tr>
 
                                     <tr>
                                         <td>Date of Birth: </td>
-                                        <td><input type="text" style="font-weight: bolder" class="form-control" name="user_dob" id="user_dob"  placeholder="Enter DOB"></td>
+                                        <td><input type="text" style="font-weight: bolder" class="form-control" name="user_dob" id="user_dob"  placeholder="Enter DOB" required></td>
                                     </tr>
                                     <tr>
                                         <td></td>

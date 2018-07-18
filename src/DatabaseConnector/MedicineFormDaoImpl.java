@@ -78,8 +78,23 @@ public class MedicineFormDaoImpl implements MedicineFormDao {
     }
 
     @Override
-    public void updateMedicineForm(MedicineForm medicineForm) {
-        String sql = "UPDATE MEDICINEFORM SET medicineform_name = ? WHERE content_ID=?";
+    public void updateMedicineForm(MedicineForm medicineForm, int type) {
+String sql = "";
+
+        if(type==1){
+             sql = "UPDATE MEDICINEFORM SET medicineform_name = ? WHERE medicineform_ID=?";
+        }
+        else if(type==2){
+             sql = "UPDATE DRUGPHASE SET drugphase_term = ? WHERE drugphase_ID=?";
+        }
+        else if(type==3){
+             sql = "UPDATE DRUGINTAKE SET drugintake_term = ? WHERE drugintake_ID=?";
+        }
+
+
+
+
+
         try {
             Connection con = db.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
@@ -136,8 +151,84 @@ public class MedicineFormDaoImpl implements MedicineFormDao {
 
 
     }
-}
 
+    @Override
+    public String getMedicineFormName(int id) {
+
+        String sql = "SELECT * FROM MEDICINEFORM WHERE medicineform_ID=?";
+        String name = "";
+
+        try {
+            Connection con = db.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+             name =  rs.getString("medicineform_name");
+
+            }
+            con.commit();
+            con.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return name;
+    }
+
+
+    @Override
+    public String getMedicinePhaseName(int id) {
+
+        String sql = "SELECT * FROM DRUGPHASE WHERE drugphase_ID=?";
+        String name = "";
+
+        try {
+            Connection con = db.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                name =  rs.getString("drugphase_term");
+
+            }
+            con.commit();
+            con.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return name;
+    }
+
+
+    @Override
+    public String getMedicineIntakeName(int id) {
+
+        String sql = "SELECT * FROM DRUGINTAKE WHERE drugintake_ID=?";
+        String name = "";
+
+        try {
+        Connection con = db.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+        name =  rs.getString("drugintake_term");
+
+        }
+        con.commit();
+        con.close();
+
+        } catch (SQLException e) {
+        e.printStackTrace();
+        }
+
+                return name;
+            }
+        }
 ////class test{
 ////    public static void main(String[] args) {
 ////        MedicineFormDao dao = new MedicineFormDaoImpl();

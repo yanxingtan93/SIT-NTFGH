@@ -127,7 +127,13 @@
 
             $.each(responseJson, function(key,value) {
 
-                var button = "\n" +
+                var button = "\n"  +
+
+                    "  <form method=\"post\" action=\"/admin/medicationFormEdit.jsp?xFormID="+value.id+" \">\n" +
+                    "                    <input type=\"hidden\" class=\"form-control\" name=\"mode\" value=\"Edit\">\n" +
+                    "                    <input type=\"hidden\" class=\"form-control\" name=\"medID\"  value="+value.id+">\n" +
+                    "                    <button type=\"submit\" class=\"btn btn-success\">Edit</button>\n" +
+                    "                </form>\n" +
                     "                    <form method=\"post\" action=\"/GeneralSettingsServlet\">\n" +
                     "                        <input type=\"hidden\" class=\"form-control\" name=\"route\"  value=\"DeleteForm\">\n" +
                     "                        <input type=\"hidden\" class=\"form-control\" name=\"settingID\"  value="+value.id+">\n" +
@@ -148,7 +154,13 @@
 
             $.each(responseJson1, function(key,value) {
 
-                var button = "\n" +
+                var button = "\n"  +
+
+                    "  <form method=\"post\" action=\"/admin/medicationPhaseEdit.jsp?xFormID="+value.id+" \">\n" +
+                    "                    <input type=\"hidden\" class=\"form-control\" name=\"mode\" value=\"Edit\">\n" +
+                    "                    <input type=\"hidden\" class=\"form-control\" name=\"medID\"  value="+value.id+">\n" +
+                    "                    <button type=\"submit\" class=\"btn btn-success\">Edit</button>\n" +
+                    "                </form>\n" +
                     "                    <form method=\"post\" action=\"/GeneralSettingsServlet\">\n" +
                     "                        <input type=\"hidden\" class=\"form-control\" name=\"route\"  value=\"DeletePhase\">\n" +
                     "                        <input type=\"hidden\" class=\"form-control\" name=\"settingID\"  value="+value.id+">\n" +
@@ -168,7 +180,13 @@
 
             $.each(responseJson2, function(key,value) {
 
-                var button = "\n" +
+                var button = "\n"  +
+
+                    "  <form method=\"post\" action=\"/admin/medicationIntakeEdit.jsp?xFormID="+value.id+" \">\n" +
+                    "                    <input type=\"hidden\" class=\"form-control\" name=\"mode\" value=\"Edit\">\n" +
+                    "                    <input type=\"hidden\" class=\"form-control\" name=\"medID\"  value="+value.id+">\n" +
+                    "                    <button type=\"submit\" class=\"btn btn-success\">Edit</button>\n" +
+                    "                </form>\n" +
                     "                    <form method=\"post\" action=\"/GeneralSettingsServlet\">\n" +
                     "                        <input type=\"hidden\" class=\"form-control\" name=\"route\"  value=\"DeleteIntake\">\n" +
                     "                        <input type=\"hidden\" class=\"form-control\" name=\"settingID\"  value="+value.id+">\n" +

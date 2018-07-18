@@ -66,7 +66,46 @@ public class GeneralSettingsServlet extends HttpServlet {
                 response.sendRedirect("/admin/settingsOverview.jsp");
                 break;
 
+            case "SavePhase":
+                String formID = request.getParameter("formID");
+                String formName = request.getParameter("form_name");
 
+                MedicineForm mf = new MedicineForm();
+                mf.setFormName(formName);
+                mf.setId(Integer.parseInt(formID));
+
+                MedicineFormDao mfd4 = new MedicineFormDaoImpl();
+                mfd4.updateMedicineForm(mf,2);
+                response.sendRedirect("/admin/settingsOverview.jsp");
+                break;
+
+
+            case "SaveForm":
+                String formID2 = request.getParameter("formID");
+                String formName2 = request.getParameter("form_name");
+
+                MedicineForm mf2 = new MedicineForm();
+                mf2.setFormName(formName2);
+                mf2.setId(Integer.parseInt(formID2));
+
+                MedicineFormDao mfd5 = new MedicineFormDaoImpl();
+                mfd5.updateMedicineForm(mf2,1);
+                response.sendRedirect("/admin/settingsOverview.jsp");
+                break;
+
+
+            case "SaveIntake":
+                String formID3 = request.getParameter("formID");
+                String formName3 = request.getParameter("form_name");
+
+                MedicineForm mf3 = new MedicineForm();
+                mf3.setFormName(formName3);
+                mf3.setId(Integer.parseInt(formID3));
+                System.out.println(mf3.getFormName()+" -- "+mf3.getId());
+                MedicineFormDao mfd6 = new MedicineFormDaoImpl();
+                mfd6.updateMedicineForm(mf3,3);
+                response.sendRedirect("/admin/settingsOverview.jsp");
+                break;
 
             default:
                 System.out.println("DEFAULT in generalsettings");
@@ -170,6 +209,32 @@ public class GeneralSettingsServlet extends HttpServlet {
                     ex.printStackTrace();
 
                 }
+                break;
+
+
+            case "medForm":
+                int type = Integer.parseInt(request.getParameter("type"));
+                int id = Integer.parseInt(request.getParameter(("id")));
+                MedicineFormDao mfd = new MedicineFormDaoImpl();
+
+                String name ="";
+                if(type==1){
+                     name  = mfd.getMedicineFormName(id);
+                }
+
+                else if(type==2){
+                    name  = mfd.getMedicinePhaseName(id);
+                }
+                else if(type==3){
+                    name  = mfd.getMedicineIntakeName(id);
+                }
+                System.out.println("TYPE FORM 3: NAME: "+name);
+                String json = new Gson().toJson(name);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(json);
+
+
                 break;
 
 

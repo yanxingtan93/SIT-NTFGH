@@ -18,4 +18,5 @@ public interface UsersDao {
     public boolean validateUser(String NRIC,String password,String role);
     public boolean validateRole(String NRIC,String role);
 
+
 }

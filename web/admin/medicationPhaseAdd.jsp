@@ -38,7 +38,7 @@
                                         <tr>
 
                                             <td>Medication Phases Term:</td>
-                                            <td><input type="text" class="form-control" name="name"  placeholder="Enter Phases"></td>
+                                            <td><input type="text" class="form-control" name="name"  placeholder="Enter Phases" required></td>
                                         </tr>
 
 

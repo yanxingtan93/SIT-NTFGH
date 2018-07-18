@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: daniel
-  Date: 3/6/18
-  Time: 1:23 PM
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -15,7 +9,7 @@
 <script src="../JS/medicineForm.js"></script>
 
 
-<t:pharmacistPage>
+<t:adminPage>
 
 <br>
     <div class="container">
@@ -38,42 +32,18 @@
 
 
                             <div class=" col-md-9 col-lg-9 ">
-                                <form method="post" action="/drugCatalogueServlet">
-                                    <input type="hidden" class="form-control" name="route" id="route" value="Save" >
-                                    <input type="hidden" class="form-control" name="drugid" id="drugid" value="" >
+                                <form method="post" action="/GeneralSettingsServlet">
+                                    <input type="hidden" class="form-control" name="route" id="route" value="SaveForm" >
+                                    <input type="hidden" class="form-control" name="formID" id="formID" value="" >
                                 <table class="table table-user-information">
 
 
                                     <tbody>
                                     <tr>
-                                        <td>Medicine Name:</td>
-                                        <td><input type="text" class="form-control" name="drug_name" id="drug_name"  placeholder="Enter Medicine Name" required></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Brand:</td>
-                                        <td><input type="text" class="form-control" name="drug_brand" id="drug_brand"  placeholder="Enter Brand" required></td>
+                                        <td>Medicine Form:</td>
+                                        <td><input type="text" class="form-control" name="form_name" id="form_name"  placeholder="Enter Term" required></td>
                                     </tr>
 
-
-                                    <tr>
-                                    <tr>
-                                        <td>Medicine Form</td>
-                                        <td>
-                                            <select class="form-control" id="medicine-form" name="medicineForm" required>
-
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Description</td>
-                                        <td><textarea class="form-control" name="drug_desc" id="drug_desc" rows="4" required></textarea></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Side Effects</td>
-                                        <td><textarea class="form-control" name="drug_sideEffects" id="drug_sideEffects"  rows="4" required></textarea></td>
-                                    </tr>
-
-                                    </tr>
 
                                     </tbody>
 
@@ -99,7 +69,7 @@
             </div>
         </div>
     </div>
-</t:pharmacistPage>
+</t:adminPage>
 
 
 
@@ -110,27 +80,19 @@
 
     $(document).ready(function() {
 
-        var drugid = $('#drugid');
-        var name = $('#drug_name');
-        var brand = $('#drug_brand');
-        var desc = $('#drug_desc');
-        var side = $('#drug_sideEffects');
+        var formID = $('#formID');
+        var name = $('#form_name');
 
-        var id = getParameterByName("xmedID");
+
+        var id = getParameterByName("xFormID");
         console.log("id is:" + id);
 
-        $.get("/drugCatalogueServlet?route=individual&id="+id, function(responseJson) {
+        $.get("/GeneralSettingsServlet?mode=medForm&id="+id+"&type=1", function(responseJson) {
+
+                formID.val(id)
+               name.val(responseJson).trigger('change');
 
 
-            $.each(responseJson, function(key,value) {
-
-                drugid.val(value.id)
-               name.val(value.medicineName).trigger('change');
-               brand.val(value.brand);
-               desc.val(value.description);
-                side.val(value.sideEffect);
-
-            });
 
         });
 

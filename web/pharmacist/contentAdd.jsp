@@ -22,7 +22,7 @@
     <form action="/contentServlet" method="post" enctype="multipart/form-data">
 
         <label for="file">Select a File to Upload</label><br />
-        <input type="file" class="form-control btn-info" style="height: 40px;width:550px"  name="file" id="file" onchange="fileSelected();"/>
+        <input type="file" class="form-control btn-info" style="height: 40px;width:550px"  name="file" id="file" onchange="fileSelected();" required/>
         <br>
         <div id="fileName"></div>
         <div id="fileSize"></div>
@@ -33,13 +33,13 @@
 
         <tr>
             <td><label>Document Title: &nbsp;</label></td>
-            <td><input type="text" class="form-control" name ="content-title"></td>
+            <td><input type="text" class="form-control" name ="content-title" required></td>
         </tr>
 
             <tr>
 
                 <td><label>Content Category: &nbsp;</label></td>
-                <td><select  class="form-control" style="height: 40px" name="contentCategory" id="content-category">   </select></td>
+                <td><select  class="form-control" style="height: 40px" name="contentCategory" id="content-category" required>   </select></td>
 
             </tr>
 

@@ -54,7 +54,7 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-4">
-                        <select name="addDrugName" id="addDrugName"></select>
+                        <select name="addDrugName" id="addDrugName" required></select>
                     </div>
                     <label class="col-sm-2 col-form-label">Total Quantity</label>
                     <div class="col-sm-4">
