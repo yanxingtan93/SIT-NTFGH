@@ -1,5 +1,6 @@
 <%@tag description="User Page template" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
@@ -35,23 +36,25 @@
 
 
 <nav class="navbar navbar-expand-lg navbar-dark" id="navbarAdmin">
-    <a class="navbar-brand" href="#"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" >
-        <div class="navbar-nav">
-
-            <div class="nav-item nav-link" style="width:100%;">
-
-                <h5><i class="fa fa-child"></i> Patient</h5>
-                <select name="caregiverPatientSelect" class="form-control" id="caregiverPatientSelect" style="color: black;background-color: antiquewhite;font-weight: bold;height: 29px">
-                </select>
+        <div class="navbar-nav row"  style="margin:0px;">
+            <div class="col-lg"  >
             </div>
-            <a class="nav-item nav-link" href="/caregiver/patientOverview.jsp"><b> <i class="fas fa-wheelchair"></i> Manage Patients</b></a>
-            <a class="nav-item nav-link" href="/caregiver/profile.jsp"><b><i class="fa fa-User"></i> My Profile</b></a>
+            <div class="col-lg" style="background: #000000;">
+                <div class="nav-item nav-link " style="width:100%;">
+
+                    <b><i class="fa fa-child"></i> Patient</b>
+                    <select name="caregiverPatientSelect" class="form-control" id="caregiverPatientSelect" style="color: black;background-color: antiquewhite;font-weight: bold;height: 29px">
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg" style="background: #000000;">
+                <a class="nav-item nav-link" href="/caregiver/patientOverview.jsp"><b> <i class="fas fa-wheelchair"></i> Manage Patients</b></a>
+            </div>
+            <div class="col-lg" style="background: #000000;">
+                <a class="nav-item nav-link" href="/caregiver/profile.jsp"><b><i class="fa fa-User"></i> My Profile</b></a>
+            </div>
         </div>
-    </div>
 </nav>
 
       <nav class="navbar navbar-expand-lg navbar-light">

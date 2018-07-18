@@ -1,8 +1,8 @@
 #navbarAdmin {
-    background-color: #000000;
+    background-color: #00000000;
     border-bottom: 3px solid #525252;
-    margin-left: 25%;
-    margin-bottom: 0px;
+    padding: 0px;
+    margin: 0px;
 }
 #navbarAdmin .navbar-nav > li > a:hover,
 ul.sub-menu li:hover a {

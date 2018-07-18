@@ -273,17 +273,6 @@ public class patientServlet extends HttpServlet {
         long insertID = 0;
 
 
-        /*
-        System.out.println(request.getParameter("addDrugName"));
-        System.out.println(request.getParameter("addDrugMeals"));
-        System.out.println(request.getParameter("addDrugInterval"));
-        System.out.println(request.getParameter("addDrugQuantity"));
-        System.out.println(request.getParameter("addDrugStartDate"));
-        System.out.println(request.getParameter("addDrugDose"));
-        System.out.println(request.getParameter("addDrugInstructions"));//
-        System.out.println(request.getParameter("addDrugFrequency"));
-        System.out.println(request.getParameter("addDrugForm"));
-        */
         //Insert into INVENTORY
         String sql = "INSERT INTO INVENTORY(drug_ID, drugintake_ID,drugphase_ID,inventory_balance,inventory_status,inventory_startdate,dose,instructions,strictness,medicineform_ID,user_NRIC) " +
                 "VALUES(?,?,?,?,?,?,?,?,?,?,?);";
