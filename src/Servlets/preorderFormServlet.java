@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -54,7 +53,7 @@ public class preorderFormServlet extends HttpServlet {
 
 
         Map<String, String> map = new LinkedHashMap<>();
-        List<String> druglist = new ArrayList<>();
+        List<Map<String, String>> druglist = new ArrayList<>();
 
         String sql = "SELECT d.drug_id, d.drug_name FROM DRUGS d, INVENTORY i WHERE i.user_NRIC = '"+NRIC+"' and i.drug_id = d.drug_id";
 
@@ -63,25 +62,23 @@ public class preorderFormServlet extends HttpServlet {
             PreparedStatement ps = DBConn.getPreparedStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-//                Map<String, String> map1 = new LinkedHashMap<>();
-//                map1.put("id", rs.getString(1));
-//                map1.put("name", rs.getString(2));
-                map.put(rs.getString(1), rs.getString(2));
-                druglist.add(rs.getString(2));
+                Map<String, String> map1 = new LinkedHashMap<>();
+                map1.put("id", rs.getString(1));
+                map1.put("drugname", rs.getString(2));
+                //map.put(rs.getString(1), rs.getString(2));
+                druglist.add(map1);
 
             }
-
-
-            String json = new Gson().toJson(map);
-            System.out.print("\nform:" + json);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(json);
-
         }catch(SQLException ex){
             ex.printStackTrace();
 
         }
+
+        String json = new Gson().toJson(druglist);
+        System.out.print("\nform:" + json);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(json);
 
     }
 }

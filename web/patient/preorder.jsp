@@ -77,6 +77,7 @@
                         <div class="row">
                             <label class="col-sm-2 col-form-label">Medication</label>
                             <input type="text" id='medication-Preorder' name="medicationPreorder">
+                            <input type="hidden" id="project-id">
 
                             <%--<select class="col-sm-4 form-control" id="medication-Preorder" name="medicationPreorder">--%>
 
@@ -119,6 +120,31 @@
     </form>
 
     <script>
+        $(document).ready(function () {
+            $("#medication-Preorder").autocomplete({
+                source: function(request, response) {
+                    $.ajax({
+                        url: "/preorderFormServlet?mode=getUserSelect",
+                        dataType: "json",
+                        data: { term: request.term },
+                        success: function (data) {
+                            var tag_val = $("#medication-Preorder").val();
+                            response($.map(data, function (item) {
+
+                                //filtering results....
+                                if (item.drugname.indexOf(tag_val) != -1) {
+                                    return {
+                                        label: item.drugname,
+                                        name: item.drugname
+                                    };
+                                }
+                            }));
+                        }
+                    });
+                }
+            });
+        });
+
         // $(document).ready(function () {
         //     $( "#medication-Preorder" ).autocomplete({
         //         source: function( request, response ) {
