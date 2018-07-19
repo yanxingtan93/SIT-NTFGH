@@ -101,6 +101,25 @@ public class Preorder {
         this.drugID = drugID;
     }
 
+    public String getID(String drugname){
+        String sql = "SELECT drug_ID FROM drugs WHERE drug_name='"+drugname+"'";
+        try {
+            DBConn db = new DBConn();
+            Connection conn = db.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                this.drugID = rs.getString("drug_ID");
+                System.out.println("\nIn preorder java, drug id:" + drugID);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return drugID;
+    }
+
     public void addPreorder(){
         String sql = "INSERT INTO PREORDER (user_NRIC,preorder_mode, collection_date,status)" +
                 "VALUES ('"+nric+"','"+mode+"', '"+collectiondate+"','"+status+"');";

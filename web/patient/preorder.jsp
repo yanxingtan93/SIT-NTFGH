@@ -77,7 +77,6 @@
                         <div class="row">
                             <label class="col-sm-2 col-form-label">Medication</label>
                             <input type="text" id='medication-Preorder' name="medicationPreorder">
-                            <input type="hidden" id="project-id">
 
                             <%--<select class="col-sm-4 form-control" id="medication-Preorder" name="medicationPreorder">--%>
 
@@ -128,14 +127,14 @@
                         dataType: "json",
                         data: { term: request.term },
                         success: function (data) {
-                            var tag_val = $("#medication-Preorder").val();
+                            var tag_val = $("#medication-Preorder").val().toLowerCase();
                             response($.map(data, function (item) {
 
                                 //filtering results....
-                                if (item.drugname.indexOf(tag_val) != -1) {
+                                if (item.drugname.toLowerCase().indexOf(tag_val) != -1) {
                                     return {
                                         label: item.drugname,
-                                        name: item.drugname
+                                        name: item.drugname,
                                     };
                                 }
                             }));
@@ -181,14 +180,14 @@
         //     });
         // } );
 
-        $(document).ready(function() {               // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
-            $.get("/preorderFormServlet?mode=getUserSelect", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
-                var $select = $("#medication-Preorder");                           // Locate HTML DOM element with ID "someselect"
-                $.each(responseJson, function(key, value) {               // Iterate over the JSON object.
-                    $("<option>").val(key).text(value).appendTo($select); // Create HTML <option> element, set its value with currently iterated key and its text content with currently iterated item and finally append it to the <select>.
-                });
-            });
-        });
+        // $(document).ready(function() {               // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
+        //     $.get("/preorderFormServlet?mode=getUserSelect", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+        //         var $select = $("#medication-Preorder");                           // Locate HTML DOM element with ID "someselect"
+        //         $.each(responseJson, function(key, value) {               // Iterate over the JSON object.
+        //             $("<option>").val(key).text(value).appendTo($select); // Create HTML <option> element, set its value with currently iterated key and its text content with currently iterated item and finally append it to the <select>.
+        //         });
+        //     });
+        // });
 
 
 
@@ -204,9 +203,8 @@
                 if(x < max_fields){ //max input box allowed
                     x++; //text box increment
                     $(wrapper).append('<div class ="row"><label class="col-sm-2 col-form-label">Medication</label>\n' +
-                        '                        <select class="col-sm-4 form-control" id="medication-Preorder" name="medicationPreorder">\n' +
+                        '                        <input type="text" id="medication-Preorder" name="medicationPreorder">\n' +
                         '\n' +
-                        '</select>'+
                         '                        <label class="col-sm-4 col-form-label">Total Quantity</label>\n' +
                         '                        <input type="number" name="quantity" min="1" max="5">\n' +
                         '<a href="#" class="remove_field"> Remove</a></div>'); //add input box

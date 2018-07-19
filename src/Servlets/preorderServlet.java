@@ -132,8 +132,7 @@ public class preorderServlet extends HttpServlet {
             }
 
             for (int i = 0; i < meds.length; i++) {
-                String medID = meds[i];
-
+                String medID = preorder.getID(meds[i]);
                 int preorderid = preorder.getPreorderID();
                 System.out.println(preorderid);
                 preorder.addPreorderDrugs(preorderid, medID);
