@@ -140,15 +140,16 @@
                 if(x < max_fields){ //max input box allowed
                     x++; //text box increment
                     $(wrapper).append('<div class ="row"><label class="col-sm-2 col-form-label">Medication</label>\n' +
-                        '                        <select class="col-sm-4 form-control" id=/"'+count+'/" name="medicationPreorder">\n' +
+                        '                        <select class="col-sm-4 form-control" id="'+x+'" name="medicationPreorder">\n' +
                         '\n' +
                         '</select>'+
                         '                        <label class="col-sm-4 col-form-label">Total Quantity</label>\n' +
                         '                        <input type="number" name="quantity" min="1" max="5">\n' +
                         '<a href="#" class="remove_field"> Remove</a></div>'); //add input box
                 }
+                //count = $('#test').attr('id');
                 $.get("/preorderFormServlet?mode=getPatientSelect", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
-                    var $select = $("select[id='"+count+"']");                           // Locate HTML DOM element with ID "someselect"
+                    var $select = $('#'+x);                           // Locate HTML DOM element with ID "someselect"
                     $.each(responseJson, function(key, value) {               // Iterate over the JSON object.
                         $("<option>").val(key).text(value).appendTo($select); // Create HTML <option> element, set its value with currently iterated key and its text content with currently iterated item and finally append it to the <select>.
                     });

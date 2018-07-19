@@ -54,6 +54,7 @@ public class preorderFormServlet extends HttpServlet {
 
 
         Map<String, String> map = new LinkedHashMap<>();
+        List<String> druglist = new ArrayList<>();
 
         String sql = "SELECT d.drug_id, d.drug_name FROM DRUGS d, INVENTORY i WHERE i.user_NRIC = '"+NRIC+"' and i.drug_id = d.drug_id";
 
@@ -62,11 +63,17 @@ public class preorderFormServlet extends HttpServlet {
             PreparedStatement ps = DBConn.getPreparedStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
+//                Map<String, String> map1 = new LinkedHashMap<>();
+//                map1.put("id", rs.getString(1));
+//                map1.put("name", rs.getString(2));
                 map.put(rs.getString(1), rs.getString(2));
+                druglist.add(rs.getString(2));
+
             }
 
+
             String json = new Gson().toJson(map);
-            System.out.print("form:" + json);
+            System.out.print("\nform:" + json);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);
@@ -75,5 +82,6 @@ public class preorderFormServlet extends HttpServlet {
             ex.printStackTrace();
 
         }
+
     }
 }

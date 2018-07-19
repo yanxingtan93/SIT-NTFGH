@@ -76,9 +76,11 @@
                         <input type="hidden" id="role" name="role" value="Patient">
                         <div class="row">
                             <label class="col-sm-2 col-form-label">Medication</label>
-                            <select class="col-sm-4 form-control" id="medication-Preorder" name="medicationPreorder">
+                            <input type="text" id='medication-Preorder' name="medicationPreorder">
 
-                            </select>
+                            <%--<select class="col-sm-4 form-control" id="medication-Preorder" name="medicationPreorder">--%>
+
+                            <%--</select>--%>
                         <label class="col-sm-4 col-form-label">Total Quantity</label>
                         <input type="number" name="quantity" min="1" max="5">
                         </div>
@@ -117,6 +119,42 @@
     </form>
 
     <script>
+        // $(document).ready(function () {
+        //     $( "#medication-Preorder" ).autocomplete({
+        //         source: function( request, response ) {
+        //             $.ajax( {
+        //                 url: "/preorderFormServlet?mode=getUserSelect",
+        //                 dataType: "json",
+        //                 data: {
+        //                     term: request.term
+        //                 },
+        //                 success: function( data ) {
+        //                     response( data.value );
+        //                 }
+        //             } );
+        //         },
+        //         minLength: 1,
+        //         select: function( event, ui ) {
+        //             log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+        //         }
+        //     } );
+        // } );
+
+        // $(document).ready(function() {
+        //     function log( message ) {
+        //         $( "<div>" ).text( message ).prependTo( "#log" );
+        //         $( "#log" ).scrollTop( 0 );
+        //     }
+        //
+        //     $( "#medication-Preorder" ).autocomplete({
+        //         source: "/preorderFormServlet?mode=getUserSelect",
+        //         minLength: 1,
+        //         select: function( event, ui ) {
+        //             log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+        //         }
+        //     });
+        // } );
+
         $(document).ready(function() {               // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
             $.get("/preorderFormServlet?mode=getUserSelect", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
                 var $select = $("#medication-Preorder");                           // Locate HTML DOM element with ID "someselect"
