@@ -234,11 +234,6 @@
                 });
             });
 
-            $(add_button).click(function(e){
-
-
-            });
-
             $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
                 e.preventDefault(); $(this).parent('div').remove(); x--;
             })

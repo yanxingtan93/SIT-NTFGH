@@ -102,17 +102,6 @@ public class preorderServlet extends HttpServlet {
                 NRIC = sessions.getAttribute("userID").toString();
             }
 
-
-            /*String patientNRIC = sessions.getAttribute("patientID").toString();
-            System.out.println("preorder NRIC of user "+patientNRIC);
-            if(patientNRIC.equals("")){
-                System.out.println("Empty "+patientNRIC);
-            }
-            else if(patientNRIC==null){
-                System.out.println("Null "+patientNRIC);
-            }
-*/
-            //String NRIC = sessions.getAttribute("userID").toString();
             String[] meds = request.getParameterValues("medicationPreorder");
             String[] quantity = request.getParameterValues("quantity");
             String mode = request.getParameter("method");
@@ -137,7 +126,18 @@ public class preorderServlet extends HttpServlet {
                 int medQ = Integer.valueOf(quantity[i]);
                 System.out.println("\nmedquantity" + medQ);
                 preorder.addPreorderDrugs(preorderid, medID, medQ);
+            }
 
+            try {
+                if (request.getParameter("role").equals("Patient")){
+                    response.sendRedirect("http://localhost:8080/patient/preorder.jsp");
+                }
+                else if (request.getParameter("role").equals("Caregiver")) {
+                    response.sendRedirect("http://localhost:8080/caregiver/preorder.jsp");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
 
