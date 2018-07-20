@@ -114,28 +114,29 @@ public class preorderServlet extends HttpServlet {
 */
             //String NRIC = sessions.getAttribute("userID").toString();
             String[] meds = request.getParameterValues("medicationPreorder");
-            String quantity = request.getParameter("quantity");
+            String[] quantity = request.getParameterValues("quantity");
             String mode = request.getParameter("method");
             String date = request.getParameter("date");
             String status = "Order Submitted";
 
 
             Preorder preorder = new Preorder();
-            int amount = Integer.valueOf(quantity);
             if (date == null) {
                 String na = "n.a.";
-                preorder = new Preorder(NRIC, mode, amount, na, status);
+                preorder = new Preorder(NRIC, mode, na, status);
                 preorder.addPreorder();
             } else if (date != null) {
-                preorder = new Preorder(NRIC, mode, amount, date, status);
+                preorder = new Preorder(NRIC, mode, date, status);
                 preorder.addPreorder();
             }
 
+            int preorderid = preorder.getPreorderID();
             for (int i = 0; i < meds.length; i++) {
                 String medID = preorder.getID(meds[i]);
-                int preorderid = preorder.getPreorderID();
-                System.out.println(preorderid);
-                preorder.addPreorderDrugs(preorderid, medID);
+                System.out.println("\nmedid:" +medID);
+                int medQ = Integer.valueOf(quantity[i]);
+                System.out.println("\nmedquantity" + medQ);
+                preorder.addPreorderDrugs(preorderid, medID, medQ);
 
             }
         }

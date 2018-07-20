@@ -26,10 +26,10 @@ public class Preorder {
 //        this.collectiondate = collectiondate;
 //    }
 
-    public Preorder(String nric, String mode, int quantity, String collectiondate, String status) {
+    public Preorder(String nric, String mode, String collectiondate, String status) {
         this.nric = nric;
         this.mode = mode;
-        this.quantity = quantity;
+        //this.quantity = quantity;
         this.collectiondate = collectiondate;
         this.status = status;
     }
@@ -148,7 +148,7 @@ public class Preorder {
 //        }
 //    }
 
-    public void addPreorderDrugs(int preorderID, String drugID) {
+    public void addPreorderDrugs(int preorderID, String drugID, int quantity) {
         System.out.println("ID: " + preorderID);
         System.out.println("drug ID: " + drugID);
         System.out.println("Quantity: " + quantity);
