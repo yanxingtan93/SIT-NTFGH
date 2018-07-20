@@ -3,7 +3,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="../JS/preorderForm.js"></script>
 
-<%--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>--%>
 
 <t:patientPage>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -62,10 +61,6 @@
                 <label class="radio-inline"><input type="radio" name="method" id="collection" value="Self-Collection" > Self-Collection</label><br>
                 <label class="radio-inline"><input type="radio" name="method" id="delivery" value="Home/ Office Delivery" checked="checked"> Home/ Office Delivery</label><br>
             </div>
-            <%--<div id="toshow" class="col-sm-6" style="display:none">--%>
-                <%--<label class="col-sm-4 col-form-label">Collection Date</label>--%>
-                <%--<input type="text" id="datepicker">--%>
-            <%--</div>--%>
         </div>
         <br>
         <div id= "medicationRow" class="form-group row">
@@ -144,41 +139,6 @@
             });
         });
 
-        // $(document).ready(function () {
-        //     $( "#medication-Preorder" ).autocomplete({
-        //         source: function( request, response ) {
-        //             $.ajax( {
-        //                 url: "/preorderFormServlet?mode=getUserSelect",
-        //                 dataType: "json",
-        //                 data: {
-        //                     term: request.term
-        //                 },
-        //                 success: function( data ) {
-        //                     response( data.value );
-        //                 }
-        //             } );
-        //         },
-        //         minLength: 1,
-        //         select: function( event, ui ) {
-        //             log( "Selected: " + ui.item.value + " aka " + ui.item.id );
-        //         }
-        //     } );
-        // } );
-
-        // $(document).ready(function() {
-        //     function log( message ) {
-        //         $( "<div>" ).text( message ).prependTo( "#log" );
-        //         $( "#log" ).scrollTop( 0 );
-        //     }
-        //
-        //     $( "#medication-Preorder" ).autocomplete({
-        //         source: "/preorderFormServlet?mode=getUserSelect",
-        //         minLength: 1,
-        //         select: function( event, ui ) {
-        //             log( "Selected: " + ui.item.value + " aka " + ui.item.id );
-        //         }
-        //     });
-        // } );
 
         // $(document).ready(function() {               // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
         //     $.get("/preorderFormServlet?mode=getUserSelect", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
@@ -250,7 +210,6 @@
                 "          <div class=\"col-sm-4\">\n" +
                 "              <input type=\"number\" name=\"quantity\" min=\"1\" max=\"5\">\n" +
                 "          </div>").insertAfter('#medicationRow')
-            // $("#medicationRow").append("");
         });
 
 
@@ -265,11 +224,9 @@
                         "                <input type=\"text\" id=\"datepicker\" name=\"date\">\n" +
                         "            </div>").insertAfter('#radiobtn');
                     $( "#datepicker" ).datepicker();
-                    //$("#toshow").show();
                 }
                 else {
                     $('#toshow').remove();
-                    //$("#toshow").hide();
                 }
             });
         });
@@ -293,7 +250,6 @@
                                     "                <input type=\"hidden\" class=\"form-control\" name=\"preorder_ID\" value="+value.preorder_ID+">\n" +
                                     "                <button type=\"submit\" class=\"btn btn-info btn-block\">View</button>\n" +
                                     "                <form>")
-                                // .append("<button type='submit' class='btn btn-info btn-block btn-lg' name='viewPreorder' onclick='submit'>View</button>")
                             )
                 });
             });

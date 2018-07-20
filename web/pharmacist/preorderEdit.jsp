@@ -42,9 +42,10 @@
         <label class="col-sm-2 col-form-label">Preorder Status:</label>
         <select class="col-sm-3 form-control" id="select" name="preorderStatus">
             <option value="Order Submitted">Order Submitted</option>
+            <option value="Order in Progress">Order in Progress</option>
+            <option value="Order Delivered">Order Delivered</option>
             <option value="Ready for Collection">Ready for Collection</option>
-            <option>Order Delivered</option>
-            <option>Order in Progress</option>
+            <option value="Order Collected">Order Collected</option>
         </select>
 
     </div><br>
