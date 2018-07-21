@@ -67,6 +67,7 @@
                   <a class="nav-item nav-link" href="/caregiver/pillboxOverview.jsp"><b><i class="fas fa-medkit"></i> Pillbox</b></a>
                   <a class="nav-item nav-link" href="/caregiver/history.jsp"><b><i class="fa fa-history"></i> History</b></a>
                   <a class="nav-item nav-link" href="/caregiver/preorder.jsp"><b><i class="fa fa-money"></i> Preorder</b></a>
+                  <a class="nav-item nav-link" href="/caregiver/drugCatalog.jsp"><b><i class="fa fa-info"></i> Drug Info</b></a>
                 <!--  <a class="nav-item nav-link" href="/patient/profile.jsp"><b><i class="fas fa-heartbeat"></i> Patient-Profile</b></a>-->
                   <a class="nav-item nav-link" href="/caregiver/patientProfile.jsp"><b><i class="fa fa-heartbeat"></i> Profile</b></a>
                   <a class="nav-item nav-link" href="/caregiver/help.jsp"><b><i class="fa fa-question-circle"></i> Help</b></a>

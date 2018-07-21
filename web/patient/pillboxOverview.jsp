@@ -15,7 +15,7 @@
         </table>
     </div>
 
-    <h1><i class="fas fa-medkit"></i>&nbsp Pillbox</h1>
+    <h1><i class="fas fa-medkit"></i>&nbsp Medication</h1>
     <div class="row">
         <button type="button" class="btn btn-success btn-block btn-lg" onclick="openAddModal()">Add new medication</button>
     </div>

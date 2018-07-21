@@ -2,8 +2,9 @@
 
 <head>
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
 <!------ Include the above in your HEAD tag ---------->
     <style>
 
@@ -63,6 +64,7 @@
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
 <div class="container">
+
     <div class="row">
         <div class="col-md-offset-5 col-md-4">
             <form method="post" action="/UserServlet">
@@ -176,14 +178,42 @@
                     <br><br>
             <span class="group-btn">
                  <a href="index.jsp" style="background-color: black" class="btn btn-primary btn-md"><b>Back</b> <i class="fa fa-close"></i></a>
-                 <button type="submit" style="background-color: black" class="btn btn-primary"><b>Register</b> <i class="fa fa-group"></i></button>
+                 <%--<button type="submit" style="background-color: black" class="btn btn-primary"><b>Register</b> <i class="fa fa-group"></i></button>--%>
+                <button type="button" onclick="openPDPAModal()" style="background-color: black" class="btn btn-primary"><b>Register</b> <i class="fa fa-group"></i></button>
 
             </span>
                 </div>
             </div>
 
+                <div id="PDPAModal" class="modal">
+                    <div class="modal-content">
+                        <h2>PDPA Agreement</h2><br>
+                        <p>
+                            Note that by using this website you are agreeing to allow NTFGH employees to view your data as in order to help you verify
+                            your medications are taken correctly. All neccessary steps under PDPA have been taken to ensure that your data is protected.
+                        </p>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="submit" class="btn btn-success btn-block btn-lg">Confirm</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-default btn-block btn-lg"  onclick="closePDPAModal()">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </form>
         </div>
     </div>
 </div>
+<script>
+    var PDPAModal = document.getElementById('PDPAModal');
+    function openPDPAModal() {
+        PDPAModal.style.display = "block";
+    }
+    function closePDPAModal() {
+        PDPAModal.style.display = "none";
+    }
+</script>
 </body>

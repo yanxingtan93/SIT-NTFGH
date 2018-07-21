@@ -30,6 +30,7 @@
               <div class="navbar-nav">
                   <a class="nav-item nav-link" href="/patient/pillboxOverview.jsp"><b><i class="fa fa-medkit"></i> My Medication</b></a>
                   <a class="nav-item nav-link" href="/patient/history.jsp"><b><i class="fa fa-history"></i> History</b></a>
+                  <a class="nav-item nav-link" href="/patient/drugCatalog.jsp"><b><i class="fa fa-info"></i> Drug Info</b></a>
                   <a class="nav-item nav-link" href="/patient/preorder.jsp"><b><i class="fa fa-money"></i> Preorder</b></a>
                   <a class="nav-item nav-link" href="/patient/profile.jsp"><b><i class="fa fa-user"></i> Profile</b></a>
                   <a class="nav-item nav-link" href="/patient/help.jsp"><b><i class="fa fa-question-circle"></i> Help</b></a>
