@@ -33,6 +33,18 @@ $(document).ready(function(){
                 });
             }
         );
+    //=============== Get Medication Frequency, Values for Add Form ===============
+    $.get( "/patient/getMedicationFrequency" )
+        .then(
+            function(data,status) {
+                $.each(JSON.parse(data), function (i, item) {
+                    $('#addDrugFrequency').append($('<option>', {
+                        value: item.frequency_ID,
+                        text : item.frequency_desc
+                    }));
+                });
+            }
+        );
 
     //=============== Get today's medication and pillbox in a Map {today:[], pillbox:[]} ===============
     $.post( "/patient/listPillbox", {userID: userID})
@@ -81,7 +93,7 @@ $(document).ready(function(){
                 });
                 $("#pillboxTable").find('tbody')
                     .append($('<tr>')
-                        .append("<th style='width:20%'>Amount</th>")
+                        .append("<th style='width:20%'>Amount Left</th>")
                         .append("<th style='width:60%'>Details</th>")
                         .append("<th style='width:20%' >Actions</th>")
                     )
@@ -90,14 +102,14 @@ $(document).ready(function(){
                         .append($('<tr>')
                             .append($('<td>')
                                 .append($('<div>')
-                                    .append("<h3>Quantity: </h3>")
                                     .append("<h3>"+item['inventory_balance']+" "+item['medicineform_name']+"</h3>")
                                 )
                             )
                             .append($('<td>')
                                 .append("<div class='pillbox'>")
                                 .append("<h2>"+item['drug_name']+"</h2>")
-                                .append("<h3>Quantity: "+item['inventory_balance']+" "+item['medicineform_name']+"</h3>")
+                                .append("<h4>Dose: "+item['dose']+" "+item['medicineform_name']+"</h4>")
+                                .append("<h4>Timing: "+item['frequency']+" ("+item['drugintake_term']+")</h4>")
                                 .append("<p>Start Date: "+item['inventory_startdate']+"</p>")
                                 .append("</div>")
                             )

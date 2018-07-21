@@ -94,15 +94,7 @@
                     <label class="col-sm-2 col-form-label">Frequency</label>
                     <div class="col-sm-4">
                         <select name="addDrugFrequency" id="addDrugFrequency">
-                            <option value="8">Every Morning</option>
-                            <option value="14">Every Afternoon</option>
-                            <option value="20">Every Night</option>
-                            <option value="22">At Bedtime</option>
-                            <option value="8,20">2 times a day</option>
-                            <option value="8,14,20">3 times a day</option>
-                            <option value="8,12,16,20">4 times a day</option>
-                            <option value="7,10,13,16,19">5 times a day</option>
-                            <option value="7,10,13,16,19,22">6 times a day</option>
+
                         </select>
                     </div>
                     <label class="col-sm-2 col-form-label">Interval</label>

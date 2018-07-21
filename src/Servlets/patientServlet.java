@@ -64,6 +64,9 @@ public class patientServlet extends HttpServlet {
             case "getMedicationForms":
                 response.getWriter().write(getMedicationForms());
                 break;
+            case "getMedicationFrequency":
+                response.getWriter().write(getMedicationFrequency());
+                break;
 
         }
     }
@@ -109,8 +112,31 @@ public class patientServlet extends HttpServlet {
         }
         return gson.toJson(list);
     }
+
+    private String getMedicationFrequency(){
+        String sql = "SELECT * FROM FREQUENCY";
+        ArrayList<Map> list = new ArrayList<>();
+        try {
+            PreparedStatement ps = DBConn.getPreparedStatement(sql);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("frequency_ID", resultSet.getString("frequency_ID"));
+                map.put("frequency_desc", resultSet.getString("frequency_desc"));
+                list.add(map);
+
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+
+        }
+        return gson.toJson(list);
+    }
     private String listPillbox(String userID){
-        //TODO:Modify for user NRIC
+        Map<String, Map> frequencyMap = getFrequencyMap();
+
+
+
         String sql = "SELECT * FROM INVENTORY INNER JOIN DRUGS on INVENTORY.drug_ID = DRUGS.drug_ID INNER JOIN DRUGINTAKE on INVENTORY.drugintake_ID = DRUGINTAKE.drugintake_ID INNER JOIN DRUGPHASE on INVENTORY.drugphase_ID = DRUGPHASE.drugphase_ID INNER JOIN REMINDERS on INVENTORY.inventory_ID = REMINDERS.inventory_ID INNER JOIN MEDICINEFORM on INVENTORY.medicineform_ID = MEDICINEFORM.medicineform_ID WHERE consumed=0 AND user_NRIC=?";
         LocalDate today = LocalDate.now();
         LocalDate test;
@@ -172,7 +198,11 @@ public class patientServlet extends HttpServlet {
                 map.put("inventory_balance", resultSet.getString("inventory_balance"));
                 map.put("dose", resultSet.getString("dose"));
                 map.put("drugintake_ID", resultSet.getString("drugintake_ID"));
-                map.put("frequency", resultSet.getString("frequency"));
+
+
+                Map<String, String> detailMap = frequencyMap.get(resultSet.getString("frequency"));
+                map.put("frequency", detailMap.get("frequency_desc"));
+
                 map.put("drugphase_ID", resultSet.getString("drugphase_ID"));
                 map.put("instructions", resultSet.getString("instructions"));
                 map.put("strictness", resultSet.getString("strictness"));
@@ -189,17 +219,42 @@ public class patientServlet extends HttpServlet {
         dataMap.put("pillbox", pillboxList);
         return gson.toJson(dataMap);
     }
+
+    private Map<String, Map> getFrequencyMap(){
+        System.out.println("getFrequencyMap");
+        Map<String, Map> frequencyMap = new HashMap<String, Map>();
+        String checkSQL = "SELECT * FROM FREQUENCY";
+        try {
+            PreparedStatement ps1 = DBConn.getPreparedStatement(checkSQL);
+            ResultSet resultSet = ps1.executeQuery();
+            while (resultSet.next()) {
+                Map<String, String> detailMap = new HashMap<String, String>();
+                detailMap.put("frequency_desc", resultSet.getString("frequency_desc"));
+                detailMap.put("frequency_value", resultSet.getString("frequency_value"));
+                frequencyMap.put(resultSet.getString("frequency_ID"), detailMap);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return frequencyMap;
+    }
     //Function to translate form inputs into an array of intake datetimes
     private List<String> getIntakeTimes(HttpServletRequest request){
+        System.out.println("getIntakeTimes");
+        Map<String, Map> frequencyMap = getFrequencyMap();
+        Map<String, String> detailMap = frequencyMap.get(request.getParameter("addDrugFrequency"));
+
+        String freqValue = detailMap.get("frequency_value");
+
+
+        String[] consumptionTimes = freqValue.split(",");
+
         List<String> intakeDateTimes = new ArrayList<String>();
 
 
         Double dose = Double.valueOf(request.getParameter("addDrugDose"));
         Double totalQuantity = Double.valueOf(request.getParameter("addDrugQuantity"));
 
-        //Dummy Variables for testing
-        //Double totalQuantity= 11.0;
-        //Double dose = 2.0;
 
         String interval = request.getParameter("addDrugInterval");
 
@@ -238,7 +293,7 @@ public class patientServlet extends HttpServlet {
         String rawStartDate = request.getParameter("addDrugStartDate");
 
         //Freq is twice a day at 1100 and 1800
-        String[] consumptionTimes = request.getParameter("addDrugFrequency").split(",");
+        //String[] consumptionTimes = request.getParameter("addDrugFrequency").split(",");
 
         LocalDate startDate = LocalDate.parse(rawStartDate);
         LocalDate currentDate = startDate;
@@ -268,14 +323,11 @@ public class patientServlet extends HttpServlet {
     private void addToPillbox(HttpServletRequest request){
         List<String> intakeDateTimes = getIntakeTimes(request);
 
-        String[] consumptionTimes = request.getParameter("addDrugFrequency").split(",");
-
         long insertID = 0;
 
-
         //Insert into INVENTORY
-        String sql = "INSERT INTO INVENTORY(drug_ID, drugintake_ID,drugphase_ID,inventory_balance,inventory_status,inventory_startdate,dose,instructions,strictness,medicineform_ID,user_NRIC) " +
-                "VALUES(?,?,?,?,?,?,?,?,?,?,?);";
+        String sql = "INSERT INTO INVENTORY(drug_ID, drugintake_ID,drugphase_ID,inventory_balance,inventory_status,inventory_startdate,dose,instructions,strictness,medicineform_ID,user_NRIC,frequency) " +
+                "VALUES(?,?,?,?,?,?,?,?,?,?,?,?);";
         try {
             PreparedStatement ps = DBConn.getPreparedStatement(sql);
             ps.setInt(1, Integer.valueOf(request.getParameter("addDrugName")));
@@ -295,6 +347,7 @@ public class patientServlet extends HttpServlet {
             }
             ps.setInt(10, Integer.valueOf(request.getParameter("addDrugForm")));
             ps.setString(11, request.getParameter("userID"));
+            ps.setInt(12, Integer.valueOf(request.getParameter("addDrugFrequency")));
             ps.executeUpdate();
             //Get primary key to reference in REMINDERS table
             ResultSet generatedKeys = ps.getGeneratedKeys();
