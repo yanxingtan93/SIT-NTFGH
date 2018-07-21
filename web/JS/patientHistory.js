@@ -1,5 +1,5 @@
 var historylist;
-$.post( "http://localhost:8080/patient/listHistory", {userID: userID})
+$.post( "/patient/listHistory", {userID: userID})
     .then(
         function(data,status) {
             historylist = JSON.parse(data);

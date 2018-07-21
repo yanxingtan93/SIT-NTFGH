@@ -109,7 +109,7 @@ public class UserServlet extends HttpServlet {
                 User user1 =  new User(NRIC1,name1,password1,dob1,Integer.parseInt(contact1),email1,address1,role1,condition);
                 user1.setSpecialCondition(condition);
                 usersDao.addNewUser(user1);
-                response.sendRedirect("http://localhost:8080/index.jsp");
+                response.sendRedirect("/index.jsp");
                 break;
 
             case "caregiverAdd":

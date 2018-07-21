@@ -32,19 +32,19 @@ public class patientServlet extends HttpServlet {
                 break;
             case "addToPillbox":
                 addToPillbox(request);
-                response.sendRedirect("http://localhost:8080/patient/pillboxOverview.jsp");
+                response.sendRedirect("/patient/pillboxOverview.jsp");
                 break;
             case "editPillbox":
                 editPillbox(request);
-                response.sendRedirect("http://localhost:8080/patient/pillboxOverview.jsp");
+                response.sendRedirect("/patient/pillboxOverview.jsp");
                 break;
             case "deleteFromPillbox":
                 deleteFromPillbox(request.getParameter("id"));
-                response.sendRedirect("http://localhost:8080/patient/pillboxOverview.jsp");
+                response.sendRedirect("/patient/pillboxOverview.jsp");
                 break;
             case "recordConsumption":
                 recordConsumption(request.getParameter("id"),request.getParameter("remainder"), request.getParameter("inventoryID"));
-                response.sendRedirect("http://localhost:8080/patient/pillboxOverview.jsp");
+                response.sendRedirect("/patient/pillboxOverview.jsp");
                 break;
             case "listHistory":
                 response.getWriter().write(listHistory(request.getParameter("userID")));

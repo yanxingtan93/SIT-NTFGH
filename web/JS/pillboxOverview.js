@@ -10,7 +10,7 @@ $(document).ready(function(){
     setDateToday();
 
     //=============== Get Medication Names, Values for Add Form ===============
-    $.get( "http://localhost:8080/patient/getMedicationNames" )
+    $.get( "/patient/getMedicationNames" )
         .then(
             function(data,status) {
                 $.each(JSON.parse(data), function (i, item) {
@@ -22,7 +22,7 @@ $(document).ready(function(){
             }
         );
     //=============== Get Medication Type, Value for Add Form ===============
-    $.get( "http://localhost:8080/patient/getMedicationForms" )
+    $.get( "/patient/getMedicationForms" )
         .then(
             function(data,status) {
                 $.each(JSON.parse(data), function (i, item) {
@@ -35,7 +35,7 @@ $(document).ready(function(){
         );
 
     //=============== Get today's medication and pillbox in a Map {today:[], pillbox:[]} ===============
-    $.post( "http://localhost:8080/patient/listPillbox", {userID: userID})
+    $.post( "/patient/listPillbox", {userID: userID})
         .then(
             function(data,status) {
                 pillboxlist = JSON.parse(data);
@@ -187,7 +187,7 @@ function openDeleteModal(id) {
 }
 function deleteFromPillbox() {
     console.log(deleteID);
-    $.post( "http://localhost:8080/patient/deleteFromPillbox", {id: deleteID})
+    $.post( "/patient/deleteFromPillbox", {id: deleteID})
         .then(location.reload());
 }
 function closeDeleteModal() {
@@ -203,7 +203,7 @@ function openRecordModal(id,dose,invId) {
 function recordConsumption() {
     console.log(recordID);
 
-    $.post( "http://localhost:8080/patient/recordConsumption", {id: recordID, remainder: remainder, inventoryID: inventoryID})
+    $.post( "/patient/recordConsumption", {id: recordID, remainder: remainder, inventoryID: inventoryID})
         .then(location.reload());
 }
 function closeRecordModal() {

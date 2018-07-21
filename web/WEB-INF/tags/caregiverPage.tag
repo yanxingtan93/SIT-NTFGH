@@ -97,7 +97,7 @@
 
         $('#caregiverPatientSelect').on('change', function() {
 
-            $.post( "http://localhost:8080/UserServlet?route=selectPatient", {patientID: this.value})
+            $.post( "/UserServlet?route=selectPatient", {patientID: this.value})
             location.reload();
         });
 
@@ -111,7 +111,7 @@
         var x = 0;
         var firstPatientID = "";
         console.log(caregiverID);
-        $.post( "http://localhost:8080/UserServlet?route=listPatients", {caregiverID: caregiverID})
+        $.post( "/UserServlet?route=listPatients", {caregiverID: caregiverID})
             .then(
                 function(data,status) {
 

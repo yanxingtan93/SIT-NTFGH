@@ -130,10 +130,10 @@ public class preorderServlet extends HttpServlet {
 
             try {
                 if (request.getParameter("role").equals("Patient")){
-                    response.sendRedirect("http://localhost:8080/patient/preorder.jsp");
+                    response.sendRedirect("/patient/preorder.jsp");
                 }
                 else if (request.getParameter("role").equals("Caregiver")) {
-                    response.sendRedirect("http://localhost:8080/caregiver/preorder.jsp");
+                    response.sendRedirect("/caregiver/preorder.jsp");
                 }
 
             } catch (IOException e) {

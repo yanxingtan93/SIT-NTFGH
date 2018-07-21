@@ -50,7 +50,7 @@
         <div class="modal-content">
             <h1>Add Entry</h1>
             <br>
-            <form action="http://localhost:8080/patient/addToPillbox" method="post">
+            <form action="/patient/addToPillbox" method="post">
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-4">
@@ -155,7 +155,7 @@
         <div class="modal-content">
             <h1>Edit Entry</h1>
             <br>
-            <form action="http://localhost:8080/patient/editPillbox" method="post">
+            <form action="/patient/editPillbox" method="post">
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-4">

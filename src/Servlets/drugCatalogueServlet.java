@@ -43,7 +43,7 @@ public class drugCatalogueServlet extends HttpServlet {
             String drugSideEffect = request.getParameter("drug_sideEffects");
             Medicine newMedicine = new Medicine(Integer.parseInt(id),medicineName,brand,medicineFormId,description,drugSideEffect);
             drugsDao.updateDrug(newMedicine);
-            response.sendRedirect("http://localhost:8080/pharmacist/medicationOverview.jsp");
+            response.sendRedirect("/pharmacist/medicationOverview.jsp");
 
         }
 
@@ -51,7 +51,7 @@ public class drugCatalogueServlet extends HttpServlet {
 
             System.out.println("In Delete mode of medEdit.jsp");
            drugsDao.deleteDrug(Integer.parseInt(medicineID));
-            response.sendRedirect("http://localhost:8080/pharmacist/medicationOverview.jsp");
+            response.sendRedirect("/pharmacist/medicationOverview.jsp");
         }
 
 
