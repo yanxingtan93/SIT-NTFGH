@@ -80,10 +80,10 @@
                 <label class="radio-inline" style="font-weight: bolder"><input type="radio" name="optradio" value="Admin">Administrator</label>
                 <div class="wrapper">
                     <br><br>
+                    <p>${requestScope["message"]}</p>
             <span class="group-btn">
-                 <button type="submit" style="background-color: black" class="btn btn-primary"><b>Login</b> <i class="fa fa-sign-in"></i></button>
 
-                <a href="#"  style="background-color: black"class="btn btn-primary btn-md"><b>Register</b> <i class="fa fa-group"></i></a>
+                 <button type="submit" style="background-color: black" class="btn btn-primary"><b>Login</b> <i class="fa fa-sign-in"></i></button>
             </span>
                 </div>
 

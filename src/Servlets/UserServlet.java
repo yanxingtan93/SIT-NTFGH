@@ -85,7 +85,15 @@ public class UserServlet extends HttpServlet {
 
                     }
                     else {
-                        response.sendRedirect("/registration.jsp");
+                        if(userRole.toLowerCase().equals("patient")|| userRole.toLowerCase().equals("caregiver")) {
+                            request.setAttribute("message","Login Failed Try again");
+                            request.getRequestDispatcher("/index.jsp").forward(request,response);
+
+                        }
+                        else if(userRole.toLowerCase().equals("pharmacist") || userRole.toLowerCase().equals("admin")){
+                            request.setAttribute("message","Login Failed Try again");
+                            request.getRequestDispatcher("/loginPharmacist.jsp").forward(request,response);
+                        }
                     }
                     break;
 
