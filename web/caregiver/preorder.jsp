@@ -35,7 +35,7 @@
 
         </div>
     </div>
-    <br><h1>Current Preorder(s)</h1><br>
+    <br><h1><i class="fa fa-money"></i> Current Preorder(s)</h1><br>
     <div class="row">
         <table id="myMainTable" class="dailyMedTable table table-striped table-bordered">
             <thead class="thead-dark">
@@ -53,7 +53,7 @@
             </div>
         </table>
     </div>
-    <br><h1>New Preorder</h1><br>
+    <br><h1><i class="fa fa-plus-square"></i> New Preorder</h1><br>
     <form action="/preorderServlet" method="post">
         <div id="collectionMode" class="form-group row">
             <label class="col-sm-2 col-form-label">Preferred Collection Method</label>
@@ -72,11 +72,13 @@
                         <input type="hidden" id="role" name="role" value="Caregiver">
                         <div class="row">
                             <label class="col-sm-2 col-form-label">Medication</label>
-                            <select class="col-sm-4 form-control" id="medication-Preorder" name="medicationPreorder">
-
-                            </select>
-                        <label class="col-sm-4 col-form-label">Total Quantity</label>
-                        <input type="number" name="quantity" min="1" max="5">
+                            <div class="col-sm-4">
+                                <input type="text" id='medication-Preorder' name="medicationPreorder" autocomplete="off">
+                            </div>
+                            <label class="col-sm-2 col-form-label">Total Quantity</label>
+                            <div class="col-sm-2">
+                                <input type="number" name="quantity" min="1" max="50">
+                            </div>
                         </div>
                     </div>
 
@@ -112,6 +114,31 @@
     </form>
 
     <script>
+        $(document).ready(function () {
+            $("#medication-Preorder").autocomplete({
+                source: function(request, response) {
+                    $.ajax({
+                        url: "/preorderFormServlet?mode=getPatientSelect",
+                        dataType: "json",
+                        data: { term: request.term },
+                        success: function (data) {
+                            var tag_val = $("#medication-Preorder").val().toLowerCase();
+                            response($.map(data, function (item) {
+
+                                //filtering results....
+                                if (item.drugname.toLowerCase().indexOf(tag_val) != -1) {
+                                    return {
+                                        label: item.drugname,
+                                        name: item.drugname,
+                                    };
+                                }
+                            }));
+                        }
+                    });
+                }
+            });
+        });
+
         $(document).ready(function() {               // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
             $.get("/preorderFormServlet?mode=getPatientSelect", function(responseJson) {                 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
                 var $select = $("#medication-Preorder");                           // Locate HTML DOM element with ID "someselect"
@@ -120,7 +147,6 @@
                 });
             });
         });
-
 
 
         $(document).ready(function() {
@@ -134,18 +160,22 @@
                 e.preventDefault();
                 if(x < max_fields){ //max input box allowed
                     x++; //text box increment
-                    $(wrapper).append('<div class ="row"><label class="col-sm-2 col-form-label">Medication</label>\n' +
-                        '                        <input type="text" id="medication-Preorder'+x+'" name="medicationPreorder">\n' +
-                        '\n' +
-                        '                        <label class="col-sm-4 col-form-label">Total Quantity</label>\n' +
-                        '                        <input type="number" name="quantity" min="1" max="5">\n' +
-                        '<a href="#" class="remove_field"> Remove</a></div>'); //add input box
+                    $(wrapper).append('<div class="row">\n' +
+                    '                            <label class="col-sm-2 col-form-label">Medication</label>\n' +
+                    '                            <div class="col-sm-4">\n' +
+                    '                                <input type="text" id="medication-Preorder'+x+'" name="medicationPreorder" autocomplete="off">\n' +
+                    '                            </div>\n' +
+                    '                            <label class="col-sm-2 col-form-label">Total Quantity</label>\n' +
+                    '                            <div class="col-sm-2">\n' +
+                    '                                <input type="number" name="quantity" min="1" max="50">\n' +
+                    '                            </div>\n' +
+                    '                            <a href="#" class="remove_field"> Remove</a></div>'); //add input box
                 }
 
                 $("#medication-Preorder"+x).autocomplete({
                     source: function(request, response) {
                         $.ajax({
-                            url: "/preorderFormServlet?mode=getUserSelect",
+                            url: "/preorderFormServlet?mode=getPatientSelect",
                             dataType: "json",
                             data: { term: request.term },
                             success: function (data) {
@@ -172,28 +202,13 @@
 
         });
 
-        $("#addRow").click(function () {
-            $("<div id= \"medicationRow\" class=\"form-group row\">\n" +
-                "          <label class=\"col-sm-2 col-form-label\">Medication</label>\n" +
-                "          <div class=\"col-sm-4\">\n" +
-                "              <input type=\"text\" id=\"medication-Preorder\" name=\"medicationPreorder\">\n" +
-                "          </div>\n" +
-                "          <label class=\"col-sm-2 col-form-label\">Total Quantity</label>\n" +
-                "          <div class=\"col-sm-4\">\n" +
-                "              <input type=\"number\" name=\"quantity\" min=\"1\" max=\"5\">\n" +
-                "          </div>").insertAfter('#medicationRow')
-        });
-
-
-
-
         $(document).ready(function(){
             $("input[type='radio']").change(function(){
                 var collection = $("input[id='collection']:checked").val();
                 if(collection){
                     $("<div id=\"toshow\" class=\"col-sm-6\">\n" +
                         "                <label class=\"col-sm-4 col-form-label\">Collection Date</label>\n" +
-                        "                <input type=\"text\" id=\"datepicker\" name=\"date\">\n" +
+                        "                <input type=\"text\" id=\"datepicker\" name=\"date\" autocomplete=\"off\">\n" +
                         "            </div>").insertAfter('#radiobtn');
                     $( "#datepicker" ).datepicker();
                 }

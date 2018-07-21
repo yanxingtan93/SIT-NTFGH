@@ -57,17 +57,13 @@ public class DBConn {
     //check connections
     public static void main(String[]args) throws SQLException {
         String medName = "Paracetamol";
-//        String sql = "SELECT drug_ID FROM DRUGS " +
-//                "WHERE drug_name ='"+medName+"'";
         String NRIC = "S1234567A";
-        String preorderID = "20";
 
-        String sql1 = "SELECT d.drug_id, d.drug_name FROM DRUGS d, INVENTORY i WHERE i.user_NRIC = 'S1234567A' and i.drug_id = d.drug_id";
-        //String sql = "DELETE FROM PREORDER WHERE preorder_ID IN (50,51,52,53) ";
-        PreparedStatement ps = getPreparedStatement(sql1);
+        //String sql1 = "SELECT d.drug_id, d.drug_name FROM DRUGS d, INVENTORY i WHERE i.user_NRIC = 'S1234567A' and i.drug_id = d.drug_id";
+        String sql = "DELETE FROM PREORDER WHERE preorder_ID IN (56,57,58,59,68) ";
+        PreparedStatement ps = getPreparedStatement(sql);
         ResultSet resultSet= ps.executeQuery();
          while (resultSet.next()) {
-             System.out.println(resultSet.getString(1) + "" + resultSet.getString(2));
          }
     }
 

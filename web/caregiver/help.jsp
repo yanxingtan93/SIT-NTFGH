@@ -40,7 +40,7 @@
 </style>
 
 <t:caregiverPage>
-  <h1>Help</h1>
+  <h1><i class="fa fa-question-circle"></i> Help</h1>
   <title>Help</title>
   <br>
   <h2>Frequently Asked Questions</h2>
@@ -85,7 +85,7 @@
         </tr>
         <tr>
           <td>Jurong Medical Centre Pharmacy (Boonlay)</td>
-          <td>Mon-Fri: 9.00am – 5.30pm<<br>
+          <td>Mon-Fri: 9.00am – 5.30pm<br>
             Sat, Sun & PH: Closed<br>
           </td>
         </tr>
