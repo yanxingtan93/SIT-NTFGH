@@ -210,7 +210,7 @@
                 if(collection){
                     $("<div id=\"toshow\" class=\"col-sm-6\">\n" +
                         "                <label class=\"col-sm-4 col-form-label\">Collection Date</label>\n" +
-                        "                <input type=\"text\" id=\"datepicker\" name=\"date\" autocomplete=\"off\">\n" +
+                        "                <input type=\"text\" id=\"datepicker\" name=\"date\" autocomplete=\"off\" required>\n" +
                         "            </div>").insertAfter('#radiobtn');
                     $( "#datepicker" ).datepicker();
                 }
