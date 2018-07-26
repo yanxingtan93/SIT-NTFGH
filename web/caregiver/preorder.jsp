@@ -210,7 +210,7 @@
                         "                <label class=\"col-sm-4 col-form-label\">Collection Date</label>\n" +
                         "                <input type=\"text\" id=\"datepicker\" name=\"date\" autocomplete=\"off\" required>\n" +
                         "            </div>").insertAfter('#radiobtn');
-                    $( "#datepicker" ).datepicker();
+                    $( "#datepicker" ).datepicker({ minDate: +1, maxDate: "+1M +10D" });
                 }
                 else {
                     $('#toshow').remove();
