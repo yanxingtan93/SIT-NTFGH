@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public interface UsersDao {
     public ArrayList<User> getAllUsers();
     public ArrayList<User> getAllPatients(String caregiverNRIC);
-    public void addNewUser(User user);
+    public boolean addNewUser(User user);
     public void addNewPatientCaregiver(User user,String caregiverNRIC);
     public User getUser(String NRIC);
     public String getName(String NRIC);

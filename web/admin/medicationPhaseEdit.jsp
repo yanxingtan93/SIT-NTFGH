@@ -87,10 +87,10 @@
         var id = getParameterByName("xFormID");
         console.log("id is:" + id);
 
-        $.get("/GeneralSettingsServlet?route=medForm&id="+id+"&type=2", function(responseJson) {
+        $.get("/GeneralSettingsServlet?mode=medForm&id="+id+"&type=2", function(responseJson) {
 
-                formID.val(value.id)
-                name.val(responseJson).trigger('change');
+            formID.val(id)
+            name.val(responseJson).trigger('change');
 
 
 
