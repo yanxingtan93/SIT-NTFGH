@@ -91,7 +91,7 @@
         var currentPatient = "${sessionScope.patientID}";
 
         if(currentPatient==""){
-           
+
         }
 
 
@@ -153,6 +153,6 @@
         });
     }
 
-    //window.onload(check());
+    window.onload(check());
 
 </script>
