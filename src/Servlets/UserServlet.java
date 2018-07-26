@@ -80,7 +80,7 @@ public class UserServlet extends HttpServlet {
                             response.sendRedirect("/admin/patientOverview.jsp");
                         }
                         else if(myRole.equals("pharmacist")){
-                            response.sendRedirect("/pharmacist/patientOverview.jsp"); 
+                            response.sendRedirect("/pharmacist/patientOverview.jsp");
                         }
 
                     }
