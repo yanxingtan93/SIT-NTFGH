@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -108,7 +109,22 @@ public class UserServlet extends HttpServlet {
 
                 User user1 =  new User(NRIC1,name1,password1,dob1,Integer.parseInt(contact1),email1,address1,role1,condition);
                 user1.setSpecialCondition(condition);
-                usersDao.addNewUser(user1);
+                boolean accept = usersDao.addNewUser(user1);
+
+                if(accept==false) {
+                    PrintWriter out = response.getWriter();
+                    response.setContentType("text/html");
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("alert('Account Already Exists, Please Try Logging in again.');");
+                    out.println("</script>");
+                }
+                else if(accept==true) {
+                    PrintWriter out = response.getWriter();
+                    response.setContentType("text/html");
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("alert('You've Successfully Registered an Account');");
+                    out.println("</script>");
+                }
                 response.sendRedirect("/index.jsp");
                 break;
 
