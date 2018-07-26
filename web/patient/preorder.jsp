@@ -72,11 +72,11 @@
                         <div class="row">
                             <label class="col-sm-2 col-form-label">Medication</label>
                             <div class="col-sm-4">
-                                <input type="text" id='medication-Preorder' name="medicationPreorder">
+                                <input type="text" id='medication-Preorder' name="medicationPreorder" required>
                             </div>
                             <label class="col-sm-2 col-form-label">Total Quantity</label>
                             <div class="col-sm-2">
-                                <input type="number" name="quantity" min="1" max="50">
+                                <input type="number" name="quantity" min="1" max="50" required>
                             </div>
                         </div>
                     </div>
@@ -165,11 +165,11 @@
                     $(wrapper).append('<div class="row">\n' +
                         '                            <label class="col-sm-2 col-form-label">Medication</label>\n' +
                         '                            <div class="col-sm-4">\n' +
-                        '                                <input type="text" id="medication-Preorder'+x+'" name="medicationPreorder">\n' +
+                        '                                <input type="text" id="medication-Preorder'+x+'" name="medicationPreorder" required>\n' +
                         '                            </div>\n' +
                         '                            <label class="col-sm-2 col-form-label">Total Quantity</label>\n' +
                         '                            <div class="col-sm-2">\n' +
-                        '                                <input type="number" name="quantity" min="1" max="50">\n' +
+                        '                                <input type="number" name="quantity" min="1" max="50" required>\n' +
                         '                            </div>\n' +
                         '                            <a href="#" class="remove_field"> Remove</a></div>'); //add input box
                 }

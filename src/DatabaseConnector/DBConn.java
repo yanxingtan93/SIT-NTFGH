@@ -60,7 +60,7 @@ public class DBConn {
         String NRIC = "S1234567A";
 
         //String sql1 = "SELECT d.drug_id, d.drug_name FROM DRUGS d, INVENTORY i WHERE i.user_NRIC = 'S1234567A' and i.drug_id = d.drug_id";
-        String sql = "DELETE FROM PREORDER WHERE preorder_ID IN (56,57,58,59,68) ";
+        String sql = "i";
         PreparedStatement ps = getPreparedStatement(sql);
         ResultSet resultSet= ps.executeQuery();
          while (resultSet.next()) {
