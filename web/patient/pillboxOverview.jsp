@@ -70,7 +70,7 @@
                     </div>
                     <label class="col-sm-2 col-form-label">Meals</label>
                     <div class="col-sm-4">
-                        <select name="addDrugMeals">
+                        <select name="addDrugMeals" id="addDrugMeals">
                             <option value="1">Before Meal</option>
                             <option value="2">After Meal</option>
                             <option value="3">Meal Independent</option>

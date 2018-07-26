@@ -64,6 +64,9 @@ public class patientServlet extends HttpServlet {
             case "getMedicationForms":
                 response.getWriter().write(getMedicationForms());
                 break;
+            case "getMedicationIntake":
+                response.getWriter().write(getMedicationIntake());
+                break;
             case "getMedicationFrequency":
                 response.getWriter().write(getMedicationFrequency());
                 break;
@@ -103,6 +106,26 @@ public class patientServlet extends HttpServlet {
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("medicineform_ID", resultSet.getString("medicineform_ID"));
                 map.put("medicineform_name", resultSet.getString("medicineform_name"));
+                list.add(map);
+
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+
+        }
+        return gson.toJson(list);
+    }
+    private String getMedicationIntake(){
+        String sql = "SELECT * FROM DRUGINTAKE";
+        ArrayList<Map> list = new ArrayList<>();
+        try {
+            PreparedStatement ps = DBConn.getPreparedStatement(sql);
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("drugintake_ID", resultSet.getString("drugintake_ID"));
+                map.put("drugintake_term", resultSet.getString("drugintake_term"));
                 list.add(map);
 
             }

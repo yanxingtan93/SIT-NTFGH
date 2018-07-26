@@ -33,6 +33,19 @@ $(document).ready(function(){
                 });
             }
         );
+    //=============== Get Medication Type, Value for Add Form ===============
+    $.get( "/patient/getMedicationIntake" )
+        .then(
+            function(data,status) {
+                $('#addDrugMeals').empty();
+                $.each(JSON.parse(data), function (i, item) {
+                    $('#addDrugMeals').append($('<option>', {
+                        value: item.drugintake_ID,
+                        text : item.drugintake_term
+                    }));
+                });
+            }
+        );
     //=============== Get Medication Frequency, Values for Add Form ===============
     $.get( "/patient/getMedicationFrequency" )
         .then(
@@ -51,7 +64,6 @@ $(document).ready(function(){
         .then(
             function(data,status) {
                 pillboxlist = JSON.parse(data);
-                console.log(pillboxlist);
 
 
                 var today = sortByKey(pillboxlist["today"], 'reminder_time');
@@ -198,7 +210,6 @@ function openDeleteModal(id) {
     deleteModal.style.display = "block";
 }
 function deleteFromPillbox() {
-    console.log(deleteID);
     $.post( "/patient/deleteFromPillbox", {id: deleteID})
         .then(location.reload());
 }
@@ -213,7 +224,6 @@ function openRecordModal(id,dose,invId) {
     recordModal.style.display = "block";
 }
 function recordConsumption() {
-    console.log(recordID);
 
     $.post( "/patient/recordConsumption", {id: recordID, remainder: remainder, inventoryID: inventoryID})
         .then(location.reload());
