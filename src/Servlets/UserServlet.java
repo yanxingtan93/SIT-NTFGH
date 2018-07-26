@@ -120,20 +120,14 @@ public class UserServlet extends HttpServlet {
                 boolean accept = usersDao.addNewUser(user1);
 
                 if(accept==false) {
-                    PrintWriter out = response.getWriter();
-                    response.setContentType("text/html");
-                    out.println("<script type=\"text/javascript\">");
-                    out.println("alert('Account Already Exists, Please Try Logging in again.');");
-                    out.println("</script>");
+                    request.setAttribute("message","Account already exists. Please Try Logging in again.");
+                    request.getRequestDispatcher("/index.jsp").forward(request,response);
                 }
                 else if(accept==true) {
-                    PrintWriter out = response.getWriter();
-                    response.setContentType("text/html");
-                    out.println("<script type=\"text/javascript\">");
-                    out.println("alert('You've Successfully Registered an Account');");
-                    out.println("</script>");
+                    request.setAttribute("message","You have successfully Registered an account. Please Login.");
+                    request.getRequestDispatcher("/index.jsp").forward(request,response);
                 }
-                response.sendRedirect("/index.jsp");
+
                 break;
 
             case "caregiverAdd":
@@ -163,6 +157,17 @@ public class UserServlet extends HttpServlet {
                 UsersDao careRemoveDao = new UsersDaoImpl();
                 careRemoveDao.removeCaregiver(patientNRIC2,caregiverNRIC2);
                 response.sendRedirect("/patient/profile.jsp");
+
+                break;
+
+
+            case "DeletePatient":
+                String myPatientID = request.getParameter("userID");
+                HttpSession myCareGiverSession = request.getSession();
+                String caregiverNRIC1 = myCareGiverSession.getAttribute("userID").toString();
+                UsersDao careRemoveDao1 = new UsersDaoImpl();
+                careRemoveDao1.removeCaregiver(myPatientID,caregiverNRIC1);
+                response.sendRedirect("/caregiver/patientOverview.jsp");
 
                 break;
 
@@ -492,7 +497,7 @@ public class UserServlet extends HttpServlet {
                 break;
 
             case "caregiver":
-                String careGiverNRIC = "S1234567C";
+                String careGiverNRIC = request.getParameter("NRIC");
                 String sqlCare = "SELECT pc.patient_NRIC,pc.caregiver_NRIC,u.user_NRIC,u.user_name,u.user_email,u.user_contact,u.user_address" +
                         ",u.user_dob FROM USERS u, PATIENTCAREGIVER pc WHERE pc.caregiver_NRIC = '"+careGiverNRIC+"' " +
                         "AND pc.patient_NRIC = u.user_NRIC";

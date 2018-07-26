@@ -45,7 +45,8 @@
 
     });
     $(document).ready(function() {
-        $.get("/UserServlet?mode=caregiver", function(responseJson) {
+        var validAcc = "${sessionScope.userID}";
+        $.get("/UserServlet?mode=caregiver&NRIC="+validAcc, function(responseJson) {
 
 
             $.each(responseJson, function(key,value) {

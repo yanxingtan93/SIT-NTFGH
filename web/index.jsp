@@ -81,7 +81,7 @@
         <label class="radio-inline" style="font-weight: bolder"><input type="radio" name="optradio" value="Caregiver">Caregiver</label>
         <div class="wrapper">
           <br><br>
-          <p>${requestScope["message"]}</p>
+          <p style="font-weight: bolder;">${requestScope["message"]}</p>
           <span class="group-btn">
 
 
