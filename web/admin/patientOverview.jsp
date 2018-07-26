@@ -46,7 +46,7 @@
     });
     $(document).ready(function() {
         $.get("/UserServlet?mode=admin", function(responseJson) {
-
+            var validAcc = "${sessionScope.userID}";
 
             $.each(responseJson, function(key,value) {
 
@@ -57,6 +57,9 @@
                     "                    <button type=\"submit\" class=\"btn btn-danger\">Remove</button>\n" +
                     "                    </form>";
 
+            if(value.NRIC==validAcc){
+                button= "";
+            }
 
                 mytable.row.add([value.NRIC, value.name, value.dob, value.contact, value.email, value.address, value.role,button]);
 

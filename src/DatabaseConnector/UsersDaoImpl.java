@@ -53,11 +53,65 @@ public class UsersDaoImpl implements UsersDao {
     }
 
     @Override
-    public void addNewUser(User user) {
+    public boolean addNewUser(User user) {
         System.out.println("ADJW");
-        String sql = "INSERT INTO USERS(user_NRIC,user_name,user_password,user_email,user_contact,user_address,user_dob) VALUES(?,?,?,?,?,?,?)";
+        boolean existUsers = false;
+        boolean existRoles = false;
 
         String myRole = user.getRole().toLowerCase().trim();
+
+
+        String searchUser = "SELECT user_NRIC from USERS WHERE user_NRIC = ?";
+        try {
+            Connection connection = db.getConnection();
+            PreparedStatement ps = connection.prepareStatement(searchUser);
+            ps.setString(1, user.getNRIC());
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()){
+                existUsers=true;
+            }
+
+            String searchRole = "";
+            PreparedStatement psRoleCheck = null;
+
+            if(myRole.equals("patient")){
+                searchRole = "SELECT * FROM PATIENTS WHERE user_NRIC = ?";
+                psRoleCheck = connection.prepareStatement(searchRole);
+                psRoleCheck.setString(1,user.getNRIC());
+
+            }
+            else if(myRole.equals("caregiver")){
+                searchRole = "SELECT * FROM CAREGIVERS WHERE user_NRIC = ?";
+                psRoleCheck = connection.prepareStatement(searchRole);
+                psRoleCheck.setString(1,user.getNRIC());
+            }
+            else if(myRole.equals("admin")){
+                searchRole = "SELECT * FROM ADMINS WHERE user_NRIC = ?";
+                psRoleCheck = connection.prepareStatement(searchRole);
+                psRoleCheck.setString(1,user.getNRIC());
+            }
+            else if(myRole.equals("pharmacist")){
+                searchRole = "SELECT * FROM PHARMACISTS WHERE user_NRIC = ?";
+                psRoleCheck = connection.prepareStatement(searchRole);
+                psRoleCheck.setString(1,user.getNRIC());
+            }
+
+            ResultSet rsRole = psRoleCheck.executeQuery();
+            while (rsRole.next()){
+                existRoles=true;
+            }
+
+        }
+        catch (SQLException e){
+            System.err.println("Error getting name of user in UserDaoImpl " + e);
+        }
+
+
+
+
+        String sql = "INSERT INTO USERS(user_NRIC,user_name,user_password,user_email,user_contact,user_address,user_dob) VALUES(?,?,?,?,?,?,?)";
 
         String roleSQL = "";
         user.setPassword(User.hashPassword(user.getPassword()));
@@ -72,8 +126,9 @@ public class UsersDaoImpl implements UsersDao {
             ps.setInt(5,user.getContact());
             ps.setString(6,user.getAddress());
             ps.setString(7,user.getDob());
-            ps.executeUpdate();
-
+            if(existUsers!=true) {
+                ps.executeUpdate();
+            }
             System.out.println("ADJW3");
 
 
@@ -100,7 +155,10 @@ public class UsersDaoImpl implements UsersDao {
                 ps1.setString(1,user.getNRIC());
             }
             System.out.println("ADJW4");
-            ps1.executeUpdate();
+            if(existRoles!=true) {
+                ps1.executeUpdate();
+
+            }
             System.out.println("ADJW5");
             connection.commit();
             connection.close();
@@ -108,6 +166,13 @@ public class UsersDaoImpl implements UsersDao {
         }catch (SQLException e) {
             e.printStackTrace();
         }
+
+
+        if(existRoles==true){
+            return false;
+        }
+        else
+            return true;
     }
 
 
