@@ -91,7 +91,7 @@
         var currentPatient = "${sessionScope.patientID}";
 
         if(currentPatient==""){
-            alert('dwa')
+           
         }
 
 
