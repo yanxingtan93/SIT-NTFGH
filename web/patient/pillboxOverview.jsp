@@ -82,7 +82,7 @@
                     <div class="col-sm-4">
                         <input type="text" class="form-control" name="addDrugInstructions" placeholder="">
                     </div>
-                    <label class="col-sm-2 col-form-label">Strictness</label>
+                    <label class="col-sm-2 col-form-label">Other Instructions</label>
                     <div class="col-sm-4">
                         <select name="addDrugStrictness">
                             <option value="true">Compulsory</option>

@@ -1,6 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="../JS/preorderForm.js"></script>
 
 
@@ -76,7 +75,7 @@
                             </div>
                             <label class="col-sm-2 col-form-label">Total Quantity</label>
                             <div class="col-sm-2">
-                                <input type="number" name="quantity" min="1" max="50" required>
+                                <input type="number" name="quantity" min="1" max="999" required>
                             </div>
                         </div>
                     </div>
@@ -169,7 +168,7 @@
                         '                            </div>\n' +
                         '                            <label class="col-sm-2 col-form-label">Total Quantity</label>\n' +
                         '                            <div class="col-sm-2">\n' +
-                        '                                <input type="number" name="quantity" min="1" max="50" required>\n' +
+                        '                                <input type="number" name="quantity" min="1" max="999" required>\n' +
                         '                            </div>\n' +
                         '                            <a href="#" class="remove_field"> Remove</a></div>'); //add input box
                 }

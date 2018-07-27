@@ -154,6 +154,7 @@ function setDateToday(){
     var month = ("0" + (now.getMonth() + 1)).slice(-2);
     var today = now.getFullYear()+"-"+(month)+"-"+(day);
     $('#addDrugStartDate').val(today);
+    $('#addDrugStartDate').attr("min",today);
 }
 function sortByKey(array, key) {
     return array.sort(function(a, b) {

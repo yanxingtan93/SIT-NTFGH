@@ -488,6 +488,7 @@ public class patientServlet extends HttpServlet {
                 Map<String, String> todayMap = new HashMap<String, String>();
                 test = LocalDateTime.parse(resultSet.getString("reminder_time"));
                 if (today.isAfter(test)){
+                    System.out.println("Test");
 
                     todayMap.put("drug_name", resultSet.getString("drug_name"));
                     todayMap.put("dose", resultSet.getString("dose"));
