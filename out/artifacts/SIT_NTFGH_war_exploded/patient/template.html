@@ -1,0 +1,280 @@
+
+
+
+
+
+
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+
+
+<html lang='en'>
+<link>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+    <meta name='description' content=''>
+    <meta name='author' content=''>
+    <link rel='icon' href='../../../../favicon.ico'>
+    <title>NTFGH - Pharmacy</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm' crossorigin='anonymous'>
+
+    <!-- Optional theme -->
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css' integrity='sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp' crossorigin='anonymous'>
+    <link rel='stylesheet' href='../css/style.css'>
+</head>
+<body>
+
+<script src='https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js' integrity='sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl' crossorigin='anonymous'></script>
+
+<div class='container'>
+
+    <div>
+        <div class="siteHeader clearfix">
+            <a href="">
+                <img src="https://www.gov.sg/sgdi/~/media/sgdi/ntfgh.png" alt="logo_ntfgh" width="291">
+            </a>
+        </div>
+        <!--
+<div class="row" style="position: absolute;padding-top:0px; text-align:center;background-color: black" >
+
+    <div class="form-group" style="margin: 0px 0px 10px 8%;">
+       <span name="patient" id="patient" style="color:white;"></span>
+    </div>
+
+</div>
+        -->
+         <div class="row" style="margin: 10px 0px 0px 92%;">
+             <div class="pull-right" name="logout" id="logout">
+                 <form method="post" action="/UserServlet">
+                     <input type="hidden" class="form-control" name="route" id="route"  placeholder="" value="logout" >
+
+                     <button type="submit" style="background-color: #3FBEBB" class="btn btn-primary pull-right"  name="btnLog" value="Logout">Logout
+                         <i class="fa fa-lock"></i></button>
+                 </form>
+             </div>
+         </div>
+
+
+
+        <div class="float-right" style="margin: -60px 130px 0px 0px;">
+            <img style="border-radius: 50%; margin: 0 10px 0 0" width="50" src="https://d30y9cdsu7xlg0.cloudfront.net/png/5832-200.png">
+            <span class="float-right" name="welcome" id="welcome"></span>
+        </div>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark" id="navbarAdmin" style="margin-left: 0;     background-color: #00000000;">
+        <div class="navbar-nav row">
+            <div class="col-lg"  >
+             </div>
+            <div class="col-lg" style="background: #000000;">
+                <div class="nav-item nav-link " style="width:100%;">
+
+                    <h5><i class="fa fa-child"></i> Patient</h5>
+                    <select name="caregiverPatientSelect" class="form-control" id="caregiverPatientSelect" style="color: black;background-color: antiquewhite;font-weight: bold;height: 29px">
+                    </select>
+                </div>
+              </div>
+              <div class="col-lg" style="background: #000000;">
+                <a class="nav-item nav-link" href="/caregiver/patientOverview.jsp"><b> <i class="fas fa-wheelchair"></i> Manage Patients</b></a>
+              </div>
+              <div class="col-lg" style="background: #000000;">
+                <a class="nav-item nav-link" href="/caregiver/profile.jsp"><b><i class="fa fa-User"></i> My Profile</b></a>
+              </div>
+            
+            
+            
+        </div>
+</nav>
+
+      <nav class="navbar navbar-expand-lg navbar-light">
+          <a class="navbar-brand" href="#"></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+              <div class="navbar-nav">
+                  <a class="nav-item nav-link" href="/caregiver/pillboxOverview.jsp"><b><i class="fas fa-medkit"></i> Pillbox</b></a>
+                  <a class="nav-item nav-link" href="/caregiver/history.jsp"><b><i class="fa fa-history"></i> History</b></a>
+                  <a class="nav-item nav-link" href="/caregiver/preorder.jsp"><b><i class="fa fa-money"></i> Preorder</b></a>
+                <!--  <a class="nav-item nav-link" href="/patient/profile.jsp"><b><i class="fas fa-heartbeat"></i> Patient-Profile</b></a>-->
+                  <a class="nav-item nav-link" href="/caregiver/patientProfile.jsp"><b><i class="fa fa-heartbeat"></i> Profile</b></a>
+                  <a class="nav-item nav-link" href="/caregiver/help.jsp"><b><i class="fa fa-question-circle"></i> Help</b></a>
+              </div>
+          </div>
+
+      </nav>
+    </div>
+    <div id="content">
+        
+        
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs-3.3.5/jq-2.1.4,dt-1.10.8/datatables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/r/bs-3.3.5/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
+
+
+    <style>
+        .dataTables_wrapper .FilterStuff .dataTables_filter {float:right}
+    </style>
+
+    <h2>My Patients
+        <span class="pull-right"> <a href="/caregiver/patientAdd.jsp" class="btn btn-primary">+ Add My Patient</a></span>
+    </h2>
+    <table id="myMainTable" class="table table-striped table-bordered" style="width:100%">
+        <thead class="thead-dark">
+        <tr><th>NRIC</th><th>Name</th><th>Date Of Birth</th><th>Contact Number</th><th>Email</th><th>Address</th><th>Functions</th></tr>
+        </thead>
+
+        <tbody>
+
+        </tbody>
+
+    </table>
+
+
+    
+    </div>
+
+
+</div>
+
+<footer class="footer" style="
+    width: 100%;
+    text-align: center;
+    margin-top: 200px;
+">
+    <span>© Copyright 2018 National University Health Services Group Pte. Ltd. </span>
+    <span>&middot;</span>
+    <span>All Rights Reserved.</span>
+</footer>
+
+</body>
+</html>
+
+<script>
+
+    $(document).ready(function(){
+        var userWelcome = $('#welcome');
+        var validAcc = "";
+        userWelcome.html("<b>CareGiver</b><br>Hello, " + validAcc);
+
+        var currentPatient = "";
+
+        if(currentPatient==""){
+            alert('dwa')
+        }
+
+
+        $('#caregiverPatientSelect').on('change', function() {
+
+            $.post( "/UserServlet?route=selectPatient", {patientID: this.value})
+            location.reload();
+        });
+
+        getPatients(validAcc);//change to session variables
+
+
+    });
+
+    function getPatients(caregiverID){
+
+        var x = 0;
+        var firstPatientID = "";
+        console.log(caregiverID);
+        $.post( "/UserServlet?route=listPatients", {caregiverID: caregiverID})
+            .then(
+                function(data,status) {
+
+                    //SET session value to item.user_NRIC
+                    $.each(JSON.parse(data), function (i, item) {
+                        $('#caregiverPatientSelect').append($('<option>', {
+                            value: item.user_NRIC,
+                            text : item.user_name.toUpperCase()
+                        }));
+                        if(x==0){
+                            firstPatientID = item.user_NRIC;
+                        }
+                        x++;
+                    });
+
+                    var validPatientID = "";
+                    $('#caregiverPatientSelect').val(validPatientID);
+                }
+            );
+
+
+
+
+
+    }
+
+
+
+    function check(){
+        var validAcc1 = "";
+        $.get("/UserServlet?mode=validate&role=caregiver&NRIC="+validAcc1, function(responseJson) {
+
+            var access = responseJson.toString();
+            if(access=="false"){
+                window.history.back();
+            }
+
+
+        });
+    }
+
+    //window.onload(check());
+
+</script>
+
+
+<script>
+
+
+    var mytable = $('#myMainTable').DataTable({
+        "aLengthMenu": [[5, 50, 75, -1], [5, 50, 75, "All"]],
+        "iDisplayLength": 5,
+        "paging": true,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "sDom": 'lfrtip'
+
+    });
+    $(document).ready(function() {
+        $.get("/UserServlet?mode=caregiver", function(responseJson) {
+
+
+            $.each(responseJson, function(key,value) {
+
+
+
+
+                var button = "\n" +
+                    "                    <form method=\"post\" action=\"/UserServlet\">\n" +
+                    "                        <input type=\"hidden\" class=\"form-control\" name=\"route\"  value=\"DeletePatient\">\n" +
+                    "                        <input type=\"hidden\" class=\"form-control\" name=\"userID\"  value="+value.NRIC+">\n" +
+                    "                    <button type=\"submit\" class=\"btn btn-danger\">Remove</button>\n" +
+                    "                    </form>&nbsp";
+
+
+                mytable.row.add([value.NRIC, value.name, value.dob, value.contact, value.email, value.address, button]);
+
+
+            });
+            mytable.draw();
+        });
+
+    });
+
+
+
+
+</script>

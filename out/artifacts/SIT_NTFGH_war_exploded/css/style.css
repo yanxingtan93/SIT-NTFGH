@@ -1,0 +1,142 @@
+#navbarAdmin {
+    background-color: #00000000;
+    border-bottom: 3px solid #525252;
+    padding: 0px;
+    margin: 0px;
+}
+#navbarAdmin .navbar-nav > li > a:hover,
+ul.sub-menu li:hover a {
+    background-color:#525252;
+}
+#navbarAdmin .navbar-nav > a:hover {
+    background-color:#525252;
+}
+
+.navbar {
+    background-color: #55C5C3;
+    border-bottom: 3px solid #549895;
+}
+.navbar .navbar-nav > li > a:hover,
+ul.sub-menu li:hover a {
+    background-color:#3FBEBB;
+}
+
+.navbar .navbar-nav > .active > a,
+.navbar .navbar-nav > .active > a:focus,
+.navbar .navbar-nav > .active > a:hover {
+    background-color:#549895;
+}
+.navbar .navbar-nav{
+    width: 100%;
+    font-size: 18px;
+    font-family: OpenSans_Regular, Helvetica, Arial, sans-serif;
+}
+.navbar .navbar-nav > a {
+    color: #fff;
+    height: 54px;
+    width: 18%;
+    padding: 14px 0 0 0;
+    text-align: center;
+    vertical-align: middle;
+    display: table-cell;
+}
+.navbar .navbar-collapse .navbar-nav > a {
+    width: 100%;
+}
+
+.navbar .navbar-nav > a:hover {
+    background-color:#3FBEBB;
+}
+
+.navbar .navbar-nav > a.active {
+    border-top: 0px solid #55C5C3;
+}
+
+#content {
+    padding: 20px 40px 0 40px;
+}
+
+#pillboxTable {
+    margin-top:25px;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 60px;
+    border: 1px solid #888;
+    width: 70%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.span {
+    width: 50px;
+    height: 50px;
+}
+
+.flex-container {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    -webkit-flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+.flex-item {
+    background: #55c5c3;
+    padding: 5px;
+    width:  280px;
+    height: 260px;
+    margin-top: 50px;
+
+    text-align: center;
+}
+
+.dashboard-item{
+    padding: 2.25rem;
+}
+
+.dashboard-item i{
+    font-size: 120px;
+}
+.dashboard-item h5{
+    margin-top: 16px;
+    font-size: 32px;
+}

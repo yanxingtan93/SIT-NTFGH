@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+    <servlet>
+        <servlet-name>drugServlet</servlet-name>
+        <servlet-class>Servlets.drugServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>drugServlet</servlet-name>
+        <url-pattern>/drugServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>medicineFormServlet</servlet-name>
+        <servlet-class>Servlets.medicineFormServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>medicineFormServlet</servlet-name>
+        <url-pattern>/medicineFormServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>contentServlet</servlet-name>
+        <servlet-class>Servlets.contentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>contentServlet</servlet-name>
+        <url-pattern>/contentServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>drugCatalogueServlet</servlet-name>
+        <servlet-class>Servlets.drugCatalogueServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>drugCatalogueServlet</servlet-name>
+        <url-pattern>/drugCatalogueServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>preorderFormServlet</servlet-name>
+        <servlet-class>Servlets.preorderFormServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>preorderFormServlet</servlet-name>
+        <url-pattern>/preorderFormServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>preorderServlet</servlet-name>
+        <servlet-class>Servlets.preorderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>preorderServlet</servlet-name>
+        <url-pattern>/preorderServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>preorderViewServlet</servlet-name>
+        <servlet-class>Servlets.preorderViewServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>preorderViewServlet</servlet-name>
+        <url-pattern>/preorderViewServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>pharmacistPreorderServlet</servlet-name>
+        <servlet-class>Servlets.pharmacistPreorderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>pharmacistPreorderServlet</servlet-name>
+        <url-pattern>/pharmacistPreorderServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>patientFormServlet</servlet-name>
+        <servlet-class>Servlets.patientFormServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>patientFormServlet</servlet-name>
+        <url-pattern>/patientFormServlet</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>patientServlet</servlet-name>
+        <servlet-class>Servlets.patientServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>patientServlet</servlet-name>
+        <url-pattern>/patient/getMedicationNames</url-pattern>
+        <url-pattern>/patient/getMedicationForms</url-pattern>
+        <url-pattern>/patient/getMedicationIntake</url-pattern>
+        <url-pattern>/patient/getMedicationFrequency</url-pattern>
+        <url-pattern>/patient/listPillbox</url-pattern>
+        <url-pattern>/patient/addToPillbox</url-pattern>
+        <url-pattern>/patient/editPillbox</url-pattern>
+        <url-pattern>/patient/deleteFromPillbox</url-pattern>
+        <url-pattern>/patient/recordConsumption</url-pattern>
+        <url-pattern>/patient/listHistory</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>Servlets.UserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/UserServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GeneralSettingsServlet</servlet-name>
+        <servlet-class>Servlets.GeneralSettingsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GeneralSettingsServlet</servlet-name>
+        <url-pattern>/GeneralSettingsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ContentCategoryServlet</servlet-name>
+        <servlet-class>Servlets.ContentCategoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ContentCategoryServlet</servlet-name>
+        <url-pattern>/ContentCategoryServlet</url-pattern>
+    </servlet-mapping>
+
+</web-app>
+
